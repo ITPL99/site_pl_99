@@ -2,6 +2,7 @@ create table if not exists users(
     id bigserial primary key,
     username varchar unique not null,
     password varchar not null,
+    email varchar not null,
     date_create timestamp with time zone not null default now(),
     date_update timestamp with time zone not null default now()
 );
