@@ -21,11 +21,11 @@ public class AuthController {
             @RequestParam String username,
            @RequestParam String password
     ) {
-        return "success";
+        return authService.login(username,password);
     }
 
     @GetMapping("/current")
     public UserDtoResponse getCurrentAuthUser(){
-        return new UserDtoResponse((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return getCurrentAuthUser();
     }
 }
