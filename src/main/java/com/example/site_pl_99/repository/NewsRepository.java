@@ -1,7 +1,7 @@
 package com.example.site_pl_99.repository;
 
 import com.example.site_pl_99.entity.News;
-import com.example.site_pl_99.entity.User;
+import com.example.site_pl_99.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +13,5 @@ import java.util.Optional;
 public interface NewsRepository extends JpaRepository<News, Long> {
     Optional<News> findNewsByTitle(String title);
     Optional<News> findNewsByDateCreated(LocalDateTime dateCreated);
-    Optional<List<News>> findNewsByUser(User user);
+    Optional<List<News>> findNewsByUser(UserEntity user);
 }

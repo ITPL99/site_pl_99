@@ -4,10 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "images_news")
-public class Image {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Image extends BaseEntity{
+
     @ManyToOne()
     private News news;
 

@@ -6,10 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "workers")
-public class Worker {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Worker extends BaseEntity{
     @Column
     private String name;
     @Column

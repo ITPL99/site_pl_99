@@ -6,10 +6,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "news")
-public class News {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class News extends BaseEntity{
+
     @Column
     private String title;
     @Column
@@ -18,7 +16,7 @@ public class News {
     private LocalDateTime dateCreated;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private User user;
+    private UserEntity user;
 
     public News() {
     }
@@ -27,7 +25,7 @@ public class News {
                 String title,
                 String description,
                 LocalDateTime dateCreated,
-                User user) {
+                UserEntity user) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -71,11 +69,11 @@ public class News {
         return this;
     }
 
-    public User getUser() {
+    public UserEntity getUser() {
         return user;
     }
 
-    public News setUser(User user) {
+    public News setUser(UserEntity user) {
         this.user = user;
         return this;
     }
