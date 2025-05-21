@@ -4,7 +4,8 @@ import com.example.site_pl_99.entity.Worker;
 
 import java.time.LocalDateTime;
 
-public class CourseDTO { // времно не используется
+public class CourseDTO {
+    private Long id;
     private String title;
     private String description;
     private Long price;
@@ -16,17 +17,28 @@ public class CourseDTO { // времно не используется
     }
 
     public CourseDTO(String title,
+                     Long id,
                      String description,
                      Long price,
                      Worker worker,
                      LocalDateTime dateStarted,
                      LocalDateTime dateEnd) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.worker = worker;
         this.dateStarted = dateStarted;
         this.dateEnd = dateEnd;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public CourseDTO setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public String getTitle() {

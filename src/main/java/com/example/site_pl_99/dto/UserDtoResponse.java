@@ -14,7 +14,17 @@ public class UserDtoResponse {
     public UserDtoResponse(UserEntity user) {
         this.id = user.getId();
         this.username = user.getUsername();
+        this.email = user.getEmail();
         this.roles = user.getRoleEntityList().stream().map(RoleDTOResponse::new).toList();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserDtoResponse setEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     public Long getId() {

@@ -14,7 +14,6 @@ public class News extends BaseEntity{
     private String description;
     @Column
     private LocalDateTime dateCreated;
-
     @OneToOne(fetch = FetchType.LAZY)
     private UserEntity user;
 

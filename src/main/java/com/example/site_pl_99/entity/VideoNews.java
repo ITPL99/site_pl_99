@@ -4,24 +4,36 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "videos_news")
-public class Video extends BaseEntity{
+public class VideoNews extends BaseEntity{
 
+    @Column
+    private String name;
     @ManyToOne()
     private News news;
 
-    public Video() {
+    public VideoNews() {
     }
 
-    public Video(Long id, News news) {
+    public VideoNews(Long id,String name, News news) {
         this.id = id;
+        this.name = name;
         this.news = news;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public VideoNews setName(String name) {
+        this.name = name;
+        return this;
     }
 
     public News getNews() {
         return news;
     }
 
-    public Video setNews(News news) {
+    public VideoNews setNews(News news) {
         this.news = news;
         return this;
     }
@@ -30,7 +42,7 @@ public class Video extends BaseEntity{
         return id;
     }
 
-    public Video setId(Long id) {
+    public VideoNews setId(Long id) {
         this.id = id;
         return this;
     }

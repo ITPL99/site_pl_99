@@ -29,6 +29,25 @@ public class MinIOServiceImpl implements MinIOService {
     }
 
     @Override
+    public boolean fileExists(String bucketName, String fileName) throws Exception {
+        try {
+            minioClient.statObject(
+                    StatObjectArgs.builder()
+                            .bucket(bucketName)
+                            .object(fileName)
+                            .build()
+            );
+            return true; // Файл найден
+        } catch (io.minio.errors.ErrorResponseException e) {
+            if (e.errorResponse().code().equals("NoSuchKey")) {
+                return false; // Файл не найден
+            } else {
+                throw e; // Другие ошибки — пробрасываем дальше
+            }
+        }
+    }
+
+    @Override
     public InputStream streamFile(String bucketName, String fileName) throws Exception {
         return minioClient.getObject(
                 GetObjectArgs.builder()
