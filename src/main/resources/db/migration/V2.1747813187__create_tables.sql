@@ -1,28 +1,14 @@
-create table if not exists users(
-    id bigserial primary key,
-    login varchar unique not null,
-    password varchar not null,
-    email varchar not null,
-    date_created timestamp with time zone default now(),
-    date_updated timestamp with time zone default now()
-);
-
-create table if not exists roles(
-    id bigserial primary key,
-    role varchar unique not null
-);
-
-create table if not exists m2m_users_roles(
-    user_id bigint references users(id) on delete cascade,
-    role_id bigint references roles(id)
-);
-
 create table if not exists workers(
     id bigserial primary key,
     name varchar not null,
     age int not null,
     bio varchar not null,
     profession varchar not null
+);
+
+create table if not exists avatars_workers(
+    id bigserial primary key,
+    worker_id bigint references workers(id) on delete cascade unique not null
 );
 
 create table if not exists news(
