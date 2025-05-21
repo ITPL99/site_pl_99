@@ -22,9 +22,10 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(request -> {
-                            CorsConfiguration corsConfiguration = (CorsConfiguration) request;
+        http.csrf(AbstractHttpConfigurer::disable);
+
+        http.cors(cors -> cors.configurationSource(request -> {
+                            CorsConfiguration corsConfiguration = new CorsConfiguration(); // Зараза надо запомнить что всегда нужно создавать новый экземпляр конфигурации
                             corsConfiguration.setAllowedOriginPatterns(List.of("*"));
                             corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                             corsConfiguration.setAllowedHeaders(List.of("*"));
@@ -33,7 +34,8 @@ public class SecurityConfiguration {
                         }
                 ));
 
-        http.httpBasic(Customizer.withDefaults())
+        http
+                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/test/open-all").permitAll()
