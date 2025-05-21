@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация пользователя</title>
+</head>
+<body>
+<h1>Регистрация</h1>
+<form id="registrationForm" action="/api/user/register" method="post">
+    <label for="username">Имя пользователя:</label><br>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="password">Пароль:</label><br>
+    <input type="password" id="password" name="password" required><br>
+
+    <label for="roles">Роли (разделяйте через запятую):</label><br>
+    <input type="text" id="roles" name="roles"><br><br>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+
+<script>
+    //Обработка отправки формы (необязательно, но желательно для валидации и обратной связи с пользователем)
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+        // Здесь можно добавить валидацию данных перед отправкой
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const roles = document.getElementById('roles').value.split(',').map(role => role.trim());
+
+        // Отправка данных на сервер с помощью fetch API
+        fetch('http://localhost:8080/api/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, roles })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                //Обработка успешной регистрации (например, перенаправление на страницу входа)
+                alert("Регистрация успешна!");
+                window.location.href = "/login"; //Пример перенаправления
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                //Обработка ошибки регистрации (например, отображение сообщения об ошибке)
+                alert("Ошибка регистрации. Попробуйте позже.");
+            });
+    });
+</script>
+</body>
+</html>
