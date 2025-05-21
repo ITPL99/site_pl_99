@@ -1,4 +1,4 @@
-package com.example.site_pl_99;
+package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
 import com.example.site_pl_99.dto.UserDtoResponse;
