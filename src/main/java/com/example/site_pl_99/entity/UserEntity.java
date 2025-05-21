@@ -36,6 +36,15 @@ public class UserEntity extends BaseEntity {
         dateUpdated = LocalDateTime.now();
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public UserEntity setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
     public String getUsername() {
         return username;
     }
