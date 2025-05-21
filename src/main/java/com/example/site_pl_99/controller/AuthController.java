@@ -1,14 +1,22 @@
 package com.example.site_pl_99.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.site_pl_99.dto.UserDtoResponse;
+import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.service.AuthService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/login")
     public String login(
@@ -16,5 +24,10 @@ public class AuthController {
            @RequestParam String password
     ) {
         return "success";
+    }
+
+    @GetMapping("/current")
+    public UserDtoResponse getCurrentAuthUser(){
+        return new UserDtoResponse((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 }
