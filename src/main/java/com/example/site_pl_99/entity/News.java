@@ -1,0 +1,82 @@
+package com.example.site_pl_99.entity;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "news")
+public class News {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
+    private String title;
+    @Column
+    private String description;
+    @Column
+    private LocalDateTime dateCreated;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    public News() {
+    }
+
+    public News(Long id,
+                String title,
+                String description,
+                LocalDateTime dateCreated,
+                User user) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dateCreated = dateCreated;
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public News setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public News setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public News setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public News setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+        return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public News setUser(User user) {
+        this.user = user;
+        return this;
+    }
+}
