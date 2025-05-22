@@ -25,8 +25,8 @@ public class UserDTORequestRegister {
         return login;
     }
 
-    public UserDTORequestRegister setLogin(String login) {
-        this.login = login;
+    public UserDtoRequestRegister setUsername(String username) {
+        this.username = username;
         return this;
     }
 
