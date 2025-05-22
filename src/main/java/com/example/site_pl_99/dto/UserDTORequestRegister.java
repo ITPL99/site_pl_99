@@ -11,14 +11,8 @@ public class UserDTORequestRegister {
     public UserDTORequestRegister() {
     }
 
-    public UserDTORequestRegister(String login,
-                                  String password,
-                                  String email,
-                                  List<String> role) {
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.role = role;
+    public String getUsername() {
+        return username;
     }
 
     public UserEntity toEntity(){
