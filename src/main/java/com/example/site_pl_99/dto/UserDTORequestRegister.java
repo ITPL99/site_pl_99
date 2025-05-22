@@ -39,17 +39,8 @@ public class UserDTORequestRegister {
         return this;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public UserDTORequestRegister setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public List<String> getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
     public UserDtoRequestRegister setRoles(List<String> roles) {
