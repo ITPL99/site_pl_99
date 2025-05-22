@@ -52,8 +52,8 @@ public class UserDTORequestRegister {
         return role;
     }
 
-    public UserDTORequestRegister setRole(List<String> role) {
-        this.role = role;
+    public UserDtoRequestRegister setRoles(List<String> roles) {
+        this.roles = roles;
         return this;
     }
 }
