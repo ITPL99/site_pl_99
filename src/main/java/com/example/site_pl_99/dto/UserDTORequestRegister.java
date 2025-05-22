@@ -5,11 +5,7 @@ import java.util.List;
 public class UserDTORequestRegister {
     private String login;
     private String password;
-    private String email;
-    private List<String> role;
-
-    public UserDTORequestRegister() {
-    }
+    private List<String> roles;
 
     public String getUsername() {
         return username;
