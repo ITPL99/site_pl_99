@@ -2,8 +2,8 @@ package com.example.site_pl_99.dto;
 
 import java.util.List;
 
-public class UserDTORequestRegister {
-    private String login;
+public class UserDtoRequestRegister {
+    private String username;
     private String password;
     private List<String> roles;
 
