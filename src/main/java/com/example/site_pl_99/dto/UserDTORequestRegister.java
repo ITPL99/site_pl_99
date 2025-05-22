@@ -34,7 +34,7 @@ public class UserDTORequestRegister {
         return password;
     }
 
-    public UserDTORequestRegister setPassword(String password) {
+    public UserDtoRequestRegister setPassword(String password) {
         this.password = password;
         return this;
     }
