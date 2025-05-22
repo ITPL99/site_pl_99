@@ -21,8 +21,10 @@ public class UserDTORequestRegister {
         this.role = role;
     }
 
-    public String getLogin() {
-        return login;
+    public UserEntity toEntity(){
+        return new UserEntity()
+                .setUsername(username)
+                .setPassword(password);
     }
 
     public UserDtoRequestRegister setUsername(String username) {
