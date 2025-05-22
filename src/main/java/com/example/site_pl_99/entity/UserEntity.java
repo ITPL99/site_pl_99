@@ -1,13 +1,16 @@
 package com.example.site_pl_99.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity {
+public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -41,6 +44,11 @@ public class UserEntity extends BaseEntity {
     public UserEntity setUsername(String username) {
         this.username = username;
         return this;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roleEntityList;
     }
 
     public String getPassword() {
