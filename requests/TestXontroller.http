@@ -1,0 +1,82 @@
+
+
+################### Запроссы на Открытый энд поинт для всех ######################
+###
+GET http://localhost:8080/api/test/open-all
+
+###
+GET http://localhost:8080/api/test/open-all
+Authorization: Basic admin admin
+###************************************************************************************###
+
+
+
+
+#######################  Запросы для всех авторезированных пользователей ##############
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic admin admin
+
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic guest guest
+
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic user user
+
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic user-guest user-guest
+
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic admin-guest admin-guest
+
+###
+GET http://localhost:8080/api/test/open-auth
+Authorization: Basic admin-user admin-user
+###************************************************************************************###
+
+
+
+#####################  Доступ только Админу ##############################################
+GET http://localhost:8080/api/test/open-admin
+Authorization: Basic admin admin
+###************************************************************************************###
+
+
+
+#####################  Доступ только Гостю ###############################################
+GET http://localhost:8080/api/test/open-guest
+Authorization: Basic guest guest
+###************************************************************************************###
+
+
+
+#####################  Доступ только Пользователю ########################################
+GET http://localhost:8080/api/test/open-user
+Authorization: Basic user user
+###************************************************************************************###
+
+
+
+
+#####################  Доступ только Админу и Гостю ######################################
+GET http://localhost:8080/api/test/open-admin-guest
+Authorization: Basic admin-guest admin-guest
+###************************************************************************************###
+
+
+
+#####################  Доступ только Админу и Пользователю ###############################
+GET http://localhost:8080/api/test/open-admin-user
+Authorization: Basic admin-user admin-user
+###************************************************************************************###
+
+
+
+#####################  Доступ только гостю и Пользователю ################################
+GET http://localhost:8080/api/test/open-guest-user
+Authorization: Basic user-guest user-guest
+###************************************************************************************###
