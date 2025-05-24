@@ -37,14 +37,4 @@ public class VideoNews extends BaseEntity{
         this.news = news;
         return this;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public VideoNews setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
 }

@@ -32,15 +32,6 @@ public class News extends BaseEntity{
         this.user = user;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public News setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
     public String getTitle() {
         return title;
     }

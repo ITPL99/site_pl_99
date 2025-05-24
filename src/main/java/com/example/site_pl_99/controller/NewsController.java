@@ -1,23 +1,26 @@
 package com.example.site_pl_99.controller;
 
-import com.example.site_pl_99.dto.VideoNewsDTORequestRegister;
+import com.example.site_pl_99.dto.CourseDTO;
+import com.example.site_pl_99.dto.NewsDTO;
+import com.example.site_pl_99.entity.Course;
 import com.example.site_pl_99.entity.ImageNews;
 import com.example.site_pl_99.entity.News;
-import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.entity.VideoNews;
 import com.example.site_pl_99.service.ImageService;
 import com.example.site_pl_99.service.NewsService;
-import com.example.site_pl_99.service.UserService;
 import com.example.site_pl_99.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/news")
@@ -26,31 +29,42 @@ public class NewsController {
     private final NewsService newsService;
     private final ImageService imageService;
     private final VideoService videoService;
-    private final UserService userService;
 
     @Autowired
-    public NewsController(UserService userService,NewsService newsService, ImageService imageService, VideoService videoService) {
+    public NewsController(NewsService newsService, ImageService imageService, VideoService videoService) {
         this.newsService = newsService;
         this.imageService = imageService;
         this.videoService = videoService;
-        this.userService = userService;
     }
 
-    @PostMapping("/create-news/{id}")
-    public ResponseEntity<?> createNews(@RequestBody News news, @PathVariable Long id){
-        UserEntity user = userService.getById(id);
-        if (!user.getRoleEntityList().get(0).equals("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("Только Админ может создовать");
-        }
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/create-news")
+    public ResponseEntity<?> createNews(@RequestBody News news){
         newsService.save(news);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("upload_images/{id}/{newsId}")
-    public ResponseEntity<String> saveImages(@RequestParam("file")MultipartFile file, @PathVariable Long id,@PathVariable Long newsId){
+    @GetMapping("/get-news-id/{id}")
+    public NewsDTO getCourseById(@PathVariable Long id){
+        News news = newsService.findNewsById(id);
+        return new NewsDTO(news);
+    }
+
+    @GetMapping("/get-all-news")
+    public List<NewsDTO> getAll(){
+        List<NewsDTO> newsDTOS = new ArrayList<>();
+        for(News news : newsService.getAll()){
+            NewsDTO newsDTO = new NewsDTO(news);
+            newsDTOS.add(newsDTO);
+        }
+        return newsDTOS;
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/upload_images/{newsId}")
+    public ResponseEntity<String> saveImages(@RequestParam("file")MultipartFile file,@PathVariable Long newsId){
         try {
-            ImageNews image = new ImageNews().setNews(newsService.findNewsById(id)).setName(file.getOriginalFilename());
+            ImageNews image = new ImageNews().setNews(newsService.findNewsById(newsId)).setName(file.getOriginalFilename());
             imageService.save(file,image);
             return ResponseEntity.ok("Файл успешно загружен: " + file.getOriginalFilename());
         } catch (Exception e) {
@@ -58,10 +72,11 @@ public class NewsController {
         }
     }
 
-    @PostMapping("/upload-video/{id}/{newsId}")
-    public ResponseEntity<String> saveVideo(@RequestParam("file") MultipartFile file, @PathVariable Long id,@PathVariable Long newsId){
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/upload-video/{newsId}")
+    public ResponseEntity<String> saveVideo(@RequestParam("file") MultipartFile file,@PathVariable Long newsId){
         try {
-            VideoNewsDTORequestRegister videoNews = new VideoNewsDTORequestRegister().setNews(newsService.findNewsById(id)).setName(file.getName());
+            VideoNews videoNews = new VideoNews().setNews(newsService.findNewsById(newsId)).setName(file.getName());
             videoService.save(file,videoNews);
             return ResponseEntity.ok("Файл успешно загружен: " + file.getOriginalFilename());
         }catch (Exception e){
@@ -70,7 +85,7 @@ public class NewsController {
         }
     }
 
-    @GetMapping("stream-images/{id}")
+    @GetMapping("/stream-images/{id}")
     private ResponseEntity<InputStream> getImagesId(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok().body(imageService.getImagesById(id));
     }

@@ -1,5 +1,7 @@
 package com.example.site_pl_99.dto;
 
+import com.example.site_pl_99.entity.News;
+
 import java.time.LocalDateTime;
 
 public class NewsDTO {
@@ -12,16 +14,12 @@ public class NewsDTO {
     public NewsDTO() {
     }
 
-    public NewsDTO(Long id,
-                   String title,
-                   String description,
-                   Long userId,
-                   LocalDateTime dateCreated) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.userId = userId;
-        this.dateCreated = dateCreated;
+    public NewsDTO(News news) {
+        this.id = news.getId();
+        this.title = news.getTitle();
+        this.description = news.getDescription();
+        this.userId = news.getUser().getId();
+        this.dateCreated = news.getDateCreated();
     }
 
     public Long getId() {

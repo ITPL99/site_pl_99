@@ -1,5 +1,6 @@
 package com.example.site_pl_99.dto;
 
+import com.example.site_pl_99.entity.Qualification;
 import com.example.site_pl_99.entity.Worker;
 
 import java.util.List;
@@ -8,19 +9,14 @@ public class QualificationDTO {
     private Long id;
     private String title;
     private String description;
-    private Worker workers;
 
     public QualificationDTO() {
     }
 
-    public QualificationDTO(Long id,
-                            String title,
-                            String description,
-                            Worker workers) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.workers = workers;
+    public QualificationDTO(Qualification qualification) {
+        this.id = qualification.getId();
+        this.title = qualification.getTitle();
+        this.description = qualification.getDescription();
     }
 
     public Long getId() {
@@ -50,12 +46,4 @@ public class QualificationDTO {
         return this;
     }
 
-    public Worker getWorkers() {
-        return workers;
-    }
-
-    public QualificationDTO setWorkers(Worker workers) {
-        this.workers = workers;
-        return this;
-    }
 }

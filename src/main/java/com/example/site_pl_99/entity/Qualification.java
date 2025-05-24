@@ -11,7 +11,7 @@ public class Qualification extends BaseEntity {
     private String title;
     @Column
     private String description;
-    @ManyToMany(mappedBy = "qualificationWorkerList",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "qualifications", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Worker> workers;
 
     public Qualification() {
@@ -34,15 +34,6 @@ public class Qualification extends BaseEntity {
 
     public Qualification setWorkers(List<Worker> workers) {
         this.workers = workers;
-        return this;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Qualification setId(Long id) {
-        this.id = id;
         return this;
     }
 

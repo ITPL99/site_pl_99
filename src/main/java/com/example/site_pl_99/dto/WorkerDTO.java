@@ -1,22 +1,45 @@
 package com.example.site_pl_99.dto;
 
+import com.example.site_pl_99.entity.Worker;
+
+import java.util.List;
+
 public class WorkerDTO {
     private Long id;
     private String name;
     private Integer age;
     private String bio;
+    private String profession;
+    private List<QualificationDTO> qualifications;
 
     public WorkerDTO() {
     }
 
-    public WorkerDTO(Long id,
-                     String name,
-                     Integer age,
-                     String bio) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.bio = bio;
+    public WorkerDTO(Worker worker) {
+        this.id = worker.getId();
+        this.name = worker.getName();
+        this.age = worker.getAge();
+        this.bio = worker.getBio();
+        this.profession = worker.getProfession();
+        this.qualifications = worker.getQualifications().stream().map(QualificationDTO::new).toList();
+    }
+
+    public String getProfession() {
+        return profession;
+    }
+
+    public WorkerDTO setProfession(String profession) {
+        this.profession = profession;
+        return this;
+    }
+
+    public List<QualificationDTO> getQualifications() {
+        return qualifications;
+    }
+
+    public WorkerDTO setQualifications(List<QualificationDTO> qualifications) {
+        this.qualifications = qualifications;
+        return this;
     }
 
     public Long getId() {

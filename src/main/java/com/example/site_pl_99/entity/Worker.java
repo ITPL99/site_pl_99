@@ -13,14 +13,15 @@ public class Worker extends BaseEntity{
     private Integer age;
     @Column
     private String bio;
-    @Column(unique = true)
+    @Column
+    private String profession;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "m2m_qualifications_workers",
-            joinColumns = @JoinColumn(name = "qualification_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "worker_id", referencedColumnName = "id")
+            joinColumns = @JoinColumn(name = "worker_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "qualification_id", referencedColumnName = "id")
     )
-    private List<Qualification> qualification;
+    private List<Qualification> qualifications;
 
     public Worker() {
     }
@@ -30,20 +31,22 @@ public class Worker extends BaseEntity{
                   String name,
                   Integer age,
                   String bio,
-                  List<Qualification> qualification) {
+                  String profession,
+                  List<Qualification> qualifications) {
+        this.profession = profession;
         this.id = id;
         this.name = name;
         this.age = age;
         this.bio = bio;
-        this.qualification = qualification;
+        this.qualifications = qualifications;
     }
 
-    public Long getId() {
-        return id;
+    public String getProfession() {
+        return profession;
     }
 
-    public Worker setId(Long id) {
-        this.id = id;
+    public Worker setProfession(String profession) {
+        this.profession = profession;
         return this;
     }
 
@@ -74,12 +77,12 @@ public class Worker extends BaseEntity{
         return this;
     }
 
-    public List<Qualification> getQualification() {
-        return qualification;
+    public List<Qualification> getQualifications() {
+        return qualifications;
     }
 
-    public Worker setQualification(List<Qualification> qualification) {
-        this.qualification = qualification;
+    public Worker setQualifications(List<Qualification> qualifications) {
+        this.qualifications = qualifications;
         return this;
     }
 }

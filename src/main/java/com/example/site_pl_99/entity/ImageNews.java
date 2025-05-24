@@ -36,13 +36,4 @@ public class ImageNews extends BaseEntity{
         this.news = news;
         return this;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ImageNews setId(Long id) {
-        this.id = id;
-        return this;
-    }
 }

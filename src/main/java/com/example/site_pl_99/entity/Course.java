@@ -18,7 +18,7 @@ public class Course extends BaseEntity{
     private LocalDateTime dateStarted;
     @Column
     private LocalDateTime dateEnd;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Worker worker;
 
     public Course() {
@@ -38,15 +38,6 @@ public class Course extends BaseEntity{
         this.dateStarted = dateStarted;
         this.dateEnd = dateEnd;
         this.worker = worker;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Course setId(Long id) {
-        this.id = id;
-        return this;
     }
 
     public String getTitle() {

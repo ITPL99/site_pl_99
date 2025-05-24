@@ -8,6 +8,7 @@ import com.example.site_pl_99.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,46 +18,29 @@ import java.util.List;
 @RequestMapping("/api/worker")
 public class WorkerController {
     private final WorkerService workerService;
-    private final UserService userService;
 
     @Autowired
-    public WorkerController(WorkerService workerService, UserService userService) {
+    public WorkerController(WorkerService workerService) {
         this.workerService = workerService;
-        this.userService = userService;
     }
 
-    @PostMapping("create-worker/{id}")
-    public ResponseEntity<String> createWorker(@RequestBody Worker worker, @PathVariable Long id){
-        UserEntity user = userService.getById(id);
-        if (!user.getRoleEntityList().get(0).equals("ADMIN")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("Только Админ может создовать");
-        }
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PostMapping("/create-worker")
+    public ResponseEntity<String> createWorker(@RequestBody Worker worker){
         workerService.save(worker);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("get-worker-id/{id}")
+    @GetMapping("/get-worker-id/{id}")
     public WorkerDTO getWorkerByid(@PathVariable Long id){
-        Worker worker = workerService.getWorkerById(id);
-        WorkerDTO workerDTO = new WorkerDTO()
-                .setAge(worker.getAge())
-                .setBio(worker.getBio())
-                .setName(worker.getName())
-                .setId(worker.getId());
-        return workerDTO;
+        return new WorkerDTO(workerService.getWorkerById(id));
     }
 
-    @GetMapping("get-all-workers")
+    @GetMapping("/get-all-workers")
     public List<WorkerDTO> getAll(){
-        List<Worker> workers = workerService.getAll();
         List<WorkerDTO> workerDTOS = new ArrayList<>();
-        for(Worker worker : workers){
-            WorkerDTO workerDTO = new WorkerDTO()
-                    .setAge(worker.getAge())
-                    .setBio(worker.getBio())
-                    .setName(worker.getName())
-                    .setId(worker.getId());
+        for(Worker worker : workerService.getAll()){
+            WorkerDTO workerDTO = new WorkerDTO(worker);
             workerDTOS.add(workerDTO);
         }
         return workerDTOS;

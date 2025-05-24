@@ -16,7 +16,7 @@ public class ImageServiceImpl implements ImageService {
     private final MinIOService minIOService;
     private final ImageRepository imageRepository;
 
-    @Value("${minio.busket-name}")
+    @Value("${minio.bucket-name}")
     private String bucketName;
 
     @Autowired

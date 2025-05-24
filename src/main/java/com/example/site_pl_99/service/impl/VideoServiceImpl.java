@@ -1,6 +1,5 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.dto.VideoNewsDTORequestRegister;
 import com.example.site_pl_99.entity.VideoNews;
 import com.example.site_pl_99.repository.VideoRepository;
 import com.example.site_pl_99.service.MinIOService;
@@ -28,16 +27,13 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void save(MultipartFile file, VideoNewsDTORequestRegister videoNewsDTORequestRegister) throws Exception{
+    public void save(MultipartFile file, VideoNews videoNews) throws Exception{
         String name = file.getOriginalFilename();
         boolean fileExists = minIOService.fileExists(bucketName, name);
         if (fileExists) {
             throw new IllegalArgumentException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
         }
         minIOService.upload(file, bucketName);
-        VideoNews videoNews = new VideoNews();
-        videoNews.setId(videoNewsDTORequestRegister.getId())
-                .setNews(videoNewsDTORequestRegister.getNews());
         repository.save(videoNews);
     }
 
