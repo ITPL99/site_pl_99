@@ -26,6 +26,6 @@ public class AuthController {
 
     @GetMapping("/current")
     public UserDtoResponse getCurrentAuthUser(){
-        return getCurrentAuthUser();
+        return authService.getCurrentUser();
     }
 }

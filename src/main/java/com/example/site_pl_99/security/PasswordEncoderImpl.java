@@ -20,13 +20,13 @@ public class PasswordEncoderImpl implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence rawPassword) {
-        if(env.matchesProfiles("test")) return rawPassword.toString();
+//        if(env.matchesProfiles("test")) return rawPassword.toString();
         return this.bCryptPasswordEncoder.encode(rawPassword);
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        if(env.matchesProfiles("test")) return rawPassword.toString().equals(encodedPassword);
+//        if(env.matchesProfiles("test")) return rawPassword.toString().equals(encodedPassword);
         return this.bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
 }
