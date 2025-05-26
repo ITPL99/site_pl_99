@@ -8,6 +8,7 @@ create table if not exists workers(
 
 create table if not exists avatars_workers(
     id bigserial primary key,
+    file_name varchar not null unique,
     worker_id bigint references workers(id) on delete cascade unique not null
 );
 
@@ -21,11 +22,13 @@ create table if not exists news(
 
 create table if not exists images_news(
     id bigserial primary key,
+    file_name varchar not null unique,
     news_id bigint references news(id) on delete cascade
 );
 
 create table if not exists videos_news(
     id bigserial primary key,
+    file_name varchar not null unique,
     news_id bigint references news(id) on delete cascade
 );
 
