@@ -36,7 +36,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                 .setPassword("admin")
+                 .setPassword("$2a$04$gkj/BP6UzLvrwsa/gZRuru/U/zjERZmb4a8P5SkLqPKnliOOD2z2G")
                  .setUsername("admin")
                  .setRoleEntityList(roleEntitySet);
             userRepository.save(admin);
@@ -45,7 +45,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("guest").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                    .setPassword("guest")
+                    .setPassword("$2a$04$7U.0RKQNnRkz1OqJaojHL..z9Ll2UTg.3pc.x3Xuulvw5upn8mxly")
                     .setUsername("guest")
                     .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("GUEST")).toList());
             userRepository.save(admin);
@@ -54,7 +54,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("user").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                    .setPassword("user")
+                    .setPassword("$2a$04$5indimnTZCLKPAUBmtpEG.jEpsjzWPTGU89n2syyGwdm8l7OKaq4a")
                     .setUsername("user")
                     .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("USER")).toList());
             userRepository.save(admin);
@@ -63,7 +63,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("user-guest").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                    .setPassword("user-guest")
+                    .setPassword("$2a$04$qAwZSoRuSJQ1qwMHjoOZs.WGGG8SwRvg5ykdHv/VMZsDbdLtwtIWe")
                     .setUsername("user-guest")
                     .setRoleEntityList(
                             roleEntitySet.stream()
@@ -74,7 +74,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin-guest").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                    .setPassword("admin-guest")
+                    .setPassword("$2a$04$EpZ6YO3NHHTG9aqmiQSwU.wXSu2IRDkI4JBkStTcnYmC/RT7icdsy")
                     .setUsername("admin-guest")
                     .setRoleEntityList(
                             roleEntitySet.stream()
@@ -85,7 +85,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin-user").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                    .setPassword("admin-user")
+                    .setPassword("$2a$04$OFIedzNScUNbyJWp12QGteqEmUbYLfuxdzwWlrF9x5MW2XSXLqbGa")
                     .setUsername("admin-user")
                     .setRoleEntityList(
                             roleEntitySet.stream()

@@ -1,3 +1,11 @@
+
+
 ###
 GET http://localhost:8080/api/auth/current
-Authorization: Basic admin admin
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6W3sidGl0bGUiOiJBRE1JTiJ9LHsidGl0bGUiOiJVU0VSIn0seyJ0aXRsZSI6IkdVRVNUIn0seyJ0aXRsZSI6Ik1BTkFHRVIifV0sImlkIjoxLCJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3NDgyNDY4MDAsImV4cCI6MTc0ODI0NzE2MH0.pDkdDriD1obXYfm8HRvmhlRsD6uZ8xmCTvVthW1C8QA1em8GQBtbWf5Sgf9HnR-o
+
+
+###
+POST http://localhost:8080/api/auth/login?
+    username=admin&
+    password=admin
