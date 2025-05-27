@@ -3,7 +3,6 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
 import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
-import com.example.site_pl_99.exceptions.UserNotFoundException;
 import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.service.UserService;
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Такого пользователя нет в системе"));
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого пользователя нет в системе"));
     }
 
     @Override
