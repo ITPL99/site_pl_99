@@ -1,6 +1,6 @@
-package com.example.site_pl_99.exception;
+package com.example.site_pl_99.excaption;
 
-public class UserNotFoundException extends ApplicationBaseException {
+public class UserNotFoundException extends BaseException {
     public UserNotFoundException(String message) {
         super(message);
     }

@@ -1,6 +1,6 @@
-package com.example.site_pl_99.exception;
+package com.example.site_pl_99.excaption;
 
-public class DuplicateUserException extends ApplicationBaseException{
+public class DuplicateUserException extends BaseException {
     public DuplicateUserException(String message) {
         super(message);
     }

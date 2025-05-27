@@ -1,6 +1,6 @@
-package com.example.site_pl_99.exception;
+package com.example.site_pl_99.excaption;
 
-public class SqlException extends ApplicationBaseException {
+public class SqlException extends BaseException {
     public SqlException(String message) {
         super(message);
     }
