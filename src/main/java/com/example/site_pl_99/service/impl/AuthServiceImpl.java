@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
     public String login(String username, String password) {
         log.info("------>>>>> Пришел логин {}", username);
         log.info("------>>>>> Пришел пароль {}", password);
-        UserEntity authUser = userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("Неверный логин или пароль"));
+        UserEntity authUser = userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("error.authorization"));
         log.info("------>>>>> Пришел пароль пользователя  {}", authUser.getPassword());
         if(!passwordEncoder.matches(password, authUser.getPassword())) {
             throw new AuthorizeException("Неверный логин или пароль");
