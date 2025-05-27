@@ -48,6 +48,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/test/open-all").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-resources/**",
+                                "/swagger-ui.html",
+                                "/webjars/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
