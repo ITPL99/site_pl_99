@@ -3,6 +3,8 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
 import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.excaption.AuthorizeException;
+import com.example.site_pl_99.excaption.UserNotFoundException;
 import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.service.UserService;
@@ -26,12 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByUsername(String username) {
-        return getByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не в системе"));
     }
 
     @Override
     public UserEntity getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого пользователя нет в системе"));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Такого пользователя нет в системе"));
     }
 
     @Override
@@ -41,17 +43,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllByCreateTime(LocalDateTime createTime) {
-        return userRepository.findByDateCreated(createTime).orElseThrow(()-> new RuntimeException("Пользователи не найдены по данной дате"));
+        return userRepository.findByDateCreated(createTime).orElseThrow(()-> new UserNotFoundException("Пользователи не найдены по данной дате"));
     }
 
     @Override
     public List<UserEntity> getAllByUpdatedTime(LocalDateTime updateTime) {
-        return userRepository.findByDateUpdated(updateTime).orElseThrow(()-> new RuntimeException("Пользователи не найдены по данной дате"));
+        return userRepository.findByDateUpdated(updateTime).orElseThrow(()-> new UserNotFoundException("Пользователи не найдены по данной дате"));
     }
 
     @Override
     public List<UserEntity> getAllByUserRole(RoleEntity role) {
-        return userRepository.findAllByRoleEntityList(role).orElseThrow(()-> new RuntimeException("Пользователи с такой ролью не найдены"));
+        return userRepository.findAllByRoleEntityList(role).orElseThrow(()-> new UserNotFoundException("Пользователи с такой ролью не найдены"));
     }
 
     @Override
@@ -63,7 +65,7 @@ public class UserServiceImpl implements UserService {
                         newUser.getRoles().get(0).isEmpty())) {
             userEntity.setRoleEntityList(List.of(
                     roleRepository.findByTitle("USER")
-                            .orElseThrow(() -> new RuntimeException("При регистрации произошла ошибка")))
+                            .orElseThrow(() -> new AuthorizeException("При регистрации произошла ошибка")))
             );
         }else {
 
