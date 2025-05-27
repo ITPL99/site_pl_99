@@ -1,4 +1,4 @@
-package com.example.site_pl_99.config;
+package com.example.site_pl_99.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -16,7 +16,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .servers(
                         List.of(
-                                new Server().url("http://localhost:8081")
+                                new Server().url("http://localhost:8080")
                         )
                 ).info(
                         new Info().title("site pl99 Api")
