@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByUsername(String username) {
-        return getByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не в системе"));
     }
 
     @Override
