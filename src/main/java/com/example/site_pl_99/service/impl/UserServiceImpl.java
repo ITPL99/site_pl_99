@@ -28,12 +28,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Такого пользователя не в системе"));
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("error.userNotFound"));
     }
 
     @Override
     public UserEntity getById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Такого пользователя нет в системе"));
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error.userNotFound"));
     }
 
     @Override
@@ -43,17 +43,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllByCreateTime(LocalDateTime createTime) {
-        return userRepository.findByDateCreated(createTime).orElseThrow(()-> new UserNotFoundException("Пользователи не найдены по данной дате"));
+        return userRepository.findByDateCreated(createTime).orElseThrow(()-> new UserNotFoundException("error.userNotFound"));
     }
 
     @Override
     public List<UserEntity> getAllByUpdatedTime(LocalDateTime updateTime) {
-        return userRepository.findByDateUpdated(updateTime).orElseThrow(()-> new UserNotFoundException("Пользователи не найдены по данной дате"));
+        return userRepository.findByDateUpdated(updateTime).orElseThrow(()-> new UserNotFoundException("error.userNotFound"));
     }
 
     @Override
     public List<UserEntity> getAllByUserRole(RoleEntity role) {
-        return userRepository.findAllByRoleEntityList(role).orElseThrow(()-> new UserNotFoundException("Пользователи с такой ролью не найдены"));
+        return userRepository.findAllByRoleEntityList(role).orElseThrow(()-> new UserNotFoundException("error.findUserByRole"));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
                         newUser.getRoles().get(0).isEmpty())) {
             userEntity.setRoleEntityList(List.of(
                     roleRepository.findByTitle("USER")
-                            .orElseThrow(() -> new AuthorizeException("При регистрации произошла ошибка")))
+                            .orElseThrow(() -> new AuthorizeException("error.registerUser")))
             );
         }else {
 
