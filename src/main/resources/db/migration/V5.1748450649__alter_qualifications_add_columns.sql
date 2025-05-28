@@ -1,0 +1,1 @@
+alter table qualifications add column user_id bigint references users(id) not null;
