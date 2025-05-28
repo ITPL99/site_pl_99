@@ -7,6 +7,7 @@ import java.util.List;
 public class UserDtoRequestRegister {
     private String username;
     private String password;
+    private String mail;
     private List<String> roles;
 
     public String getUsername() {
@@ -16,7 +17,8 @@ public class UserDtoRequestRegister {
     public UserEntity toEntity(){
         return new UserEntity()
                 .setUsername(username)
-                .setPassword(password);
+                .setPassword(password)
+                .setMail(mail);
     }
 
     public UserDtoRequestRegister setUsername(String username) {
@@ -39,6 +41,15 @@ public class UserDtoRequestRegister {
 
     public UserDtoRequestRegister setRoles(List<String> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public UserDtoRequestRegister setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 }

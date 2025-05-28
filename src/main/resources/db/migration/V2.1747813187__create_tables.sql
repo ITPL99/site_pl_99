@@ -1,7 +1,7 @@
 create table if not exists workers(
     id bigserial primary key,
     name varchar not null,
-    age int not null,
+    date timestamp with time zone default now(),
     bio varchar not null,
     profession varchar not null
 );
@@ -9,7 +9,7 @@ create table if not exists workers(
 create table if not exists avatars_workers(
     id bigserial primary key,
     file_name varchar not null unique,
-    worker_id bigint references workers(id) on delete cascade unique not null
+    worker_id bigint references workers(id) unique not null
 );
 
 create table if not exists news(
@@ -23,13 +23,13 @@ create table if not exists news(
 create table if not exists images_news(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id) on delete cascade
+    news_id bigint references news(id)
 );
 
 create table if not exists videos_news(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id) on delete cascade
+    news_id bigint references news(id)
 );
 
 create table if not exists course(

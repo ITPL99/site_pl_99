@@ -16,6 +16,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
+    @Column(name = "mail", nullable = false)
+    private String mail;
 
     @Column(name = "date_create")
     private LocalDateTime dateCreated;
@@ -84,6 +86,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     public UserEntity setRoleEntityList(List<RoleEntity> roleEntityList) {
         this.roleEntityList = roleEntityList;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public UserEntity setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 }
