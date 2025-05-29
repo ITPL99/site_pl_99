@@ -8,11 +8,13 @@ import java.util.List;
 public class UserDtoResponse {
     private Long id;
     private String username;
+    private String mail;
     private List<RoleDTOResponse> roles;
 
     public UserDtoResponse(UserEntity user) {
         this.id = user.getId();
         this.username = user.getUsername();
+        this.mail = user.getMail();
         this.roles = user.getRoleEntityList().stream().map(RoleDTOResponse::new).toList();
     }
 
@@ -40,6 +42,15 @@ public class UserDtoResponse {
 
     public UserDtoResponse setRoles(List<RoleDTOResponse> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public UserDtoResponse setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 }

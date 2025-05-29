@@ -38,7 +38,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
             admin
                  .setPassword("$2a$04$gkj/BP6UzLvrwsa/gZRuru/U/zjERZmb4a8P5SkLqPKnliOOD2z2G")
                  .setUsername("admin")
-                 .setRoleEntityList(roleEntitySet);
+                 .setRoleEntityList(roleEntitySet)
+                 .setMail("admin@admin.com");
             userRepository.save(admin);
         }
 
@@ -47,7 +48,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
             admin
                     .setPassword("$2a$04$7U.0RKQNnRkz1OqJaojHL..z9Ll2UTg.3pc.x3Xuulvw5upn8mxly")
                     .setUsername("guest")
-                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("GUEST")).toList());
+                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("GUEST")).toList())
+                            .setMail("guest@guest.com");
             userRepository.save(admin);
         }
 
@@ -56,7 +58,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
             admin
                     .setPassword("$2a$04$5indimnTZCLKPAUBmtpEG.jEpsjzWPTGU89n2syyGwdm8l7OKaq4a")
                     .setUsername("user")
-                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("USER")).toList());
+                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("USER")).toList())
+                            .setMail("user@user.com");
             userRepository.save(admin);
         }
 
@@ -68,7 +71,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
                     .setRoleEntityList(
                             roleEntitySet.stream()
                                     .filter(x->x.getTitle().equals("USER") || x.getTitle().equals("GUEST") )
-                                    .toList());
+                                    .toList())
+                            .setMail("user-guest@guest.com");
             userRepository.save(admin);
         }
         if(userRepository.findByUsername("admin-guest").isEmpty()) {
@@ -79,7 +83,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
                     .setRoleEntityList(
                             roleEntitySet.stream()
                                     .filter(x->x.getTitle().equals("ADMIN") || x.getTitle().equals("GUEST") )
-                                    .toList());
+                                    .toList())
+                            .setMail("admin-guest@admin.com");
             userRepository.save(admin);
         }
         if(userRepository.findByUsername("admin-user").isEmpty()) {
@@ -90,7 +95,8 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
                     .setRoleEntityList(
                             roleEntitySet.stream()
                                     .filter(x->x.getTitle().equals("ADMIN") || x.getTitle().equals("USER") )
-                                    .toList());
+                                    .toList())
+                            .setMail("admin-user@admin.com");
             userRepository.save(admin);
         }
     }
