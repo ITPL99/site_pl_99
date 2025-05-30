@@ -23,18 +23,16 @@ public class WorkerMapper {
     }
 
     public static WorkerDtoResponse toWorkerDtoResponse(WorkerEntity workerEntity) {
-        System.out.println("workerIdAvatar: " + Objects.isNull(workerEntity.getAvatar()));
-        System.out.println("course:" + Objects.isNull(workerEntity.getCourseEntityList()));
-        System.out.println("qualification: " + Objects.isNull(workerEntity.getQualificationEntities()));
-        return new WorkerDtoResponse().setId(workerEntity.getId())
+        WorkerDtoResponse workerDtoResponse = new WorkerDtoResponse().setId(workerEntity.getId())
                 .setFullName(workerEntity.getFullName())
                 .setBirthDate(workerEntity.getDateBirth())
                 .setBiography(workerEntity.getBiography())
                 .setProfession(workerEntity.getProfession())
                 .setDateCreated(workerEntity.getDateCreated())
                 .setDateUpdated(workerEntity.getDateUpdated())
-                .setUserId(workerEntity.getUser().getId())
-                .setAvatarId(workerEntity.getAvatar().getId());
+                .setUserId(workerEntity.getUser().getId());
+        if(Objects.nonNull(workerEntity.getAvatar())) workerDtoResponse .setAvatarId(workerEntity.getAvatar().getId());
+        return workerDtoResponse;
     }
 
     public static List<WorkerDtoResponse> toWorkerDtoResponseList(List<WorkerEntity> workerEntityList) {

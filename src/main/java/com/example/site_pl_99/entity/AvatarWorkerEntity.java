@@ -12,7 +12,7 @@ public class AvatarWorkerEntity extends BaseEntity {
     @Column(name = "file_name", nullable = false, unique = true)
     private String fileName;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false, unique = true)
+    @JoinColumn(name = "worker_id", referencedColumnName = "id")
     private WorkerEntity worker;
     @Column(name = "date_upload")
     private LocalDateTime dateUpload;
@@ -83,17 +83,5 @@ public class AvatarWorkerEntity extends BaseEntity {
     public AvatarWorkerEntity setStatusDeleted(Boolean statusDeleted) {
         this.statusDeleted = statusDeleted;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "AvatarWorkerEntity{" +
-                "fileName='" + fileName + '\'' +
-                ", worker=" + worker +
-                ", dateUpload=" + dateUpload +
-                ", dateUpdated=" + dateUpdated +
-                ", user=" + user +
-                ", statusDeleted=" + statusDeleted +
-                '}';
     }
 }

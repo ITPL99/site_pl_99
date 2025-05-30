@@ -29,7 +29,7 @@ public class WorkerEntity extends BaseEntity {
     @Column(name = "status_deleted")
     private Boolean statusDeleted;
 
-    @OneToOne(mappedBy = "worker",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "worker")
     private AvatarWorkerEntity avatar;
     @OneToMany(mappedBy = "worker",fetch = FetchType.EAGER)
     private List<CourseEntity> courseEntityList;
@@ -140,22 +140,5 @@ public class WorkerEntity extends BaseEntity {
     public WorkerEntity setQualificationEntities(List<QualificationEntity> qualificationEntities) {
         this.qualificationEntities = qualificationEntities;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "WorkerEntity{" +
-                "fullName='" + fullName + '\'' +
-                ", dateBirth=" + dateBirth +
-                ", biography='" + biography + '\'' +
-                ", profession='" + profession + '\'' +
-                ", dateCreated=" + dateCreated +
-                ", dateUpdated=" + dateUpdated +
-                ", user=" + user +
-                ", statusDeleted=" + statusDeleted +
-                ", avatar=" + avatar +
-                ", courseEntityList=" + courseEntityList +
-                ", qualificationEntities=" + qualificationEntities +
-                '}';
     }
 }
