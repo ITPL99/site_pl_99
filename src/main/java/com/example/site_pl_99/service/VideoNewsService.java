@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 
 public interface VideoNewsService {
-    VideoNewsEntity upload(MultipartFile file, Long newsId, Long userId);
+    VideoNewsEntity upload(MultipartFile file, Long newsId, UserEntity user);
     InputStream stream(Long id);
     String getContentType(Long id);
 }

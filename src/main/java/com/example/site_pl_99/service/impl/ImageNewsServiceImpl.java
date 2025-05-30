@@ -2,13 +2,10 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.ImageNewsEntity;
 import com.example.site_pl_99.entity.UserEntity;
-import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.repository.ImageNewsRepository;
-import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.ImageNewsService;
 import com.example.site_pl_99.service.MinIoService;
 import com.example.site_pl_99.service.NewsService;
-import com.example.site_pl_99.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,30 +16,28 @@ import java.io.InputStream;
 @Service
 public class ImageNewsServiceImpl implements ImageNewsService {
     private final ImageNewsRepository imageNewsRepository;
-    private final UserService userService;
     private final NewsService newsService;
     private final MinIoService minIoService;
     @Value("${minio.bucket.name.imagesNews}")
     private String bucketName;
 
     @Autowired
-    public ImageNewsServiceImpl(MinIoService minIoService, ImageNewsRepository imageNewsRepository, UserService userService, NewsService newsService) {
+    public ImageNewsServiceImpl(MinIoService minIoService, ImageNewsRepository imageNewsRepository, NewsService newsService) {
         this.imageNewsRepository= imageNewsRepository;
         this.minIoService= minIoService;
-        this.userService = userService;
         this.newsService = newsService;
     }
 
     @Override
-    public ImageNewsEntity upload(MultipartFile file, Long newsId, Long userId) {
+    public ImageNewsEntity upload(MultipartFile file, Long newsId, UserEntity user) {
         try {
             if (minIoService.fileExists(bucketName, file.getOriginalFilename())) {
                 throw new RuntimeException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
             }
             ImageNewsEntity imageNews = new ImageNewsEntity()
                     .setFileName(file.getOriginalFilename())
-                    .setNewsEntity(NewsMapper.toNewsEntity(newsService.getNewsId(newsId), userService.getById(userId)))
-                    .setUserCreated(userService.getById(userId));
+                    .setNewsEntity(newsService.getNewsId(newsId))
+                    .setUserCreated(user);
             minIoService.upload(file, bucketName);
             imageNewsRepository.save(imageNews);
             return imageNews;

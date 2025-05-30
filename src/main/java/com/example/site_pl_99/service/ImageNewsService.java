@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 
 public interface ImageNewsService {
-    ImageNewsEntity upload(MultipartFile file, Long newsId, Long userId);
+    ImageNewsEntity upload(MultipartFile file, Long newsId, UserEntity user);
     String getContentType(Long id);
     InputStream streamFile(Long id);
 }

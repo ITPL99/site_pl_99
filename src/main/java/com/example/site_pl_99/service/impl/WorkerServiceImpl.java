@@ -1,6 +1,7 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.dto.WorkerDtoResponse;
+import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.entity.WorkerEntity;
 import com.example.site_pl_99.service.WorkerService;
 import org.springframework.stereotype.Service;
 
@@ -8,28 +9,29 @@ import java.util.List;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
+
     @Override
-    public WorkerDtoResponse saveWorker(Long userId) {
+    public WorkerEntity saveWorker(UserEntity user) {
         return null;
     }
 
     @Override
-    public WorkerDtoResponse getWorkerId(Long id) {
+    public WorkerEntity getWorkerId(Long id) {
         return null;
     }
 
     @Override
-    public List<WorkerDtoResponse> getAllWorkers() {
+    public List<WorkerEntity> getAllWorkers() {
         return List.of();
     }
 
     @Override
-    public WorkerDtoResponse getWorkerByName(String name) {
+    public WorkerEntity getWorkerByName(String name) {
         return null;
     }
 
     @Override
-    public List<WorkerDtoResponse> getWorkerByProfession(String profession) {
+    public List<WorkerEntity> getWorkerByProfession(String profession) {
         return List.of();
     }
 }

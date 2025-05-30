@@ -1,13 +1,14 @@
 package com.example.site_pl_99.service;
 
-import com.example.site_pl_99.dto.WorkerDtoResponse;
+import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.entity.WorkerEntity;
 
 import java.util.List;
 
 public interface WorkerService {
-    WorkerDtoResponse saveWorker(Long userId);
-    WorkerDtoResponse getWorkerId(Long id);
-    List<WorkerDtoResponse> getAllWorkers();
-    WorkerDtoResponse getWorkerByName(String name);
-    List<WorkerDtoResponse> getWorkerByProfession(String profession);
+    WorkerEntity saveWorker(UserEntity user);
+    WorkerEntity getWorkerId(Long id);
+    List<WorkerEntity> getAllWorkers();
+    WorkerEntity getWorkerByName(String name);
+    List<WorkerEntity> getWorkerByProfession(String profession);
 }
