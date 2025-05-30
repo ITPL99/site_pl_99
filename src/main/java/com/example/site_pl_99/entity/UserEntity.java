@@ -18,6 +18,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String password;
     @Column(name = "mail", nullable = false)
     private String mail;
+    @Column(name = "active")
+    private Boolean active;
 
     @Column(name = "date_create")
     private LocalDateTime dateCreated;
@@ -32,11 +34,21 @@ public class UserEntity extends BaseEntity implements UserDetails {
     )
     private List<RoleEntity> roleEntityList;
 
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<NewsEntity> newsEntityList;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<WorkerEntity> workerEntityList;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<CourseEntity> courseEntityList;
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    private List<QualificationEntity> qualificationEntityList;
+
 
     @PrePersist
     public void prePersist() {
         dateCreated = LocalDateTime.now();
         dateUpdated = LocalDateTime.now();
+        active = true;
     }
 
     public String getUsername() {
@@ -95,6 +107,51 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     public UserEntity setMail(String mail) {
         this.mail = mail;
+        return this;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public UserEntity setActive(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public List<NewsEntity> getNewsEntityList() {
+        return newsEntityList;
+    }
+
+    public UserEntity setNewsEntityList(List<NewsEntity> newsEntityList) {
+        this.newsEntityList = newsEntityList;
+        return this;
+    }
+
+    public List<WorkerEntity> getWorkerEntityList() {
+        return workerEntityList;
+    }
+
+    public UserEntity setWorkerEntityList(List<WorkerEntity> workerEntityList) {
+        this.workerEntityList = workerEntityList;
+        return this;
+    }
+
+    public List<CourseEntity> getCourseEntityList() {
+        return courseEntityList;
+    }
+
+    public UserEntity setCourseEntityList(List<CourseEntity> courseEntityList) {
+        this.courseEntityList = courseEntityList;
+        return this;
+    }
+
+    public List<QualificationEntity> getQualificationEntityList() {
+        return qualificationEntityList;
+    }
+
+    public UserEntity setQualificationEntityList(List<QualificationEntity> qualificationEntityList) {
+        this.qualificationEntityList = qualificationEntityList;
         return this;
     }
 }

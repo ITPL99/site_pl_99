@@ -5,10 +5,6 @@ import com.example.site_pl_99.entity.RoleEntity;
 public class RoleDTOResponse {
     private String title;
 
-    public RoleDTOResponse(RoleEntity roleEntity) {
-        this.title = roleEntity.getTitle();
-    }
-
     public String getTitle() {
         return title;
     }

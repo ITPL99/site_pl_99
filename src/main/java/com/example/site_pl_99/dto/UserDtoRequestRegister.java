@@ -1,9 +1,11 @@
 package com.example.site_pl_99.dto;
 
 import com.example.site_pl_99.entity.UserEntity;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class UserDtoRequestRegister {
     private String username;
     private String password;
@@ -12,13 +14,6 @@ public class UserDtoRequestRegister {
 
     public String getUsername() {
         return username;
-    }
-
-    public UserEntity toEntity(){
-        return new UserEntity()
-                .setUsername(username)
-                .setPassword(password)
-                .setMail(mail);
     }
 
     public UserDtoRequestRegister setUsername(String username) {

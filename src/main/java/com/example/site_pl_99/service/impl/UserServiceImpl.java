@@ -5,6 +5,7 @@ import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.excaption.AuthorizeException;
 import com.example.site_pl_99.excaption.UserNotFoundException;
+import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.service.UserService;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity save(UserDtoRequestRegister newUser) {
-        UserEntity userEntity = newUser.toEntity();
+        UserEntity userEntity = UserMapper.toUserEntity(newUser);
         if(newUser.getRoles() == null ||
                 newUser.getRoles().isEmpty() ||
                 (newUser.getRoles().size() == 1 &&
@@ -73,6 +74,7 @@ public class UserServiceImpl implements UserService {
             for (String lineElementRoleList : newUser.getRoles()) {
                 roles.add(roleRepository.findByTitle(lineElementRoleList).orElse(null));
             }
+            userEntity.setRoleEntityList(roles);
         }
        return userRepository.save(userEntity);
     }
