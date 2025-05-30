@@ -22,6 +22,15 @@ public class WorkerMapper {
                 .setUser(userEntity);
     }
 
+    public static WorkerEntity toWorkerEntity(WorkerDtoResponse workerDtoResponse, UserEntity userEntity){
+
+        return new WorkerEntity().setFullName(workerDtoResponse.getFullName())
+                .setDateBirth(workerDtoResponse.getBirthDate())
+                .setBiography(workerDtoResponse.getBiography())
+                .setProfession(workerDtoResponse.getProfession())
+                .setUser(userEntity);
+    }
+
     public static WorkerDtoResponse toWorkerDtoResponse(WorkerEntity workerEntity) {
         WorkerDtoResponse workerDtoResponse = new WorkerDtoResponse().setId(workerEntity.getId())
                 .setFullName(workerEntity.getFullName())

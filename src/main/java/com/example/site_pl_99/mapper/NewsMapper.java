@@ -19,6 +19,14 @@ public class NewsMapper {
                 .setVideos(videoNewsEntities);
     }
 
+    public static NewsEntity toNewsEntity(NewsDtoResponse newsDtoResponse, UserEntity userEntity) {
+        return new NewsEntity().setTitle(newsDtoResponse.getTitle())
+                .setDescription(newsDtoResponse.getDescription())
+                .setUser(userEntity)
+                .setUserCreated(userEntity)
+                .setUserUpdated(userEntity);
+    }
+
     public static NewsDtoResponse toNewsDtoResponse(NewsEntity newsEntity) {
         return new NewsDtoResponse()
                 .setId(newsEntity.getId())
