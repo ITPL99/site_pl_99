@@ -3,6 +3,7 @@ package com.example.site_pl_99.controller;
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
 import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.excaption.BaseException;
+import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.UserService;
 import com.example.site_pl_99.utils.Internalization;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class UserController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllUsers(@RequestHeader(name = "Accept-Language", required = false)Locale language) {
         try{
-            return ResponseEntity.ok(userService.getAll().stream().map(UserDtoResponse::new).toList());
+            return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAll()));
         }catch (BaseException e){
             return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
         }
@@ -42,7 +43,7 @@ public class UserController {
     @PostMapping("/add")
     public ResponseEntity<?> addNewUser(@RequestBody UserDtoRequestRegister userDtoRequestRegister, @RequestHeader(name = "Accept-Language", required = false)Locale language) {
         try{
-            return ResponseEntity.ok(new UserDtoResponse( userService.save(userDtoRequestRegister)));
+            return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.save(userDtoRequestRegister)));
         }catch (BaseException e){
             return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
         }
@@ -54,7 +55,7 @@ public class UserController {
     @PostMapping("/get-login")
     public ResponseEntity<?> getUserByLogin(@RequestParam String username, @RequestHeader(name = "Accept-Language", required = false)Locale language) {
         try{
-            return ResponseEntity.ok(new UserDtoResponse(userService.getByUsername(username)));
+            return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.getByUsername(username)));
         }catch (BaseException e){
             return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
         }

@@ -48,7 +48,7 @@ public class JWTHandler {
         claims.put("username", user.getUsername());
         claims.put("roles",
                 user.getRoleEntityList().stream()
-                .map(RoleDTOResponse::new)
+                .map(roleEntity -> new RoleDTOResponse().setTitle(roleEntity.getTitle()))
                 .toList());
 
         return Jwts.builder()
