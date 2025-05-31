@@ -11,5 +11,4 @@ public interface CourseService {
     CourseEntity getCourseId(Long id);
     List<CourseEntity> getAllCourse();
     CourseEntity getCourseByWorker(Long workerId);
-    CourseEntity getCourseByUser(Long userId);
 }
