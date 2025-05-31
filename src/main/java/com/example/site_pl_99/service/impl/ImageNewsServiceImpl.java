@@ -1,6 +1,7 @@
 package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.ImageNewsEntity;
+import com.example.site_pl_99.entity.NewsEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.repository.ImageNewsRepository;
 import com.example.site_pl_99.service.ImageNewsService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.util.List;
 
 @Service
 public class ImageNewsServiceImpl implements ImageNewsService {
@@ -34,13 +36,16 @@ public class ImageNewsServiceImpl implements ImageNewsService {
             if (minIoService.fileExists(bucketName, file.getOriginalFilename())) {
                 throw new RuntimeException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
             }
+            NewsEntity newsEntity = newsService.getNewsId(newsId);
+            List<ImageNewsEntity> imageNewsEntityList = newsEntity.getImages();
             ImageNewsEntity imageNews = new ImageNewsEntity()
                     .setFileName(file.getOriginalFilename())
-                    .setNewsEntity(newsService.getNewsId(newsId))
+                    .setNewsEntity(newsEntity)
                     .setUserCreated(user);
+            imageNewsEntityList.add(imageNews);
+            newsService.saveNews(newsEntity);
             minIoService.upload(file, bucketName);
-            imageNewsRepository.save(imageNews);
-            return imageNews;
+            return imageNewsRepository.save(imageNews);
         }catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

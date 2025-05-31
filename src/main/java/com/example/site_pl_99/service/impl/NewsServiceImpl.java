@@ -29,6 +29,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public NewsEntity saveNews(NewsEntity newsEntity) {
+        return newsRepository.save(newsEntity);
+    }
+
+    @Override
     public List<NewsEntity> getAllNews() {
         return newsRepository.findAll();
     }

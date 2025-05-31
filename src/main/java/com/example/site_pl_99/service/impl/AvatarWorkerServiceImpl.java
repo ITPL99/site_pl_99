@@ -38,8 +38,7 @@ public class AvatarWorkerServiceImpl implements AvatarWorkerService {
                     .setUser(user)
                     .setFileName(file.getOriginalFilename());
             minIoService.upload(file, bucketName);
-            avatarRepository.save(avatarWorkerEntity);
-            return avatarWorkerEntity;
+            return avatarRepository.save(avatarWorkerEntity);
         }catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

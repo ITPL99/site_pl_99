@@ -26,7 +26,14 @@ public class QualificationServiceImpl implements QualificationService {
 
     @Override
     public QualificationEntity save(QualificationDtoRequest qualificationDtoRequest, UserEntity user, Long workerId) {
-        return qualificationRepository.save(QualificationMapper.toQualificationEntity(qualificationDtoRequest, user));
+        return qualificationRepository
+                .save(QualificationMapper.toQualificationEntity(qualificationDtoRequest, user)
+                        .setWorkerEntities(
+                                List.of(
+                                        workerService.getWorkerId(workerId)
+                                )
+                        )
+                );
     }
 
     @Override

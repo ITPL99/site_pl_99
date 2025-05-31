@@ -38,8 +38,7 @@ public class VideoNewsServiceImpl implements VideoNewsService {
                 .setUserCreated(user)
                 .setNewsEntity(newsService.getNewsId(newsId));
         minIoService.upload(file, bucketName);
-        videoNewsRepository.save(videoNews);
-        return videoNews;
+        return videoNewsRepository.save(videoNews);
     }
 
     @Override

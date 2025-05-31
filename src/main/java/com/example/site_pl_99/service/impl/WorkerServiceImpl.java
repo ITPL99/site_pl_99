@@ -1,13 +1,10 @@
 package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.dto.WorkerDtoRequest;
-import com.example.site_pl_99.entity.QualificationEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.entity.WorkerEntity;
 import com.example.site_pl_99.mapper.WorkerMapper;
-import com.example.site_pl_99.repository.QualificationRepository;
 import com.example.site_pl_99.repository.WorkerRepository;
-import com.example.site_pl_99.service.QualificationService;
 import com.example.site_pl_99.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,20 +15,15 @@ import java.util.List;
 public class WorkerServiceImpl implements WorkerService {
 
     private final WorkerRepository workerRepository;
-    private final QualificationRepository qualificationRepository;
 
     @Autowired
-    public WorkerServiceImpl(WorkerRepository workerRepository, QualificationRepository qualificationRepository) {
+    public WorkerServiceImpl(WorkerRepository workerRepository) {
         this.workerRepository = workerRepository;
-        this.qualificationRepository = qualificationRepository;
     }
 
     @Override
     public WorkerEntity saveWorker(WorkerDtoRequest worker, UserEntity user) {
-        WorkerEntity workerEntity = WorkerMapper.toWorkerEntity(worker, user);
-        workerEntity
-                .setQualificationEntities(qualificationRepository.findQualificationEntitiesByWorkerEntities(workerEntity).orElseThrow(() -> new RuntimeException("ошибка при сохронении")));
-        return workerRepository.save(workerEntity);
+        return workerRepository.save(WorkerMapper.toWorkerEntity(worker, user));
     }
 
     @Override
