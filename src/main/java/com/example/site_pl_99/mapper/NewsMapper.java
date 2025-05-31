@@ -9,14 +9,12 @@ import java.util.stream.Collectors;
 
 public class NewsMapper {
 
-    public static NewsEntity toNewsEntity(NewsDtoRequest newsDtoRequest, UserEntity userEntity, List<ImageNewsEntity> imageNewsEntities, List<VideoNewsEntity> videoNewsEntities) {
+    public static NewsEntity toNewsEntity(NewsDtoRequest newsDtoRequest, UserEntity userEntity) {
         return new NewsEntity().setTitle(newsDtoRequest.getTitle())
                 .setDescription(newsDtoRequest.getDescription())
                 .setUser(userEntity)
                 .setUserCreated(userEntity)
-                .setUserUpdated(userEntity)
-                .setImages(imageNewsEntities)
-                .setVideos(videoNewsEntities);
+                .setUserUpdated(userEntity);
     }
 
     public static NewsDtoResponse toNewsDtoResponse(NewsEntity newsEntity) {
