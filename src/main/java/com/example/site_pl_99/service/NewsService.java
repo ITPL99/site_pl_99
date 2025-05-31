@@ -10,5 +10,5 @@ public interface NewsService {
     NewsEntity saveNews(NewsDtoRequest newsDtoRequest, UserEntity user);
     NewsEntity getNewsId(Long id);
     List<NewsEntity> getAllNews();
-    NewsEntity getNewsByUser(Long userId);
+   List<NewsEntity> getNewsByUser(UserEntity user);
 }
