@@ -10,6 +10,6 @@ public interface CourseService {
     CourseEntity saveCourse(CourseDtoRequest courseDtoRequest, Long workerId, UserEntity user);
     CourseEntity getCourseId(Long id);
     List<CourseEntity> getAllCourse();
-    CourseEntity getCourseByWorker(Long workerId);
-    CourseEntity getCourseByUser(Long userId);
+    List <CourseEntity> getCourseByWorker(Long workerId);
+    List <CourseEntity> getCourseByUser(Long userId);
 }
