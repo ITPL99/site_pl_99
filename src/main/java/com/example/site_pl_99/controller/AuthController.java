@@ -2,6 +2,7 @@ package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.excaption.BaseException;
+import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.AuthService;
 import com.example.site_pl_99.utils.Internalization;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthController {
 
     private final AuthService authService;
-    private final Internalization internalization;
 
-    public AuthController(AuthService authService, Internalization internalization) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.internalization = internalization;
     }
     @Operation(
             summary = "Вход в аккаунт",
@@ -30,14 +29,9 @@ public class AuthController {
     @PostMapping("/login")
     public String login(
             @RequestParam String username,
-            @RequestParam String password,
-            @RequestHeader(name = "Accept-Language", required = false)Locale locale
-            ) {
-        try{
+            @RequestParam String password
+            ) throws BaseException {
             return authService.login(username, password);
-        }catch (BaseException e){
-            return internalization.getMessage(e.getMessage(), locale);
-        }
     }
     @Operation(
             summary = "Получить текущего пользователя",
@@ -45,6 +39,6 @@ public class AuthController {
     )
     @GetMapping("/current")
     public UserDtoResponse getCurrentAuthUser(){
-        return authService.getCurrentUser();
+        return UserMapper.toUserDtoResponse(authService.getCurrentUser());
     }
 }
