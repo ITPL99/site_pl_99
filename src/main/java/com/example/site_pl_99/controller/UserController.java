@@ -18,46 +18,32 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
-    private final Internalization internalization;
 
-    public UserController(UserService userService, Internalization internalization) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.internalization = internalization;
     }
     @Operation(
             summary = "Вернуть список всех пользователей",
             description = "Возвращает список всех зарегистрированных пользователей и принимает язык через хедер, включая их Id, имена и роли."
     )
     @GetMapping("/all")
-    public ResponseEntity<?> getAllUsers(@RequestHeader(name = "Accept-Language", required = false)Locale language) {
-        try{
+    public ResponseEntity<?> getAllUsers() throws BaseException {
             return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAll()));
-        }catch (BaseException e){
-            return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
-        }
     }
     @Operation(
             summary = "Добавить нового пользователя",
             description = "Добавляет нового пользователя: требует имя, пароль и роль и принимает язык через хедер."
     )
     @PostMapping("/add")
-    public ResponseEntity<?> addNewUser(@RequestBody UserDtoRequestRegister userDtoRequestRegister, @RequestHeader(name = "Accept-Language", required = false)Locale language) {
-        try{
+    public ResponseEntity<?> addNewUser(@RequestBody UserDtoRequestRegister userDtoRequestRegister) throws BaseException {
             return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.save(userDtoRequestRegister)));
-        }catch (BaseException e){
-            return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
-        }
     }
     @Operation(
             summary = "Вернуть пользователя по логину",
             description = "Возвращает информацию о пользователе по указанному логину(имени пользователя) и принимает язык через хедер"
     )
     @PostMapping("/get-login")
-    public ResponseEntity<?> getUserByLogin(@RequestParam String username, @RequestHeader(name = "Accept-Language", required = false)Locale language) {
-        try{
+    public ResponseEntity<?> getUserByLogin(@RequestParam String username) throws BaseException{
             return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.getByUsername(username)));
-        }catch (BaseException e){
-            return ResponseEntity.badRequest().body(internalization.getMessage(e.getMessage(), language));
-        }
     }
 }

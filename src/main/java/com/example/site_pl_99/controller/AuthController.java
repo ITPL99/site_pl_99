@@ -30,14 +30,9 @@ public class AuthController {
     @PostMapping("/login")
     public String login(
             @RequestParam String username,
-            @RequestParam String password,
-            @RequestHeader(name = "Accept-Language", required = false)Locale locale
-            ) {
-        try{
+            @RequestParam String password
+            ) throws BaseException {
             return authService.login(username, password);
-        }catch (BaseException e){
-            return internalization.getMessage(e.getMessage(), locale);
-        }
     }
     @Operation(
             summary = "Получить текущего пользователя",
