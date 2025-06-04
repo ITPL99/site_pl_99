@@ -1,20 +1,30 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+@Schema(description = "DTO для предоставления информаций работнике")
 @RequiredArgsConstructor
 public class WorkerDtoResponse {
+    @Schema(description = "Уникальный идентификатор рабочего(ставится автоматически сервером)", accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+    @Schema(description = "Полное имя работника")
     private String fullName;
+    @Schema(description = "Дата рождения работника")
     private LocalDate birthDate;
+    @Schema(description = "Биография работника")
     private String biography;
+    @Schema(description = "Профессия работника(охранник, мастер, учитель, уборщик")
     private String profession;
+    @Schema(description = "Дата создания профиля работника(Ставится автоматически сервером)", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dateCreated;
+    @Schema(description = "Дата обновления информации о работника(Ставится автоматически сервером)", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dateUpdated;
+    @Schema(description = "Иденитификатор пользоавателяб который добавил рабочего",example = "2")
     private Long userId;
+    @Schema(description = "Идентификатор аватара рабочего")
     private Long avatarId;
 
     public Long getId() {

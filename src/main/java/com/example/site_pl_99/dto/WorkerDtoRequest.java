@@ -1,15 +1,21 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
+@Schema(description = "DTO для запроса информаций о работнике")
 public class WorkerDtoRequest {
+    @Schema(description = "Полное имя работника")
     private String fullName;
+    @Schema(description = "Дата рождения работника")
     private LocalDate birthDate;
+    @Schema(description = "Биография работника")
     private String biography;
+    @Schema(description = "Профессия работника(охранник, мастер, учитель, уборщик")
     private String profession;
 
     public String getFullName() {
