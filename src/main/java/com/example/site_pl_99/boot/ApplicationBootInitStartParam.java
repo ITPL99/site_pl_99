@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
+// TODO: На продакшен убрать удалить данный класс
 @Profile({"develop","local","test"})
 @Component
 public class ApplicationBootInitStartParam implements CommandLineRunner {
