@@ -10,6 +10,7 @@ import com.example.site_pl_99.utils.Internalization;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Контроллер пользователя")
 @RestController
 @RequestMapping("/api/user")
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
     private final UserService userService;
 

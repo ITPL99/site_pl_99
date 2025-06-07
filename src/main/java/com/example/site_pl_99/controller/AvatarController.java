@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import java.util.Locale;
 @Tag(name = "Контроллер Аватара")
 @RestController
 @RequestMapping("/api/avatars")
+@SecurityRequirement(name = "bearerAuth")
 public class AvatarController {
     private final AvatarWorkerServiceImpl avatarWorkerService;
     private final AuthService authService;
