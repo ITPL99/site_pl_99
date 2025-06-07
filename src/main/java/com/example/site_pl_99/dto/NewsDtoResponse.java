@@ -1,20 +1,30 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Schema(description = "DTO-ответ информацией о новости")
 @RequiredArgsConstructor
 public class NewsDtoResponse {
+    @Schema(description = "Уникальный идентификатор новости (Устанавливается автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
+    @Schema(description = "Заголовок новости")
     private String title;
+    @Schema(description = "Описание новости")
     private String description;
+    @Schema(description = "Дата создания новости(ставится автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dateCreated;
+    @Schema(description = "Дата последнего обновления новости(ставится автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime dateUpdated;
+    @Schema(description = "Id автора новости",example = "1")
     private Long authorId;
+    @Schema(description = "ID пользователя который обновил новость", example = "2")
     private Long userIdUpdated;
+    @Schema(description = "Список идентификаторов фотографий, прикрепленных к новости ")
     private List<Long> imagesId;
+    @Schema(description = "Список идентификаторов видеозаписей, прикреплённых к новости")
     private List<Long> videosId;
 
     public Long getId() {

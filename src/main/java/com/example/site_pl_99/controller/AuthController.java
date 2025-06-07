@@ -2,8 +2,12 @@ package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.excaption.BaseException;
+import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.AuthService;
 import com.example.site_pl_99.utils.Internalization;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -17,19 +21,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class AuthController {
 
     private final AuthService authService;
-    private final Internalization internalization;
 
-    public AuthController(AuthService authService, Internalization internalization) {
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.internalization = internalization;
     }
     @Operation(
             summary = "Вход в аккаунт",
             description = "Принимает имя и пароль пользователя и принимает язык через хедер, что бы войти в аккаунт"
     )
+    @ApiResponses(
+            {@ApiResponse(responseCode = "400",description = "некоректный ввод"),
+            @ApiResponse(responseCode = "200", description = "Успешно выполнено"),
+            @ApiResponse(responseCode = "409",description = "Ресурс уже существует и не может быть дубликатов")})
     @PostMapping("/login")
-    public String login(
+    public String login(@Parameter(description = "Имя пользователя")
             @RequestParam String username,
+            @Parameter(description = "Пароль пользователя")
             @RequestParam String password
             ) throws BaseException {
             return authService.login(username, password);
@@ -40,6 +47,6 @@ public class AuthController {
     )
     @GetMapping("/current")
     public UserDtoResponse getCurrentAuthUser(){
-        return authService.getCurrentUser();
+        return UserMapper.toUserDtoResponse(authService.getCurrentUser());
     }
 }

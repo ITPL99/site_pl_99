@@ -4,6 +4,7 @@ import com.example.site_pl_99.dto.CourseDtoRequest;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.entity.WorkerEntity;
+import com.example.site_pl_99.excaption.CourseIsNotFoundException;
 import com.example.site_pl_99.mapper.CourseMapper;
 import com.example.site_pl_99.repository.CourseRepository;
 import com.example.site_pl_99.service.CourseService;
@@ -33,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseEntity getCourseId(Long id) {
-        return courseRepository.findById(id).orElseThrow(()-> new RuntimeException("Курс не найден"));
+        return courseRepository.findById(id).orElseThrow(()-> new CourseIsNotFoundException("error.findCourse"));
     }
 
     @Override
@@ -43,11 +44,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getCourseByWorker(Long workerId) {
-        return courseRepository.findCourseEntitiesByWorker(workerService.getWorkerId(workerId)).orElseThrow(() -> new RuntimeException("Курсы не найдены"));
+        return courseRepository.findCourseEntitiesByWorker(workerService.getWorkerId(workerId)).orElseThrow(() -> new CourseIsNotFoundException("error.findCourse"));
     }
 
     @Override
     public List<CourseEntity> getCourseByUser(Long userId) {
-        return courseRepository.findCourseEntitiesByUser(userService.getById(userId)).orElseThrow(() -> new RuntimeException("Курсы не найдены"));
+        return courseRepository.findCourseEntitiesByUser(userService.getById(userId)).orElseThrow(() -> new CourseIsNotFoundException("error.findCourse"));
     }
 }
