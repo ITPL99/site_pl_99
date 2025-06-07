@@ -8,6 +8,7 @@ import com.example.site_pl_99.utils.Internalization;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -45,6 +46,7 @@ public class AuthController {
             summary = "Получить текущего пользователя",
             description = "Возвращает информацию о текущем пользователе, включая его id, имя и роль. "
     )
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/current")
     public UserDtoResponse getCurrentAuthUser(){
         return UserMapper.toUserDtoResponse(authService.getCurrentUser());

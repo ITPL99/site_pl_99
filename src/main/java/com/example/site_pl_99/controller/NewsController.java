@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -30,6 +31,7 @@ import java.util.List;
 @Tag(name = "Контроллер новостей")
 @RestController
 @RequestMapping("/api/news")
+@SecurityRequirement(name = "bearerAuth")
 public class NewsController {
     private final NewsService newsService;
     private final ImageNewsService imageNewsService;

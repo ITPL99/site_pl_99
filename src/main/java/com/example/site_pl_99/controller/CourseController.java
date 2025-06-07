@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.Locale;
 @Tag(name = "Контроллер Курсов")
 @RestController
 @RequestMapping("/api/courses")
+@SecurityRequirement(name = "bearerAuth")
 public class CourseController {
     private final CourseService courseService;
     private final AuthService authService;
