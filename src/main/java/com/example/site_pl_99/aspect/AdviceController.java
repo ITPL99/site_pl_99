@@ -24,7 +24,6 @@ public class AdviceController {
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<String> exceptionHandler(BaseException ex, HttpServletRequest request) {
         Locale locale = request.getLocale();
-        System.out.println(locale.getLanguage());
         return ResponseEntity.badRequest().body(internalization.getMessage(ex.getMessage(), locale));
     }
 }
