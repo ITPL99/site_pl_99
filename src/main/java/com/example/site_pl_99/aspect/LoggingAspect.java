@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 import java.util.Arrays;
 
 @Component
@@ -17,13 +16,12 @@ import java.util.Arrays;
 @Slf4j
 public class LoggingAspect {
 
-    @Pointcut("execution(public * com.example.site_pl_99.controller.*.*(..))")
+@Pointcut("execution(public * com.example.site_pl_99.controller.*.*(..))")
     public void controllerLog() {
     }
 
     @Pointcut("execution(* com.example.site_pl_99.service.*.*(..))")
     public void service() {}
-
 
     @Before("controllerLog()")
     public void doBeforeController(JoinPoint jp) {
@@ -80,7 +78,6 @@ public class LoggingAspect {
         return proceed;
 
     }
-
 
     @AfterThrowing(throwing = "ex", pointcut = "controllerLog()")
     public void throwsException(JoinPoint jp, Exception ex) {
