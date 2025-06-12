@@ -51,4 +51,14 @@ public class MessageController {
     public ResponseEntity<?> getMessageById(@RequestParam Long messageId) throws BaseException {
         return ResponseEntity.ok(mailSenderService.getMessageById(messageId));
     }
+
+    @PutMapping("/update-by-id")
+    public ResponseEntity<?> updateMessageStatus(@RequestParam Long messageId, @RequestParam String status) throws BaseException {
+        return ResponseEntity.ok(mailSenderService.updateMessageStatus(messageId, status));
+    }
+
+    @GetMapping("/get-all-by-status")
+    public ResponseEntity<?> getAllMessagesByStatus(@RequestParam String status) throws BaseException {
+        return ResponseEntity.ok(mailSenderService.getAllMessagesByStatus(status));
+    }
 }

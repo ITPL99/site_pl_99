@@ -3,6 +3,7 @@ package com.example.site_pl_99.mapper;
 import com.example.site_pl_99.dto.MessageDtoRequest;
 import com.example.site_pl_99.dto.MessageDtoResponse;
 import com.example.site_pl_99.entity.MessageEntity;
+import com.example.site_pl_99.entity.MessageStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,9 @@ public class MessageMapper {
                 .setTitle(messageEntity.getTitle())
                 .setMessage(messageEntity.getMessage())
                 .setDateCreated(messageEntity.getDateCreated())
-                .setDateUpdated(messageEntity.getDateUpdated());
-        if(Objects.nonNull(messageEntity.getMailEntity())) messageDtoResponse.setMailName(messageEntity.getMailEntity().getMailName());
+                .setDateUpdated(messageEntity.getDateUpdated())
+                .setMessageStatus(messageEntity.getMessageStatus().getStatusName());
+        if(Objects.nonNull(messageEntity.getMail())) messageDtoResponse.setMailName(messageEntity.getMail());
         return messageDtoResponse;
     }
 

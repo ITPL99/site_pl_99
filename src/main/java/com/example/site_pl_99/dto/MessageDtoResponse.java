@@ -13,6 +13,7 @@ public class MessageDtoResponse {
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
     private String mailName;
+    private String messageStatus;
 
     public Long getId() {
         return id;
@@ -74,6 +75,15 @@ public class MessageDtoResponse {
 
     public MessageDtoResponse setMailName(String mailName) {
         this.mailName = mailName;
+        return this;
+    }
+
+    public String getMessageStatus() {
+        return messageStatus;
+    }
+
+    public MessageDtoResponse setMessageStatus(String messageStatus) {
+        this.messageStatus = messageStatus;
         return this;
     }
 }

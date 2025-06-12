@@ -2,6 +2,7 @@ package com.example.site_pl_99.entity;
 
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
@@ -19,9 +20,11 @@ public class MessageEntity extends BaseEntity {
     private LocalDateTime dateCreated;
     @Column(name = "date_updated")
     private LocalDateTime dateUpdated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mail_id", referencedColumnName = "id")
-    private MailEntity mailEntity;
+    @Column(name = "mail")
+    private String mail;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "current_status", referencedColumnName = "id")
+    private MessageStatus messageStatus;
 
     @PrePersist
     public void prePersist() {
@@ -75,12 +78,21 @@ public class MessageEntity extends BaseEntity {
         return this;
     }
 
-    public MailEntity getMailEntity() {
-        return mailEntity;
+    public MessageStatus getMessageStatus() {
+        return messageStatus;
     }
 
-    public MessageEntity setMailEntity(MailEntity mailEntity) {
-        this.mailEntity = mailEntity;
+    public MessageEntity setMessageStatus(MessageStatus messageStatus) {
+        this.messageStatus = messageStatus;
+        return this;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public MessageEntity setMail(String mail) {
+        this.mail = mail;
         return this;
     }
 }
