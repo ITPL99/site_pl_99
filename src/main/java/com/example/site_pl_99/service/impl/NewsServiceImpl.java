@@ -3,6 +3,7 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.entity.NewsEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.excaption.NewsIsNotFoundException;
 import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.NewsService;
@@ -24,8 +25,13 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public NewsEntity saveNews(NewsEntity newsEntity) {
+        return newsRepository.save(newsEntity);
+    }
+
+    @Override
     public NewsEntity getNewsId(Long id) {
-        return newsRepository.findById(id).orElseThrow(() -> new RuntimeException("Нет такой новости"));
+        return newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
     }
 
     @Override
@@ -35,6 +41,6 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<NewsEntity> getNewsByUser(UserEntity user) {
-        return newsRepository.findNewsEntitiesByUser(user).orElseThrow(()-> new RuntimeException("Нет такой новости"));
+        return newsRepository.findNewsEntitiesByUser(user).orElseThrow(()-> new NewsIsNotFoundException("error.findNews"));
     }
 }

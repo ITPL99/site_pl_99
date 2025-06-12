@@ -7,6 +7,7 @@ import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.entity.WorkerEntity;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class CourseMapper {
@@ -24,17 +25,18 @@ public class CourseMapper {
     }
 
     public static CourseDtoResponse toCourseDtoResponse(CourseEntity courseEntity) {
-        return new CourseDtoResponse().setId(courseEntity.getId())
+        CourseDtoResponse courseDtoResponse = new CourseDtoResponse().setId(courseEntity.getId())
                 .setTitle(courseEntity.getTitle())
                 .setDescription(courseEntity.getDescription())
                 .setPrice(courseEntity.getPrice())
                 .setDateStart(courseEntity.getDateStart())
-                .setDateEnd(courseEntity.getDateEnd())
-                .setWorkerId(courseEntity.getWorker().getId())
+                .setDateEnd(courseEntity.getDateEnd());
+                if(Objects.nonNull(courseEntity.getWorker())) courseDtoResponse.setWorkerId(courseEntity.getWorker().getId())
                 .setDateCreated(courseEntity.getDateCreated())
                 .setDateUpdated(courseEntity.getDateUpdated())
                 .setUserId(courseEntity.getUser().getId())
                 .setUserIdUpdated(courseEntity.getUserUpdated().getId());
+                return courseDtoResponse;
     }
 
     public static List<CourseDtoResponse> toCourseDtoRequestList(List<CourseEntity> courseEntityList) {

@@ -20,7 +20,6 @@ public class AdviceController {
     public AdviceController(Internalization internalization) {
         this.internalization = internalization;
     }
-
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<String> exceptionHandler(BaseException ex, HttpServletRequest request) {
         Locale locale = request.getLocale();

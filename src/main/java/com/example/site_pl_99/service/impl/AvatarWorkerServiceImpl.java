@@ -2,6 +2,8 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.AvatarWorkerEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.excaption.AvatarIsAlreadyExistsException;
+import com.example.site_pl_99.excaption.AvatarIsNotFoundException;
 import com.example.site_pl_99.repository.AvatarRepository;
 import com.example.site_pl_99.service.AvatarWorkerService;
 import com.example.site_pl_99.service.MinIoService;
@@ -31,7 +33,7 @@ public class AvatarWorkerServiceImpl implements AvatarWorkerService {
     public AvatarWorkerEntity upload(MultipartFile file, Long workerId, UserEntity user) {
         try {
             if (minIoService.fileExists(bucketName, file.getOriginalFilename())) {
-                throw new RuntimeException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
+                throw new AvatarIsAlreadyExistsException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
             }
             AvatarWorkerEntity avatarWorkerEntity = new AvatarWorkerEntity()
                     .setWorker(workerService.getWorkerId(workerId))
@@ -47,13 +49,13 @@ public class AvatarWorkerServiceImpl implements AvatarWorkerService {
 
     @Override
     public InputStream stream(Long id) {
-        AvatarWorkerEntity avatarWorker = avatarRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого видео нет"));
+        AvatarWorkerEntity avatarWorker = avatarRepository.findById(id).orElseThrow(() -> new AvatarIsNotFoundException("Такого видео нет"));
         return minIoService.streamFile(bucketName, avatarWorker.getFileName());
     }
 
     @Override
     public String getContentType(Long id){
-        AvatarWorkerEntity avatarWorker = avatarRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого видео нет"));
+        AvatarWorkerEntity avatarWorker = avatarRepository.findById(id).orElseThrow(() -> new AvatarIsNotFoundException("Такого видео нет"));
         return minIoService.getContentType(bucketName, avatarWorker.getFileName());
     }
 }

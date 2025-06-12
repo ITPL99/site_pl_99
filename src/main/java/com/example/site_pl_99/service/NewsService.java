@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface NewsService {
     NewsEntity saveNews(NewsDtoRequest newsDtoRequest, UserEntity user);
+    NewsEntity saveNews(NewsEntity newsEntity);
     NewsEntity getNewsId(Long id);
     List<NewsEntity> getAllNews();
    List<NewsEntity> getNewsByUser(UserEntity user);

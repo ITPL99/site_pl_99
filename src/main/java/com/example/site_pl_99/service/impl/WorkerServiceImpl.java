@@ -4,6 +4,7 @@ import com.example.site_pl_99.dto.WorkerDtoRequest;
 import com.example.site_pl_99.entity.QualificationEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.entity.WorkerEntity;
+import com.example.site_pl_99.excaption.WorkerIsNotFoundException;
 import com.example.site_pl_99.mapper.WorkerMapper;
 import com.example.site_pl_99.repository.QualificationRepository;
 import com.example.site_pl_99.repository.WorkerRepository;
@@ -29,14 +30,12 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public WorkerEntity saveWorker(WorkerDtoRequest worker, UserEntity user) {
         WorkerEntity workerEntity = WorkerMapper.toWorkerEntity(worker, user);
-        workerEntity
-                .setQualificationEntities(qualificationRepository.findQualificationEntitiesByWorkerEntities(workerEntity).orElseThrow(() -> new RuntimeException("ошибка при сохронении")));
         return workerRepository.save(workerEntity);
     }
 
     @Override
     public WorkerEntity getWorkerId(Long id) {
-        return workerRepository.findById(id).orElseThrow(() -> new RuntimeException("нет такого работника"));
+        return workerRepository.findById(id).orElseThrow(() -> new WorkerIsNotFoundException("error.findWorker"));
     }
 
     @Override
@@ -46,11 +45,11 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     public WorkerEntity getWorkerByName(String name) {
-        return workerRepository.findWorkerEntitiesByFullName(name).orElseThrow(() -> new RuntimeException("нет такого работника"));
+        return workerRepository.findWorkerEntitiesByFullName(name).orElseThrow(() -> new WorkerIsNotFoundException("error.findWorker"));
     }
 
     @Override
     public List<WorkerEntity> getWorkerByProfession(String profession) {
-        return workerRepository.findWorkerEntitiesByProfession(profession).orElseThrow(() -> new RuntimeException("нет такого работника"));
+        return workerRepository.findWorkerEntitiesByProfession(profession).orElseThrow(() -> new WorkerIsNotFoundException("error.findWorkersByProfession"));
     }
 }
