@@ -3,9 +3,9 @@ package com.example.site_pl_99.excaption;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class WorkerIsNotFoundException extends BaseException {
-    public WorkerIsNotFoundException(String message) {
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
+public class MailIsNotFoundException extends BaseException {
+    public MailIsNotFoundException(String message) {
         super(message);
     }
 }
