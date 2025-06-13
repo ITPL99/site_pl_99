@@ -1,26 +1,21 @@
 package com.example.site_pl_99.configuration;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
-
+@OpenAPIDefinition(info = @Info(
+        title = "site_pl_99",
+        version = "1.0",
+        description = "API для сайта лицея"
+))
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
 @Configuration
 public class SwaggerConfig {
-
-    @Bean
-    public OpenAPI aip(){
-        return new OpenAPI()
-                .servers(
-                        List.of(
-                                new Server().url("http://localhost:8080")
-                        )
-                ).info(
-                        new Info().title("site pl99 Api")
-                );
-    }
-
 }

@@ -5,31 +5,31 @@ import com.example.site_pl_99.dto.NewsDtoResponse;
 import com.example.site_pl_99.entity.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class NewsMapper {
 
-    public static NewsEntity toNewsEntity(NewsDtoRequest newsDtoRequest, UserEntity userEntity, List<ImageNewsEntity> imageNewsEntities, List<VideoNewsEntity> videoNewsEntities) {
+    public static NewsEntity toNewsEntity(NewsDtoRequest newsDtoRequest, UserEntity userEntity) {
         return new NewsEntity().setTitle(newsDtoRequest.getTitle())
                 .setDescription(newsDtoRequest.getDescription())
                 .setUser(userEntity)
                 .setUserCreated(userEntity)
-                .setUserUpdated(userEntity)
-                .setImages(imageNewsEntities)
-                .setVideos(videoNewsEntities);
+                .setUserUpdated(userEntity);
     }
 
     public static NewsDtoResponse toNewsDtoResponse(NewsEntity newsEntity) {
-        return new NewsDtoResponse()
+        NewsDtoResponse newsDtoResponse = new NewsDtoResponse()
                 .setId(newsEntity.getId())
                 .setTitle(newsEntity.getTitle())
                 .setDescription(newsEntity.getDescription())
                 .setDateCreated(newsEntity.getDateCreated())
                 .setDateUpdated(newsEntity.getDateUpdated())
                 .setAuthorId(newsEntity.getUser().getId())
-                .setUserIdUpdated(newsEntity.getUserUpdated().getId())
-                .setImagesId(newsEntity.getImages().stream().map(BaseEntity::getId).toList())
-                .setVideosId(newsEntity.getVideos().stream().map(BaseEntity::getId).toList());
+                .setUserIdUpdated(newsEntity.getUserUpdated().getId());
+                if(Objects.nonNull(newsEntity.getImages())) newsDtoResponse.setImagesId(newsEntity.getImages().stream().map(BaseEntity::getId).toList());
+                if(Objects.nonNull(newsEntity.getVideos())) newsDtoResponse.setVideosId(newsEntity.getVideos().stream().map(BaseEntity::getId).toList());
+                return newsDtoResponse;
     }
 
     public static List<NewsDtoResponse> toNewsDtoResponseList(List<NewsEntity> newsEntities) {

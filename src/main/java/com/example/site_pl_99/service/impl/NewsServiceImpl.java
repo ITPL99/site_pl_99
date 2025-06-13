@@ -3,6 +3,8 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.entity.NewsEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.excaption.NewsIsNotFoundException;
+import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.NewsService;
 import org.springframework.stereotype.Service;
@@ -19,21 +21,26 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsEntity saveNews(NewsDtoRequest newsDtoRequest, UserEntity user) {
-        return null;
+        return newsRepository.save(NewsMapper.toNewsEntity(newsDtoRequest, user));
+    }
+
+    @Override
+    public NewsEntity saveNews(NewsEntity newsEntity) {
+        return newsRepository.save(newsEntity);
     }
 
     @Override
     public NewsEntity getNewsId(Long id) {
-        return null;
+        return newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
     }
 
     @Override
     public List<NewsEntity> getAllNews() {
-        return List.of();
+        return newsRepository.findAll();
     }
 
     @Override
-    public NewsEntity getNewsByUser(Long userId) {
-        return null;
+    public List<NewsEntity> getNewsByUser(UserEntity user) {
+        return newsRepository.findNewsEntitiesByUser(user).orElseThrow(()-> new NewsIsNotFoundException("error.findNews"));
     }
 }

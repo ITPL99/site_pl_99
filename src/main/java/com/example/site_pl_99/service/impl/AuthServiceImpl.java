@@ -41,8 +41,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserDtoResponse getCurrentUser() {
-        return UserMapper.toUserDtoResponse((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public UserEntity getCurrentUser() {
+        return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @Override
