@@ -1,55 +1,27 @@
 package com.example.site_pl_99.entity;
 
 import jakarta.persistence.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@RequiredArgsConstructor
 public class UserEntity extends BaseEntity implements UserDetails {
-
-    @Column(unique = true, nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "mail", nullable = false)
-    private String mail;
     @Column(name = "active")
-    private Boolean active;
-
-    @Column(name = "date_create")
-    private LocalDateTime dateCreated;
-
-    @Column(name = "date_update")
-    private LocalDateTime dateUpdated;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable( name = "m2m_users_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
-    )
-    private List<RoleEntity> roleEntityList;
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<NewsEntity> newsEntityList;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<WorkerEntity> workerEntityList;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<CourseEntity> courseEntityList;
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<QualificationEntity> qualificationEntityList;
-
-
-    @PrePersist
-    public void prePersist() {
-        dateCreated = LocalDateTime.now();
-        dateUpdated = LocalDateTime.now();
-        active = true;
-    }
+    private String active;
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+    @ManyToMany(mappedBy = "userEntityList",fetch = FetchType.EAGER)
+    private List<RoleEntity> roles;
 
     public String getUsername() {
         return username;
@@ -62,7 +34,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleEntityList;
+        return roles;
     }
 
     public String getPassword() {
@@ -74,84 +46,30 @@ public class UserEntity extends BaseEntity implements UserDetails {
         return this;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public UserEntity setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-        return this;
-    }
-
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public UserEntity setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
-        return this;
-    }
-
-    public List<RoleEntity> getRoleEntityList() {
-        return roleEntityList;
-    }
-
-    public UserEntity setRoleEntityList(List<RoleEntity> roleEntityList) {
-        this.roleEntityList = roleEntityList;
-        return this;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public UserEntity setMail(String mail) {
-        this.mail = mail;
-        return this;
-    }
-
-    public Boolean getActive() {
+    public String getActive() {
         return active;
     }
 
-    public UserEntity setActive(Boolean active) {
+    public UserEntity setActive(String active) {
         this.active = active;
         return this;
     }
 
-    public List<NewsEntity> getNewsEntityList() {
-        return newsEntityList;
+    public String getEmail() {
+        return email;
     }
 
-    public UserEntity setNewsEntityList(List<NewsEntity> newsEntityList) {
-        this.newsEntityList = newsEntityList;
+    public UserEntity setEmail(String email) {
+        this.email = email;
         return this;
     }
 
-    public List<WorkerEntity> getWorkerEntityList() {
-        return workerEntityList;
+    public List<RoleEntity> getRoles() {
+        return roles;
     }
 
-    public UserEntity setWorkerEntityList(List<WorkerEntity> workerEntityList) {
-        this.workerEntityList = workerEntityList;
-        return this;
-    }
-
-    public List<CourseEntity> getCourseEntityList() {
-        return courseEntityList;
-    }
-
-    public UserEntity setCourseEntityList(List<CourseEntity> courseEntityList) {
-        this.courseEntityList = courseEntityList;
-        return this;
-    }
-
-    public List<QualificationEntity> getQualificationEntityList() {
-        return qualificationEntityList;
-    }
-
-    public UserEntity setQualificationEntityList(List<QualificationEntity> qualificationEntityList) {
-        this.qualificationEntityList = qualificationEntityList;
+    public UserEntity setRoles(List<RoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 }

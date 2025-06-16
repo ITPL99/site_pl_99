@@ -1,8 +1,11 @@
 package com.example.site_pl_99.entity;
 
-import jakarta.persistence.*;
+import com.example.site_pl_99.enums.StatusMessage;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 
 import java.time.LocalDateTime;
 
@@ -12,25 +15,21 @@ import java.time.LocalDateTime;
 public class MessageEntity extends BaseEntity {
     @Column(name = "full_name")
     private String fullName;
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "message")
+    @Column(name = "message", nullable = false)
     private String message;
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
-    @Column(name = "date_updated")
-    private LocalDateTime dateUpdated;
-    @Column(name = "mail")
-    private String mail;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "current_status", referencedColumnName = "id")
-    private MessageStatus messageStatus;
+    @Column(name = "email", nullable = false)
+    private String toEmail;
+    @Column(name = "current_status", nullable = false)
+    private StatusMessage currentStatus;
 
     @PrePersist
     public void prePersist() {
-        if(fullName == null) fullName = "anonim";
+        currentStatus = StatusMessage.CONSIDER;
         dateCreated = LocalDateTime.now();
-        dateUpdated = LocalDateTime.now();
     }
 
     public String getFullName() {
@@ -69,30 +68,21 @@ public class MessageEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
+    public String getToEmail() {
+        return toEmail;
     }
 
-    public MessageEntity setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
+    public MessageEntity setToEmail(String toEmail) {
+        this.toEmail = toEmail;
         return this;
     }
 
-    public MessageStatus getMessageStatus() {
-        return messageStatus;
+    public StatusMessage getCurrentStatus() {
+        return currentStatus;
     }
 
-    public MessageEntity setMessageStatus(MessageStatus messageStatus) {
-        this.messageStatus = messageStatus;
-        return this;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public MessageEntity setMail(String mail) {
-        this.mail = mail;
+    public MessageEntity setCurrentStatus(StatusMessage currentStatus) {
+        this.currentStatus = currentStatus;
         return this;
     }
 }

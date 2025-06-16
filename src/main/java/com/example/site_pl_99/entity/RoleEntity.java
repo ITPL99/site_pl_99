@@ -1,42 +1,43 @@
 package com.example.site_pl_99.entity;
 
 import jakarta.persistence.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
+@RequiredArgsConstructor
 public class RoleEntity extends BaseEntity implements GrantedAuthority {
-
-
-    @Column(unique = true, nullable = false)
-    private String title;
-
-    @ManyToMany(mappedBy = "roleEntityList", fetch = FetchType.LAZY)
-    private Set<UserEntity> users;
-
+    private String roleName;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+    )
+    private List<UserEntity> userEntityList;
 
     @Override
     public String getAuthority() {
-        return title;
+        return roleName;
     }
 
-    public String getTitle() {
-        return title;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public RoleEntity setTitle(String title) {
-        this.title = title;
+    public RoleEntity setRoleName(String roleName) {
+        this.roleName = roleName;
         return this;
     }
 
-    public Set<UserEntity> getUsers() {
-        return users;
+    public List<UserEntity> getUserEntityList() {
+        return userEntityList;
     }
 
-    public RoleEntity setUsers(Set<UserEntity> users) {
-        this.users = users;
+    public RoleEntity setUserEntityList(List<UserEntity> userEntityList) {
+        this.userEntityList = userEntityList;
         return this;
     }
 }
