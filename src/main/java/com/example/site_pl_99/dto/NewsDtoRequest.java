@@ -1,13 +1,11 @@
 package com.example.site_pl_99.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
-@Schema(description = "DTO-запрос с информацией о новостях")
+
 @RequiredArgsConstructor
 public class NewsDtoRequest {
-    @Schema(description = "Заголовок новости", example = "Важное обновление на сайте")
     private String title;
-    @Schema(description = "Описание новостей", example = "Сегодня мы запустили новую версию сайта")
+    private String subTitle;
     private String description;
 
     public String getTitle() {
@@ -16,6 +14,15 @@ public class NewsDtoRequest {
 
     public NewsDtoRequest setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public NewsDtoRequest setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
         return this;
     }
 

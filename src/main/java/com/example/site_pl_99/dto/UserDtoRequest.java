@@ -5,27 +5,27 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class UserDtoResponse {
-    private Long id;
+public class UserDtoRequest {
     private String username;
+    private String password;
     private String email;
     private List<String> roles;
-
-    public Long getId() {
-        return id;
-    }
-
-    public UserDtoResponse setId(Long id) {
-        this.id = id;
-        return this;
-    }
 
     public String getUsername() {
         return username;
     }
 
-    public UserDtoResponse setUsername(String username) {
+    public UserDtoRequest setUsername(String username) {
         this.username = username;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserDtoRequest setPassword(String password) {
+        this.password = password;
         return this;
     }
 
@@ -33,7 +33,7 @@ public class UserDtoResponse {
         return email;
     }
 
-    public UserDtoResponse setEmail(String email) {
+    public UserDtoRequest setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -42,7 +42,7 @@ public class UserDtoResponse {
         return roles;
     }
 
-    public UserDtoResponse setRoles(List<String> roles) {
+    public UserDtoRequest setRoles(List<String> roles) {
         this.roles = roles;
         return this;
     }

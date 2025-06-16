@@ -1,31 +1,26 @@
 package com.example.site_pl_99.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.example.site_pl_99.enums.ActiveNews;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-@Schema(description = "DTO-ответ информацией о новости")
+
 @RequiredArgsConstructor
 public class NewsDtoResponse {
-    @Schema(description = "Уникальный идентификатор новости (Устанавливается автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
-    @Schema(description = "Заголовок новости")
-    private String title;
-    @Schema(description = "Описание новости")
-    private String description;
-    @Schema(description = "Дата создания новости(ставится автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
+    private String titleRu;
+    private String titleKg;
+    private String subTitleRu;
+    private String subTitleKg;
+    private String descriptionRu;
+    private String descriptionKg;
     private LocalDateTime dateCreated;
-    @Schema(description = "Дата последнего обновления новости(ставится автоматически сервером)",accessMode = Schema.AccessMode.READ_ONLY)
-    private LocalDateTime dateUpdated;
-    @Schema(description = "Id автора новости",example = "1")
-    private Long authorId;
-    @Schema(description = "ID пользователя который обновил новость", example = "2")
-    private Long userIdUpdated;
-    @Schema(description = "Список идентификаторов фотографий, прикрепленных к новости ")
-    private List<Long> imagesId;
-    @Schema(description = "Список идентификаторов видеозаписей, прикреплённых к новости")
-    private List<Long> videosId;
+    private ActiveNews activeNews;
+    private Long imageSmallId;
+    private Long imageFullId;
+    private List<Long> images;
+    private Long videoId;
 
     public Long getId() {
         return id;
@@ -36,21 +31,57 @@ public class NewsDtoResponse {
         return this;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitleRu() {
+        return titleRu;
     }
 
-    public NewsDtoResponse setTitle(String title) {
-        this.title = title;
+    public NewsDtoResponse setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitleKg() {
+        return titleKg;
     }
 
-    public NewsDtoResponse setDescription(String description) {
-        this.description = description;
+    public NewsDtoResponse setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
+        return this;
+    }
+
+    public String getSubTitleRu() {
+        return subTitleRu;
+    }
+
+    public NewsDtoResponse setSubTitleRu(String subTitleRu) {
+        this.subTitleRu = subTitleRu;
+        return this;
+    }
+
+    public String getSubTitleKg() {
+        return subTitleKg;
+    }
+
+    public NewsDtoResponse setSubTitleKg(String subTitleKg) {
+        this.subTitleKg = subTitleKg;
+        return this;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public NewsDtoResponse setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+        return this;
+    }
+
+    public String getDescriptionKg() {
+        return descriptionKg;
+    }
+
+    public NewsDtoResponse setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
         return this;
     }
 
@@ -63,48 +94,48 @@ public class NewsDtoResponse {
         return this;
     }
 
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
+    public ActiveNews getActiveNews() {
+        return activeNews;
     }
 
-    public NewsDtoResponse setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
+    public NewsDtoResponse setActiveNews(ActiveNews activeNews) {
+        this.activeNews = activeNews;
         return this;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Long getImageSmallId() {
+        return imageSmallId;
     }
 
-    public NewsDtoResponse setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public NewsDtoResponse setImageSmallId(Long imageSmallId) {
+        this.imageSmallId = imageSmallId;
         return this;
     }
 
-    public Long getUserIdUpdated() {
-        return userIdUpdated;
+    public Long getImageFullId() {
+        return imageFullId;
     }
 
-    public NewsDtoResponse setUserIdUpdated(Long userIdUpdated) {
-        this.userIdUpdated = userIdUpdated;
+    public NewsDtoResponse setImageFullId(Long imageFullId) {
+        this.imageFullId = imageFullId;
         return this;
     }
 
-    public List<Long> getImagesId() {
-        return imagesId;
+    public List<Long> getImages() {
+        return images;
     }
 
-    public NewsDtoResponse setImagesId(List<Long> imagesId) {
-        this.imagesId = imagesId;
+    public NewsDtoResponse setImages(List<Long> images) {
+        this.images = images;
         return this;
     }
 
-    public List<Long> getVideosId() {
-        return videosId;
+    public Long getVideoId() {
+        return videoId;
     }
 
-    public NewsDtoResponse setVideosId(List<Long> videosId) {
-        this.videosId = videosId;
+    public NewsDtoResponse setVideoId(Long videoId) {
+        this.videoId = videoId;
         return this;
     }
 }

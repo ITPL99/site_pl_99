@@ -3,22 +3,21 @@ package com.example.site_pl_99.entity;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @Entity
-@Table(name = "images_news")
+@Table(name = "images_news_small")
 @RequiredArgsConstructor
-public class ImageNewsEntity extends BaseEntity {
+public class ImageNewsSmallEntity extends BaseEntity {
+    @Column(name = "file_name", nullable = false, unique = true)
     private String fileName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "news_id", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "news_id", referencedColumnName = "id", unique = true)
     private NewsEntity newsEntity;
 
     public String getFileName() {
         return fileName;
     }
 
-    public ImageNewsEntity setFileName(String fileName) {
+    public ImageNewsSmallEntity setFileName(String fileName) {
         this.fileName = fileName;
         return this;
     }
@@ -27,7 +26,7 @@ public class ImageNewsEntity extends BaseEntity {
         return newsEntity;
     }
 
-    public ImageNewsEntity setNewsEntity(NewsEntity newsEntity) {
+    public ImageNewsSmallEntity setNewsEntity(NewsEntity newsEntity) {
         this.newsEntity = newsEntity;
         return this;
     }

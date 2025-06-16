@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.ActiveNews;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 
@@ -10,52 +11,88 @@ import java.util.List;
 @Table(name = "news")
 @RequiredArgsConstructor
 public class NewsEntity extends BaseEntity {
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "title_ru", nullable = false, unique = true)
+    private String titleRu;
+    @Column(name = "title_kg", nullable = false, unique = true)
+    private String titleKg;
+    @Column(name = "subtitle_ru", nullable = false, unique = true)
+    private String subTitleRu;
+    @Column(name = "subtitle_kg", nullable = false, unique = true)
+    private String subTitleKg;
+    @Column(name = "description_ru", nullable = false)
+    private String descriptionRu;
+    @Column(name = "description_kg", nullable = false)
+    private String descriptionKg;
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
-    @Column(name = "date_updated")
-    private LocalDateTime dateUpdated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_create", referencedColumnName = "id")
-    private UserEntity userCreated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_updated", referencedColumnName = "id")
-    private UserEntity userUpdated;
-    @OneToMany(mappedBy = "newsEntity",fetch = FetchType.EAGER)
-    private List<ImageNewsEntity> images;
-    @OneToMany(mappedBy = "newsEntity",fetch = FetchType.EAGER)
-    private List<VideoNewsEntity> videos;
-    @Column(name = "status_deleted")
-    private Boolean statusDeleted;
+    @Column(name = "active")
+    private ActiveNews active;
+    @OneToOne(mappedBy = "newsEntity", fetch = FetchType.EAGER)
+    private ImageNewsSmallEntity imageNewsSmallEntity;
+    @OneToOne(mappedBy = "newsEntity", fetch = FetchType.EAGER)
+    private ImageNewsFullEntity imageNewsFullEntity;
+    @OneToMany(mappedBy = "newsEntity", fetch = FetchType.EAGER)
+    private List<ImageNewsEntity> imageNewsEntityList;
+    @OneToOne(mappedBy = "newsEntity",fetch = FetchType.EAGER)
+    private VideoNewsEntity videoNewsEntity;
 
     @PrePersist
     public void prePersist() {
+        active = ActiveNews.NEW;
         dateCreated = LocalDateTime.now();
-        dateUpdated = LocalDateTime.now();
-        statusDeleted = false;
     }
 
-    public String getTitle() {
-        return title;
+    public String getTitleRu() {
+        return titleRu;
     }
 
-    public NewsEntity setTitle(String title) {
-        this.title = title;
+    public NewsEntity setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitleKg() {
+        return titleKg;
     }
 
-    public NewsEntity setDescription(String description) {
-        this.description = description;
+    public NewsEntity setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
+        return this;
+    }
+
+    public String getSubTitleRu() {
+        return subTitleRu;
+    }
+
+    public NewsEntity setSubTitleRu(String subTitleRu) {
+        this.subTitleRu = subTitleRu;
+        return this;
+    }
+
+    public String getSubTitleKg() {
+        return subTitleKg;
+    }
+
+    public NewsEntity setSubTitleKg(String subTitleKg) {
+        this.subTitleKg = subTitleKg;
+        return this;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public NewsEntity setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+        return this;
+    }
+
+    public String getDescriptionKg() {
+        return descriptionKg;
+    }
+
+    public NewsEntity setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
         return this;
     }
 
@@ -68,68 +105,48 @@ public class NewsEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
+    public ActiveNews getActive() {
+        return active;
     }
 
-    public NewsEntity setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
+    public NewsEntity setActive(ActiveNews active) {
+        this.active = active;
         return this;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public ImageNewsSmallEntity getImageNewsSmallEntity() {
+        return imageNewsSmallEntity;
     }
 
-    public NewsEntity setUser(UserEntity user) {
-        this.user = user;
+    public NewsEntity setImageNewsSmallEntity(ImageNewsSmallEntity imageNewsSmallEntity) {
+        this.imageNewsSmallEntity = imageNewsSmallEntity;
         return this;
     }
 
-    public UserEntity getUserCreated() {
-        return userCreated;
+    public ImageNewsFullEntity getImageNewsFullEntity() {
+        return imageNewsFullEntity;
     }
 
-    public NewsEntity setUserCreated(UserEntity userCreated) {
-        this.userCreated = userCreated;
+    public NewsEntity setImageNewsFullEntity(ImageNewsFullEntity imageNewsFullEntity) {
+        this.imageNewsFullEntity = imageNewsFullEntity;
         return this;
     }
 
-    public UserEntity getUserUpdated() {
-        return userUpdated;
+    public List<ImageNewsEntity> getImageNewsEntityList() {
+        return imageNewsEntityList;
     }
 
-    public NewsEntity setUserUpdated(UserEntity userUpdated) {
-        this.userUpdated = userUpdated;
+    public NewsEntity setImageNewsEntityList(List<ImageNewsEntity> imageNewsEntityList) {
+        this.imageNewsEntityList = imageNewsEntityList;
         return this;
     }
 
-    public Boolean getStatusDeleted() {
-        return statusDeleted;
+    public VideoNewsEntity getVideoNewsEntity() {
+        return videoNewsEntity;
     }
 
-    public NewsEntity setStatusDeleted(Boolean statusDeleted) {
-        this.statusDeleted = statusDeleted;
+    public NewsEntity setVideoNewsEntity(VideoNewsEntity videoNewsEntity) {
+        this.videoNewsEntity = videoNewsEntity;
         return this;
     }
-
-    public List<ImageNewsEntity> getImages() {
-        return images;
-    }
-
-    public NewsEntity setImages(List<ImageNewsEntity> images) {
-        this.images = images;
-        return this;
-    }
-
-    public List<VideoNewsEntity> getVideos() {
-        return videos;
-    }
-
-    public NewsEntity setVideos(List<VideoNewsEntity> videos) {
-        this.videos = videos;
-        return this;
-    }
-
-
 }
