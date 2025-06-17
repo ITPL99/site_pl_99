@@ -1,9 +1,7 @@
 package com.example.site_pl_99.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.*;
 
 @MappedSuperclass
 public abstract class BaseEntity {

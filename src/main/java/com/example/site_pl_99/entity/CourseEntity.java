@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.ActiveJob;
 import com.example.site_pl_99.enums.CourseType;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,16 @@ public class CourseEntity extends BaseEntity {
     private LocalDateTime dateEnd;
     @OneToOne(mappedBy = "courseEntity", fetch = FetchType.EAGER)
     private ImageCourseEntity imageCourse;
+    @Column(name = "active")
+    private ActiveJob active;
+
+    public ActiveJob getActive() {
+        return active;
+    }
+
+    public void setActive(ActiveJob active) {
+        this.active = active;
+    }
 
     public CourseType getCourseType() {
         return courseType;

@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.ActiveJob;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +12,16 @@ public class ImageTeacherEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id", unique = true)
     private TeacherEntity teacher;
+    @Column(name = "active")
+    private ActiveJob active;
+
+    public ActiveJob getActive() {
+        return active;
+    }
+
+    public void setActive(ActiveJob active) {
+        this.active = active;
+    }
 
     public String getFileName() {
         return fileName;

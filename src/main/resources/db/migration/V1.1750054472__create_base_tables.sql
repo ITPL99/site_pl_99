@@ -32,8 +32,9 @@ create table if not exists masters(
 create table if not exists images_masters(
     id bigserial primary key,
     file_name varchar not null unique,
-    master_id bigint references masters(id) unique
-);
+    master_id bigint references masters(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists teachers(
     id bigserial primary key,
@@ -48,8 +49,9 @@ create table if not exists teachers(
 create table if not exists images_teachers(
     id bigserial primary key,
     file_name varchar not null unique,
-    teacher_id bigint references teachers(id) unique
-);
+    teacher_id bigint references teachers(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists employees(
     id bigserial primary key,
@@ -64,8 +66,9 @@ create table if not exists employees(
 create table if not exists images_employees(
     id bigserial primary key,
     file_name varchar not null unique,
-    employee_id bigint references employees(id) unique
-);
+    employee_id bigint references employees(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists news(
     id bigserial primary key,
@@ -82,26 +85,30 @@ create table if not exists news(
 create table if not exists images_news_small(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id) unique
-);
+    news_id bigint references news(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists images_news_full(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id) unique
-);
+    news_id bigint references news(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists images_news(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id)
-);
+    news_id bigint references news(id),
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists videos_news(
     id bigserial primary key,
     file_name varchar not null unique,
-    news_id bigint references news(id) unique
-);
+    news_id bigint references news(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists course(
     id bigserial primary key,
@@ -112,14 +119,16 @@ create table if not exists course(
     description_kg varchar not null,
     price integer not null,
     date_started timestamp with time zone not null,
-    date_end timestamp with time zone not null
+    date_end timestamp with time zone not null,
+    active varchar not null default 'WORKING'
 );
 
 create table if not exists images_courses(
     id bigserial primary key,
     file_name varchar not null unique,
-    course_id bigint references course(id) unique
-);
+    course_id bigint references course(id) unique,
+    active varchar not null default 'WORKING'
+    );
 
 create table if not exists messages(
     id bigserial primary key,
@@ -128,5 +137,6 @@ create table if not exists messages(
     message varchar not null,
     date_created timestamp with time zone default now(),
     email varchar not null,
-    current_status varchar not null
-);
+    current_status varchar not null,
+    active varchar not null default 'WORKING'
+    );
