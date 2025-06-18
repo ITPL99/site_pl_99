@@ -14,6 +14,8 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Locale;
 
+
+// TODO: Настройть перехватчик ошибок (Почитать про AdviceControllerHandler)
 @Hidden
 @ControllerAdvice
 public class AdviceController {
