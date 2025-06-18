@@ -6,6 +6,7 @@ import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -21,13 +22,15 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ApplicationBootInitStartParam(
             UserRepository userRepository,
-            RoleRepository roleRepository
+            RoleRepository roleRepository, PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                 .setPassword("$2a$04$gkj/BP6UzLvrwsa/gZRuru/U/zjERZmb4a8P5SkLqPKnliOOD2z2G")
+                 .setPassword(passwordEncoder.encode("admin"))
                  .setUsername("admin")
                  .setRoles(roleEntitySet)
                  .setEmail("admin@admin.com");
