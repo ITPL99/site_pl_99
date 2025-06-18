@@ -1,13 +1,10 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.excaption.AuthorizeException;
 import com.example.site_pl_99.excaption.NotImplementedException;
-import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.security.JWTHandler;
-import com.example.site_pl_99.security.PasswordEncoderImpl;
 import com.example.site_pl_99.service.AuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

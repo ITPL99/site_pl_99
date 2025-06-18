@@ -1,6 +1,6 @@
 package com.example.site_pl_99.security;
 
-import com.example.site_pl_99.dto.RoleDTOResponse;
+
 import com.example.site_pl_99.entity.UserEntity;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -46,10 +46,7 @@ public class JWTHandler {
         UserEntity user = (UserEntity) userDetails;
         claims.put("id", user.getId());
         claims.put("username", user.getUsername());
-        claims.put("roles",
-                user.getRoleEntityList().stream()
-                .map(roleEntity -> new RoleDTOResponse().setTitle(roleEntity.getTitle()))
-                .toList());
+
 
         return Jwts.builder()
                 .claims()

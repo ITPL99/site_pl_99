@@ -4,15 +4,12 @@ import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.excaption.BaseException;
 import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.AuthService;
-import com.example.site_pl_99.utils.Internalization;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Locale;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

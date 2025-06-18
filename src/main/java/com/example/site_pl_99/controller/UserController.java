@@ -1,12 +1,10 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
-import com.example.site_pl_99.dto.UserDtoResponse;
 import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.excaption.BaseException;
 import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.UserService;
-import com.example.site_pl_99.utils.Internalization;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Locale;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -63,28 +61,28 @@ public class UserController {
     public ResponseEntity<?> getUserByLogin(@Parameter(description = "Принимает имя пользователя")@RequestParam String username) throws BaseException {
             return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.getByUsername(username)));
     }
-    @Operation(summary = "Вернут всех пользователей по дате создания",
-    description = "веррнет список аккаунтов по указанному дате создания")
-    @ApiResponses(value = {@ApiResponse(responseCode = "400",description = "некоректный ввод"),
-            @ApiResponse(responseCode = "200", description = "Успешно выполнено")})
-    @GetMapping("/get-all-by-create-time")
-    public ResponseEntity<?> getUsersByCreateTime(@Parameter(description = "Дата создания")@RequestParam LocalDateTime createTime) throws BaseException {
-            return ResponseEntity.ok(userService.getAllByCreateTime(createTime));
-    }
-    @Operation(summary = "Вернуть список аккаунтов по дате обнволения",
-    description = "Возвращает список аккаунтов по веденному дате обновления")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно выполнено"),@ApiResponse(responseCode = "400",description = "некоректный ввод")})
-
-    @GetMapping("/get-all-by-update-time")
-    public ResponseEntity<?> getUsersByUpdatedTime(@Parameter(description = "Дата обновления")@RequestParam LocalDateTime updateTime) throws BaseException {
-            return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAllByUpdatedTime(updateTime)));
-    }
-    @Operation(summary = "Вернуть список аккаунтов по ролям",
-    description = "Возвращает список аккаунтов по ведденой роли")
-    @ApiResponses(value = {@ApiResponse(responseCode = "400",description = "некоректный ввод"),
-            @ApiResponse(responseCode = "200", description = "Успешно выполнено")})
-    @GetMapping("/get-all-by-roles")
-    public ResponseEntity<?> getUsersByRoles(@Parameter(description = "Роль")@RequestParam String role) throws BaseException {
-            return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAllByUserRole(new RoleEntity().setTitle(role))));
-    }
+//    @Operation(summary = "Вернут всех пользователей по дате создания",
+//    description = "веррнет список аккаунтов по указанному дате создания")
+//    @ApiResponses(value = {@ApiResponse(responseCode = "400",description = "некоректный ввод"),
+//            @ApiResponse(responseCode = "200", description = "Успешно выполнено")})
+//    @GetMapping("/get-all-by-create-time")
+//    public ResponseEntity<?> getUsersByCreateTime(@Parameter(description = "Дата создания")@RequestParam LocalDateTime createTime) throws BaseException {
+//            return ResponseEntity.ok(userService.getAllByCreateTime(createTime));
+//    }
+//    @Operation(summary = "Вернуть список аккаунтов по дате обнволения",
+//    description = "Возвращает список аккаунтов по веденному дате обновления")
+//    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно выполнено"),@ApiResponse(responseCode = "400",description = "некоректный ввод")})
+//
+//    @GetMapping("/get-all-by-update-time")
+//    public ResponseEntity<?> getUsersByUpdatedTime(@Parameter(description = "Дата обновления")@RequestParam LocalDateTime updateTime) throws BaseException {
+//            return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAllByUpdatedTime(updateTime)));
+//    }
+//    @Operation(summary = "Вернуть список аккаунтов по ролям",
+//    description = "Возвращает список аккаунтов по ведденой роли")
+//    @ApiResponses(value = {@ApiResponse(responseCode = "400",description = "некоректный ввод"),
+//            @ApiResponse(responseCode = "200", description = "Успешно выполнено")})
+//    @GetMapping("/get-all-by-roles")
+//    public ResponseEntity<?> getUsersByRoles(@Parameter(description = "Роль")@RequestParam String role) throws BaseException {
+//            return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAllByUserRole(new RoleEntity())));
+//    }
 }

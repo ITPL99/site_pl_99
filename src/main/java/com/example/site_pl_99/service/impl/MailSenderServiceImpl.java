@@ -1,62 +1,51 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.dto.MessageDtoRequest;
-import com.example.site_pl_99.dto.MessageDtoResponse;
-import com.example.site_pl_99.entity.MessageEntity;
-import com.example.site_pl_99.entity.MessageStatus;
-import com.example.site_pl_99.excaption.MessageFailedToSendException;
-import com.example.site_pl_99.excaption.MessageIsNotFound;
-import com.example.site_pl_99.mapper.MessageMapper;
-import com.example.site_pl_99.repository.MessageRepository;
-import com.example.site_pl_99.repository.MessageStatusRepository;
+
 import com.example.site_pl_99.service.MailSenderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.activation.FileTypeMap;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+@Slf4j
 @Service
 public class MailSenderServiceImpl implements MailSenderService {
-    private final MessageRepository messageRepository;
-    private final MessageStatusRepository messageStatusRepository;
+
     @Value("${spring.mail.username}")
     private String mailName;
 
-    @Autowired
-    public MailSenderServiceImpl(MessageRepository messageRepository, MessageStatusRepository messageStatusRepository) {
-        this.messageRepository = messageRepository;
-        this.messageStatusRepository = messageStatusRepository;
+    private final JavaMailSender mailSender;
+
+    public MailSenderServiceImpl(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
     }
 
-    @Override
-    public MessageDtoResponse sendMessage(MessageDtoRequest messageDtoRequest) {
-        MessageEntity messageEntity = MessageMapper.toEntity(messageDtoRequest).setMail(mailName).setMessageStatus(messageStatusRepository.findById(3l).orElseThrow(() -> new MessageFailedToSendException("error.messageFailedToSend")));
-        return MessageMapper.toDtoResponse(messageRepository.save(messageEntity));
-    }
+
 
     @Override
-    public List<MessageDtoResponse> getAllMessages() {
-        return MessageMapper.toDtoResponseList(messageRepository.findAll());
+    public void sendMessage(String email, String title, String content, FileTypeMap... files) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        try {
+            mimeMessageHelper.setFrom(mailName);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(title);
+            if(files != null && files.length > 0) {
+                for (FileTypeMap fileTypeMap : files)
+                    mimeMessageHelper.setFileTypeMap(fileTypeMap);
+            }
+            mimeMessageHelper.setText(content);
+            mailSender.send(mimeMessage);
+        }catch (MessagingException e) {
+            log.error(e.getMessage());
+        }
+
+
     }
 
-    @Override
-    public MessageDtoResponse getMessageById(Long id) {
-        return MessageMapper.toDtoResponse(messageRepository.findById(id).orElseThrow(() -> new MessageIsNotFound("error.messageIsNotFound")));
-    }
 
-    @Override
-    public MessageDtoResponse updateMessageStatus(Long id, String status) {
-        MessageEntity messageEntity = messageRepository.findById(id).orElseThrow(() -> new MessageIsNotFound("error.messageIsNotFound"));
-        MessageStatus messageStatus = messageStatusRepository.findByStatusName(status).orElseThrow(() -> new MessageIsNotFound("error.status"));
-        messageEntity.setMessageStatus(messageStatus).setDateUpdated(LocalDateTime.now());
-        return MessageMapper.toDtoResponse(messageRepository.save(messageEntity));
-    }
-
-    @Override
-    public List<MessageDtoResponse> getAllMessagesByStatus(String status) {
-        MessageStatus messageStatus = messageStatusRepository.findByStatusName(status).orElseThrow(() -> new MessageIsNotFound("error.status"));
-        return MessageMapper.toDtoResponseList(messageRepository.findAllByMessageStatus(messageStatus));
-    }
 }
