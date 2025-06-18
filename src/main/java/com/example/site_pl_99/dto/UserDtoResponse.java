@@ -1,5 +1,10 @@
 package com.example.site_pl_99.dto;
 
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
+@RequiredArgsConstructor
 public class UserDtoResponse {
     private Long id;
     private String username;
