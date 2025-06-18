@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.CourseType;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 
@@ -9,65 +10,75 @@ import java.time.LocalDateTime;
 @Table(name = "course")
 @RequiredArgsConstructor
 public class CourseEntity extends BaseEntity {
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "description", nullable = false)
-    private String description;
-    @Column(name = "price")
-    private Long price;
-    @Column(name = "date_started")
+    @Column(name = "type", nullable = false)
+    private CourseType courseType;
+    @Column(name = "title_ru", nullable = false)
+    private String titleRu;
+    @Column(name = "title_kg", nullable = false)
+    private String titleKg;
+    @Column(name = "description_ru", nullable = false)
+    private String descriptionRu;
+    @Column(name = "description_kg", nullable = false)
+    private String descriptionKg;
+    @Column(name = "price", nullable = false)
+    private Integer price;
+    @Column(name = "date_started", nullable = false)
     private LocalDateTime dateStart;
-    @Column(name = "date_end")
+    @Column(name = "date_end", nullable = false)
     private LocalDateTime dateEnd;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "worker_id", referencedColumnName = "id")
-    private WorkerEntity worker;
-    @Column(name = "date_create")
-    private LocalDateTime dateCreated;
-    @Column(name = "date_updated")
-    private LocalDateTime dateUpdated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_create", referencedColumnName = "id")
-    private UserEntity userCreated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_updated", referencedColumnName = "id")
-    private UserEntity userUpdated;
-    @Column(name = "status_deleted")
-    private Boolean statusDeleted;
+    @OneToOne(mappedBy = "courseEntity", fetch = FetchType.EAGER)
+    private ImageCourseEntity imageCourse;
 
-    @PrePersist
-    public void prePersist() {
-        dateCreated = LocalDateTime.now();
-        dateUpdated = LocalDateTime.now();
-        statusDeleted = false;
+    public CourseType getCourseType() {
+        return courseType;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public CourseEntity setTitle(String title) {
-        this.title = title;
+    public CourseEntity setCourseType(CourseType courseType) {
+        this.courseType = courseType;
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitleRu() {
+        return titleRu;
     }
 
-    public CourseEntity setDescription(String description) {
-        this.description = description;
+    public CourseEntity setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
         return this;
     }
 
-    public Long getPrice() {
+    public String getTitleKg() {
+        return titleKg;
+    }
+
+    public CourseEntity setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
+        return this;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public CourseEntity setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+        return this;
+    }
+
+    public String getDescriptionKg() {
+        return descriptionKg;
+    }
+
+    public CourseEntity setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
+        return this;
+    }
+
+    public Integer getPrice() {
         return price;
     }
 
-    public CourseEntity setPrice(Long price) {
+    public CourseEntity setPrice(Integer price) {
         this.price = price;
         return this;
     }
@@ -90,66 +101,12 @@ public class CourseEntity extends BaseEntity {
         return this;
     }
 
-    public WorkerEntity getWorker() {
-        return worker;
+    public ImageCourseEntity getImageCourse() {
+        return imageCourse;
     }
 
-    public CourseEntity setWorker(WorkerEntity worker) {
-        this.worker = worker;
-        return this;
-    }
-
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
-    }
-
-    public CourseEntity setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-        return this;
-    }
-
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
-    }
-
-    public CourseEntity setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
-        return this;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public CourseEntity setUser(UserEntity user) {
-        this.user = user;
-        return this;
-    }
-
-    public UserEntity getUserCreated() {
-        return userCreated;
-    }
-
-    public CourseEntity setUserCreated(UserEntity userCreated) {
-        this.userCreated = userCreated;
-        return this;
-    }
-
-    public UserEntity getUserUpdated() {
-        return userUpdated;
-    }
-
-    public CourseEntity setUserUpdated(UserEntity userUpdated) {
-        this.userUpdated = userUpdated;
-        return this;
-    }
-
-    public Boolean getStatusDeleted() {
-        return statusDeleted;
-    }
-
-    public CourseEntity setStatusDeleted(Boolean statusDeleted) {
-        this.statusDeleted = statusDeleted;
+    public CourseEntity setImageCourse(ImageCourseEntity imageCourse) {
+        this.imageCourse = imageCourse;
         return this;
     }
 }

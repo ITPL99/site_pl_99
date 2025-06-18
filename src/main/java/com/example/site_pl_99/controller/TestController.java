@@ -24,7 +24,8 @@ public class TestController {
      */
     @GetMapping("/open-all")
     public String openAll() {
-        return "открыт для всех";
+        throw new RuntimeException("ertyuilo;lkjhgfds");
+//        return "открыт для всех";
     }
 
     /**
@@ -83,6 +84,7 @@ public class TestController {
     @PreAuthorize("hasAnyAuthority('GUEST', 'USER')")
     @GetMapping("/open-guest-user")
     public String openGuestUser() {
+
         return "открыт для guest-user";
     }
 

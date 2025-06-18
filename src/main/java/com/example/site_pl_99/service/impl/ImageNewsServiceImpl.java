@@ -8,12 +8,14 @@ import com.example.site_pl_99.service.MinIoService;
 import com.example.site_pl_99.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 
 @Service
+@PropertySource("classpath:min_io.properties")
 public class ImageNewsServiceImpl implements ImageNewsService {
     private final ImageNewsRepository imageNewsRepository;
     private final NewsService newsService;
