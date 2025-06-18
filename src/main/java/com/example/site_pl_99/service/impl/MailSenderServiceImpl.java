@@ -2,13 +2,7 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.dto.MessageDtoRequest;
 import com.example.site_pl_99.dto.MessageDtoResponse;
-import com.example.site_pl_99.entity.MessageEntity;
 import com.example.site_pl_99.entity.MessageStatus;
-import com.example.site_pl_99.excaption.MessageFailedToSendException;
-import com.example.site_pl_99.excaption.MessageIsNotFound;
-import com.example.site_pl_99.mapper.MessageMapper;
-import com.example.site_pl_99.repository.MessageRepository;
-import com.example.site_pl_99.repository.MessageStatusRepository;
 import com.example.site_pl_99.service.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
