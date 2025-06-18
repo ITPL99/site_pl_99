@@ -13,8 +13,5 @@ public interface UserService {
     UserEntity getByUsername(String username);
     UserEntity getById(Long id);
     List<UserEntity> getAll();
-    List<UserEntity> getAllByCreateTime(LocalDateTime createTime);
-    List<UserEntity> getAllByUpdatedTime(LocalDateTime updateTime);
-    List<UserEntity> getAllByUserRole(RoleEntity role);
     UserEntity save(UserDtoRequestRegister newUser);
 }

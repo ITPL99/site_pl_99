@@ -9,7 +9,6 @@ public class UserDtoResponse {
     private Long id;
     private String username;
     private String email;
-    private List<String> roles;
 
     public Long getId() {
         return id;
@@ -35,15 +34,6 @@ public class UserDtoResponse {
 
     public UserDtoResponse setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public UserDtoResponse setRoles(List<String> roles) {
-        this.roles = roles;
         return this;
     }
 }
