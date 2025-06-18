@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(info = @Info(
         title = "site_pl_99",
         version = "1.0",
+        // TODO: Добавить в описание дефолтных пользователей с паролями и логинами
         description = "API для сайта лицея"
 ))
 @SecurityScheme(

@@ -53,11 +53,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String parseJwt(HttpServletRequest request){
         final String authHeader = request.getHeader("Authorization");
-        log.info("------->>>>> {}", authHeader);
+
 
         if(Objects.nonNull(authHeader) ){
             if(authHeader.contains("Basic ")) {
-                log.info("Вернул  ------->>>>>  {}", authHeader);
                 throw  new AuthorizeException("Ошибка авторизации ");
             }
 

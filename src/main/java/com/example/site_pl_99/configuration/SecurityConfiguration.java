@@ -43,6 +43,7 @@ public class SecurityConfiguration {
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // TODO: Разобраться с настройками Секьюрити почему то выдает 403 или 401 ошибку на открытые эндпоинты
         http
 //                .httpBasic(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable)
