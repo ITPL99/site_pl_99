@@ -3,6 +3,7 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
 import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.excaption.AuthorizeException;
 import com.example.site_pl_99.excaption.UserNotFoundException;
 import com.example.site_pl_99.mapper.UserMapper;
@@ -38,8 +39,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity save(UserEntity entity) {
+        return userRepository.save(entity);
+    }
+
+    @Override
     public List<UserEntity> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error.userNotFound"));
+        userEntity.setActive(Active.DELETED);
+        userRepository.save(userEntity);
     }
 
 //    @Override
@@ -57,8 +70,5 @@ public class UserServiceImpl implements UserService {
 //        return userRepository.findAllByRoleEntityList(role).orElseThrow(()-> new UserNotFoundException("error.findUserByRole"));
 //    }
 
-    @Override
-    public UserEntity save(UserDtoRequestRegister newUser) {
-       return userRepository.save(UserMapper.toUserEntity(newUser));
-    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.Active;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +18,8 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "active")
-    private String active;
+    @Enumerated(EnumType.STRING)
+    private Active active;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     @ManyToMany(mappedBy = "userEntityList",fetch = FetchType.EAGER)
@@ -46,11 +48,11 @@ public class UserEntity extends BaseEntity implements UserDetails {
         return this;
     }
 
-    public String getActive() {
+    public Active getActive() {
         return active;
     }
 
-    public UserEntity setActive(String active) {
+    public UserEntity setActive(Active active) {
         this.active = active;
         return this;
     }

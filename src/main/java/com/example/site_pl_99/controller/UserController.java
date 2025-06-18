@@ -47,7 +47,7 @@ public class UserController {
     })
     @PostMapping("/add")
     public ResponseEntity<?> addNewUser(@Parameter(description = "Данные для регистраций") @RequestBody UserDtoRequestRegister userDtoRequestRegister) throws BaseException {
-            return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.save(userDtoRequestRegister)));
+            return ResponseEntity.ok(UserMapper.toUserDtoResponse(userService.save(UserMapper.toUserEntity(userDtoRequestRegister))));
     }
     @Operation(
             summary = "Вернуть пользователя по логину",
