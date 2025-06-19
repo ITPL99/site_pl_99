@@ -16,7 +16,7 @@ import java.io.InputStream;
 public class ImageServiceImpl implements ImageService {
     private final MinIoService minIoService;
     private final ImageRepository imageRepository;
-    @Value("${minio.bucket.name.imagesNews}")
+    @Value("${minio.bucket.name.images}")
     private String bucketName;
 
     public ImageServiceImpl(MinIoService minIoService, ImageRepository imageRepository) {

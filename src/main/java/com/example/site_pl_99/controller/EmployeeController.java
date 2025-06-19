@@ -22,87 +22,62 @@ public class EmployeeController  {
     }
 
     @PostMapping("/get-by-date-name")
-    public ResponseEntity<EmployeeDtoResponseRu> getFullName(@RequestParam String fullName) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapEntityToDtoResponse(employeeService.getFullName(fullName))
-        );
+    public ResponseEntity<?> getFullName(@RequestParam String fullName) {
+        return ResponseEntity.ok(EmployeeMapper.mapEntityToDtoResponse(employeeService.getFullName(fullName)));
     }
 
     @PostMapping("/get-by-date-containing-name")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesContentName(@RequestParam String fullName) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesContentName(fullName))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesContentName(@RequestParam String fullName) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesContentName(fullName).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @PostMapping("/get-by-date-date-berth")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesByDateBerth(@RequestParam LocalDate dateBerth) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesByDateBerth(dateBerth))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesByDateBerth(@RequestParam LocalDate dateBerth) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByDateBerth(dateBerth).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @PostMapping("/get-by-date-status")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesByStatusActive(@RequestParam Active status) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesByStatusActive(status))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesByStatusActive(@RequestParam Active status) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByStatusActive(status).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @PostMapping("/get-by-date-department")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesByDepartment(@RequestParam String department) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesByDepartment(department))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesByDepartment(@RequestParam String department) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByDepartment(department).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @PostMapping("/get-by-date-employment")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesByDateEmployment(@RequestParam LocalDate dateEmployment) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesByDateEmployment(dateEmployment))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesByDateEmployment(@RequestParam LocalDate dateEmployment) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByDateEmployment(dateEmployment).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @PostMapping("/get-by-date-dismissal")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAllEmployeesByDateDismissal(
-            @RequestParam LocalDate dateDismissal) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAllEmployeesByDateDismissal(dateDismissal))
-        );
+    public ResponseEntity<List<?>> getAllEmployeesByDateDismissal(@RequestParam LocalDate dateDismissal) {
+        return ResponseEntity.ok(employeeService.getAllEmployeesByDateDismissal(dateDismissal).stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getFullAll() {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getFullAll())
-        );
+    public ResponseEntity<List<?>> getFullAll() {
+        return ResponseEntity.ok(employeeService.getFullAll().stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
-    @PostMapping("/get-by-id")
-    public ResponseEntity<EmployeeDtoResponseRu> getById(@RequestParam Long id) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapEntityToDtoResponse(employeeService.getById(id))
-        );
+    @PostMapping("/get-by-id/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(EmployeeMapper.mapEntityToDtoResponse(employeeService.getById(id)));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<EmployeeDtoResponseRu> save(EmployeeDtoRequest entity) {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapEntityToDtoResponse(employeeService.save(
-                        EmployeeMapper.mapDtoToEntity( entity)
-                ))
-        );
+    public ResponseEntity<?> save(EmployeeDtoRequest entity) {
+        return ResponseEntity.ok(EmployeeMapper.mapEntityToDtoResponse(employeeService.save(EmployeeMapper.mapDtoToEntity(entity))));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<EmployeeDtoResponseRu>> getAll() {
-        return ResponseEntity.ok(
-                EmployeeMapper.mapAllEntityToDtoResponse(employeeService.getAll())
-        );
+    public ResponseEntity<List<?>> getAll() {
+        return ResponseEntity.ok(employeeService.getAll().stream().map(EmployeeMapper::mapEntityToDtoResponse).toList());
     }
 
-    @DeleteMapping("/delete")
-    public void deleteById( @RequestParam Long id) {
+    @DeleteMapping("/delete-by-id/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
         employeeService.deleteById(id);
     }
 }

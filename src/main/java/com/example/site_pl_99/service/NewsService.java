@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface NewsService extends BaseService<NewsEntity> {
     NewsEntity getTitle(String title);
-    Set<NewsEntity> getAllContentTitle(String title);
+    List<NewsEntity> getAllContentTitle(String title);
     List<NewsEntity> getAllContentSubTitle(String subTitle);
     List<NewsEntity> getAllActiveStatus(Active status);
 }

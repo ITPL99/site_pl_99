@@ -29,12 +29,6 @@ public class EmployeeMapper {
         dtoKg.setDateDismissal(employee.getDateDismissal());
         return dtoKg;
     }
-    public static List<EmployeeDtoResponseRu> mapAllEntityToDtoResponse(List<EmployeeEntity> allEmployeesContentName) {
-        return allEmployeesContentName.stream().map(EmployeeMapper::mapEntityToDtoResponse).collect(Collectors.toList());
-    }
-    public static List<EmployeeDtoResponseKg> mapAllEntityToDtoResponseKg(List<EmployeeEntity> allEmployeesContentName) {
-        return allEmployeesContentName.stream().map(EmployeeMapper::mapEntityToDtoResponseKg).collect(Collectors.toList());
-    }
 
     public static EmployeeEntity mapDtoToEntity(EmployeeDtoRequest entity) {
         EmployeeEntity employeeEntity = new EmployeeEntity();

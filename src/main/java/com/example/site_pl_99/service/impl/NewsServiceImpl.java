@@ -24,7 +24,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Set<NewsEntity> getAllContentTitle(String title) {
+    public List<NewsEntity> getAllContentTitle(String title) {
         return newsRepository.findAllByTitleRuContainingOrTitleKgContaining(title, title).orElseThrow(() -> new NotFoundException("Не найден"));
     }
 

@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface NewsRepository extends JpaRepository<NewsEntity, Long> {
     Optional<NewsEntity> findByTitleRuOrTitleKg(String titleRu, String titleKg);
-    Optional<Set<NewsEntity>> findAllByTitleRuContainingOrTitleKgContaining(String titleRu, String titleKg);
+    Optional<List<NewsEntity>> findAllByTitleRuContainingOrTitleKgContaining(String titleRu, String titleKg);
     Optional<List<NewsEntity>> findAllBySubTitleRuOrSubTitleKg(String subTitleRu, String subTitleKg);
     Optional<List<NewsEntity>> findAllByActive(Active active);
 }

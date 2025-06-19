@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>API Тестовая Страница</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        input, button { margin: 5px 0; padding: 8px; width: 100%; }
+        textarea, pre { width: 100%; min-height: 100px; margin-top: 10px; }
+        section { margin-bottom: 40px; border-bottom: 1px solid #ccc; padding-bottom: 20px; }
+    </style>
+</head>
+<body>
+<h1>🔐 API тестовая страница</h1>
+
+<!-- Login -->
+<section>
+    <h2>1. Вход (POST /api/auth/login)</h2>
+    <input type="text" id="login-username" placeholder="Имя пользователя">
+    <input type="password" id="login-password" placeholder="Пароль">
+    <button onclick="login()">Войти</button>
+    <textarea id="login-result" placeholder="Результат JWT токена" readonly></textarea>
+</section>
+
+<!-- Current User -->
+<section>
+    <h2>2. Текущий пользователь (GET /api/auth/current)</h2>
+    <input type="text" id="token-input" placeholder="JWT токен (автоматически подставляется)">
+    <button onclick="getCurrentUser()">Получить пользователя</button>
+    <pre id="current-user-result"></pre>
+</section>
+
+<!-- All Users -->
+<section>
+    <h2>3. Все пользователи (GET /api/user/all)</h2>
+    <button onclick="getAllUsers()">Получить список</button>
+    <pre id="all-users-result"></pre>
+</section>
+
+<!-- Add New User -->
+<section>
+    <h2>4. Добавить пользователя (POST /api/user/add)</h2>
+    <input type="text" id="new-username" placeholder="Имя пользователя">
+    <input type="password" id="new-password" placeholder="Пароль">
+    <input type="text" id="mail" placeholder="почта">
+    <input type="text" id="new-role" placeholder="Роль (например, USER)">
+    <button onclick="addUser()">Добавить</button>
+    <pre id="add-user-result"></pre>
+</section>
+
+<!-- Get User by Login -->
+<section>
+    <h2>5. Найти пользователя по логину (POST /api/user/get-login)</h2>
+    <input type="text" id="search-username" placeholder="Логин пользователя">
+    <button onclick="getUserByLogin()">Найти</button>
+    <pre id="find-user-result"></pre>
+</section>
+
+<script>
+    let savedToken = '';
+
+    async function login() {
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        const res = await fetch('http://localhost:8080/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ username, password })
+        });
+
+        const token = await res.text();
+        savedToken = token;
+        document.getElementById('token-input').value = token;
+        document.getElementById('login-result').value = token;
+    }
+
+    async function getCurrentUser() {
+        const token = document.getElementById('token-input').value;
+        const res = await fetch('http://localhost:8080/api/auth/current', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+        document.getElementById('current-user-result').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getAllUsers() {
+        const token = document.getElementById('token-input').value;
+
+        const res = await fetch('http://localhost:8080/api/user/all', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await res.json();
+        document.getElementById('all-users-result').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function addUser() {
+        const token = document.getElementById('token-input').value;
+        const username = document.getElementById('new-username').value;
+        const password = document.getElementById('new-password').value;
+        const role = document.getElementById('new-role').value;
+        const mail = document.getElementById('mail').value;
+
+        const res = await fetch('http://localhost:8080/api/user/add', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password, role, mail})
+        });
+
+        const data = await res.json();
+        document.getElementById('add-user-result').textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function getUserByLogin() {
+        const token = document.getElementById('token-input').value;
+        const username = document.getElementById('search-username').value;
+
+        const res = await fetch(`http://localhost:8080/api/user/get-login?username=${encodeURIComponent(username)}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await res.json();
+        document.getElementById('find-user-result').textContent = JSON.stringify(data, null, 2);
+    }
+</script>
+</body>
+</html>
