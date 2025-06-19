@@ -28,6 +28,9 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <docker.image.name>pl99-application:latest</docker.image.name>
+        <docker.from.image>openjdk:17-alpine</docker.from.image>
+        <docker.port>8080</docker.port>
     </properties>
     <dependencies>
         <dependency>
@@ -124,6 +127,47 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.42.0</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${docker.image.name}</name>
+                            <build>
+                                <from>${docker.from.image}</from>
+                                <assembly>
+                                    <descriptorRef>artifact</descriptorRef>
+                                </assembly>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>/maven/${project.build.finalName}.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <ports>
+                                    <port>${docker.port}</port>
+                                </ports>
+                                <env>
+                                    <JAR_FILE_NAME>${project.build.finalName}</JAR_FILE_NAME>
+                                </env>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>docker-build</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

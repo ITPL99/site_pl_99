@@ -3,9 +3,9 @@ package com.example.site_pl_99.controller;
 import com.example.site_pl_99.dto.CourseDtoAll;
 import com.example.site_pl_99.dto.CourseDtoResponse;
 import com.example.site_pl_99.dto.CourseDtoRequest;
-import com.example.site_pl_99.entity.CourseEntity;
-import com.example.site_pl_99.enums.CourseType;
 
+
+import com.example.site_pl_99.enums.CourseType;
 import com.example.site_pl_99.mapper.CourseMapper;
 import com.example.site_pl_99.service.CourseService;
 import org.springframework.http.ResponseEntity;

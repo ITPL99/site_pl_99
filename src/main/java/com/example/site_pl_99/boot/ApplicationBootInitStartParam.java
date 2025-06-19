@@ -2,6 +2,7 @@ package com.example.site_pl_99.boot;
 
 import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -41,6 +42,7 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
+//                    .setActive(Active.NEW)
                  .setPassword(passwordEncoder.encode("admin"))
                  .setUsername("admin")
                  .setRoles(roleEntitySet)
