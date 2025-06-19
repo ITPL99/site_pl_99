@@ -21,4 +21,76 @@ public class CourseEntity extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "image_id")
     private ImageEntity image;
+
+    public CourseType getType(){
+        return type;
+    }
+
+    public void setType(CourseType type) {
+        this.type = type;
+    }
+
+    public String getTitleRu() {
+        return titleRu;
+    }
+
+    public void setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
+    }
+
+    public String getTitleKg() {
+        return titleKg;
+    }
+
+    public void setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+    public String getDescriptionKg() {
+        return descriptionKg;
+    }
+
+    public void setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public LocalDate getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
+    }
 }

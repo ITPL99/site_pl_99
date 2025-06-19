@@ -4,16 +4,14 @@ import com.example.site_pl_99.enums.CourseType;
 
 import java.time.LocalDate;
 
-public class CourseDtoRequest {
+public class CourseDtoResponseRu {
     private CourseType courseType;
-    private String titleKg;
     private String titleRu;
-    private String descriptionKg;
     private String descriptionRu;
     private Double price;
-    private long imageId;
     private LocalDate dateStart;
     private LocalDate dateEnd;
+    private long imageId;
 
     public LocalDate getDateStart() {
         return dateStart;
@@ -21,14 +19,6 @@ public class CourseDtoRequest {
 
     public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
-    }
-
-    public LocalDate getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
     }
 
     public CourseType getCourseType() {
@@ -39,28 +29,12 @@ public class CourseDtoRequest {
         this.courseType = courseType;
     }
 
-    public String getTitleKg() {
-        return titleKg;
-    }
-
-    public void setTitleKg(String titleKg) {
-        this.titleKg = titleKg;
-    }
-
     public String getTitleRu() {
         return titleRu;
     }
 
     public void setTitleRu(String titleRu) {
         this.titleRu = titleRu;
-    }
-
-    public String getDescriptionKg() {
-        return descriptionKg;
-    }
-
-    public void setDescriptionKg(String descriptionKg) {
-        this.descriptionKg = descriptionKg;
     }
 
     public String getDescriptionRu() {
@@ -77,6 +51,14 @@ public class CourseDtoRequest {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public long getImageId() {

@@ -1,7 +1,12 @@
 package com.example.site_pl_99.service;
 
 import com.example.site_pl_99.entity.ImageEntity;
+import org.springframework.web.multipart.MultipartFile;
 
-public interface ImageService extends BaseService<ImageEntity> {
-    ImageEntity getByFileName(String fileName);
+import java.io.InputStream;
+
+public interface ImageService{
+    InputStream getById(Long id);
+    ImageEntity save(ImageEntity entity, MultipartFile file);
+    String getContentType(Long id);
 }

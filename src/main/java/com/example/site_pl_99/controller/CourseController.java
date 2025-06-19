@@ -1,9 +1,8 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.CourseDtoAll;
-import com.example.site_pl_99.dto.CourseDtoResponse;
+import com.example.site_pl_99.dto.CourseDtoResponseRu;
 import com.example.site_pl_99.dto.CourseDtoRequest;
-import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.CourseType;
 
 import com.example.site_pl_99.mapper.CourseMapper;
@@ -24,13 +23,14 @@ public class CourseController  {
         this.courseService = courseService;
     }
 
-    public ResponseEntity<CourseDtoResponse> getByTitle(String title) {
+    @GetMapping("/get-by-title")
+    public ResponseEntity<CourseDtoResponseRu> getByTitle(@RequestParam String title) {
         return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.getByTitle(title)));
     }
 
-
-    public ResponseEntity<List<CourseDtoAll>> getAllCourseByType(CourseType type) {
-        return ResponseEntity.ok(null);
+    @GetMapping("/get-all-by-type")
+    public ResponseEntity<List<CourseDtoResponseRu>> getAllCourseByType(CourseType type) {
+        return ResponseEntity.ok(courseService.getAllCourseByType(type).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
     }
 
     public ResponseEntity<List<CourseDtoAll>> getAllCourseByPrice(Double price) {
@@ -45,11 +45,11 @@ public class CourseController  {
         return ResponseEntity.ok(null);
     }
 
-    public ResponseEntity<CourseDtoResponse> getById(Long id) {
+    public ResponseEntity<CourseDtoResponseRu> getById(Long id) {
         return ResponseEntity.ok(null);
     }
 
-    public ResponseEntity<CourseDtoResponse> save(CourseDtoRequest entity) {
+    public ResponseEntity<CourseDtoResponseRu> save(CourseDtoRequest entity) {
         return ResponseEntity.ok(null);
     }
 
