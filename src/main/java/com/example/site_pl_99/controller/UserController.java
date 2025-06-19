@@ -1,7 +1,7 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.UserDtoRequestRegister;
-import com.example.site_pl_99.entity.RoleEntity;
+
 import com.example.site_pl_99.excaption.BaseException;
 import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.UserService;
@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

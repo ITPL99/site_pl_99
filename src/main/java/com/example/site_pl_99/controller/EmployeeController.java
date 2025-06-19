@@ -21,7 +21,7 @@ public class EmployeeController  {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/get-by-date-containing-name")
+    @PostMapping("/get-by-date-name")
     public ResponseEntity<EmployeeDtoResponse> getFullName(@RequestParam String fullName) {
         return ResponseEntity.ok(
                 EmployeeMapper.mapEntityToDtoResponse(employeeService.getFullName(fullName))
@@ -101,7 +101,7 @@ public class EmployeeController  {
         );
     }
 
-    @DeleteMapping("/delete}")
+    @DeleteMapping("/delete")
     public void deleteById( @RequestParam Long id) {
         employeeService.deleteById(id);
     }
