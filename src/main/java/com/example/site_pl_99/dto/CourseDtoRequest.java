@@ -5,37 +5,21 @@ import com.example.site_pl_99.enums.CourseType;
 import java.time.LocalDate;
 
 public class CourseDtoRequest {
-    private CourseType courseType;
+    private String courseType;
     private String titleKg;
     private String titleRu;
     private String descriptionKg;
     private String descriptionRu;
     private Double price;
-    private long imageId;
+    private ImageDto image;
     private LocalDate dateStart;
     private LocalDate dateEnd;
 
-    public LocalDate getDateStart() {
-        return dateStart;
-    }
-
-    public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public LocalDate getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public CourseType getCourseType() {
+    public String getCourseType() {
         return courseType;
     }
 
-    public void setCourseType(CourseType courseType) {
+    public void setCourseType(String courseType) {
         this.courseType = courseType;
     }
 
@@ -79,11 +63,27 @@ public class CourseDtoRequest {
         this.price = price;
     }
 
-    public long getImageId() {
-        return imageId;
+    public ImageDto getImage() {
+        return image;
     }
 
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
+    public void setImage(ImageDto image) {
+        this.image = image;
+    }
+
+    public LocalDate getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 }

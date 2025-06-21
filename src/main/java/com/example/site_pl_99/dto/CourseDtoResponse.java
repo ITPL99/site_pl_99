@@ -4,37 +4,37 @@ import com.example.site_pl_99.enums.CourseType;
 
 import java.time.LocalDate;
 
-public class CourseDtoResponseKg {
-    private CourseType courseType;
-    private String titleKg;
-    private String descriptionKg;
+public class CourseDtoResponse {
+    private String courseType;
+    private String title;
+    private String description;
     private Double price;
     private LocalDate dateStart;
     private LocalDate dateEnd;
-    private long imageId;
+    private String imageFileName;
 
-    public CourseType getCourseType() {
+    public String getCourseType() {
         return courseType;
     }
 
-    public void setCourseType(CourseType courseType) {
+    public void setCourseType(String courseType) {
         this.courseType = courseType;
     }
 
-    public String getTitleKg() {
-        return titleKg;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitleKg(String titleKg) {
-        this.titleKg = titleKg;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getDescriptionKg() {
-        return descriptionKg;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionKg(String descriptionKg) {
-        this.descriptionKg = descriptionKg;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getPrice() {
@@ -61,11 +61,11 @@ public class CourseDtoResponseKg {
         this.dateEnd = dateEnd;
     }
 
-    public long getImageId() {
-        return imageId;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 }
