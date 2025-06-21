@@ -43,11 +43,13 @@ public class SecurityConfiguration {
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // TODO: Разобраться с настройками Секьюрити почему то выдает 403 или 401 ошибку на открытые эндпоинты
         http
 //                .httpBasic(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/employee/get-all").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/api/test/open-all").permitAll()
                         .requestMatchers(

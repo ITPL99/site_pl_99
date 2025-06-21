@@ -1,76 +1,70 @@
 package com.example.site_pl_99.controller;
 
+import com.example.site_pl_99.dto.CourseDtoResponseRu;
 import com.example.site_pl_99.dto.CourseDtoRequest;
-import com.example.site_pl_99.excaption.BaseException;
+import com.example.site_pl_99.enums.CourseType;
+
 import com.example.site_pl_99.mapper.CourseMapper;
-import com.example.site_pl_99.service.AuthService;
 import com.example.site_pl_99.service.CourseService;
-import com.example.site_pl_99.utils.Internalization;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Locale;
-@Tag(name = "Контроллер Курсов")
-@RestController
-@RequestMapping("/api/courses")
-@SecurityRequirement(name = "bearerAuth")
-public class CourseController {
-    private final CourseService courseService;
-    private final AuthService authService;
+import java.time.LocalDate;
+import java.util.List;
 
-    public CourseController(CourseService courseService, AuthService authService) {
+import static java.util.stream.Collectors.toList;
+
+@RestController
+@RequestMapping("/api/course")
+public class CourseController  {
+    private final CourseService courseService;
+
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-        this.authService = authService;
     }
-    @Operation(
-            summary = "Добавить курс",
-            description ="Создает новый курс для указанного работника, принимает данные курса в теле запроса"
-    )
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Курс добавлен"),
-    @ApiResponse(responseCode = "400",description = "Некорректный ввод"),
-            @ApiResponse(responseCode = "403", description = "Недостаточно прав для созданий курса")
-    })
-    @PostMapping("/add-course")
-    public ResponseEntity<?> addNewCourse(@Parameter(description = "Данные курса")@RequestBody CourseDtoRequest courseDtoRequest,
-                                          @Parameter(description = "Id работника который создает курс") @RequestParam Long workerId) throws BaseException {
-            return ResponseEntity.ok(CourseMapper.toCourseDtoResponse(courseService.saveCourse(courseDtoRequest, workerId, authService.getCurrentUser())));
+
+    @GetMapping("/get-by-title")
+    public ResponseEntity<?> getByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.getByTitle(title)));
     }
-    @Operation(
-            summary = "Вернуть курс по айди",
-            description = "Возвращает курс по указанному Id "
-    )
-    @ApiResponses(value = {@ApiResponse(responseCode = "200",description = "Курс найден"),
-            @ApiResponse(responseCode = "404", description = "Курс не найден"),
-            @ApiResponse(responseCode = "400", description = "Некоректный ввод")})
+
+    @GetMapping("/get-all-by-type")
+    public ResponseEntity<List<?>> getAllCourseByType(@RequestParam CourseType type) {
+        return ResponseEntity.ok(courseService.getAllCourseByType(type).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    }
+
+    @GetMapping("/get-all-by-price")
+    public ResponseEntity<List<?>> getAllCourseByPrice(@RequestParam Double price) {
+        return ResponseEntity.ok(courseService.getAllCourseByPrice(price).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    }
+
+    @GetMapping("/get-all-by-date-start")
+    public ResponseEntity<List<?>> getAllCourseByDateStart(@RequestParam LocalDate dateStart) {
+        return ResponseEntity.ok(courseService.getAllCourseByDateStart(dateStart).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    }
+
+    @GetMapping("/get-all-by-date-end")
+    public ResponseEntity<List<?>> getAllCourseByDateEnd(@RequestParam LocalDate dateEnd) {
+        return ResponseEntity.ok(courseService.getAllCourseByDateEnd(dateEnd).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    }
+
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getCourseById(@Parameter(description = "Id курса") @PathVariable Long id) throws BaseException {
-            return ResponseEntity.ok(CourseMapper.toCourseDtoResponse(courseService.getCourseId(id)));
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.getById(id)));
     }
-    @Operation(
-            summary = "Возвращает лист курсов",
-            description = "Возвращает все добавленные курсы ввиде списка"
-    )
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно")})
+
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody CourseDtoRequest entity) {
+        return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.save(CourseMapper.toEntity(entity))));
+    }
+
     @GetMapping("/get-all")
-    public ResponseEntity<?> getAllCourses() throws BaseException {
-            return ResponseEntity.ok(CourseMapper.toCourseDtoRequestList(courseService.getAllCourse()));
+    public ResponseEntity<List<?>> getAll() {
+        return ResponseEntity.ok(courseService.getAll().stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
     }
-    @Operation(
-            summary = "Вернуть курс по Id пользователя",
-            description = "Возвращет список всех созданных курсов указанным пользователем "
-    )
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Успешно"),
-    @ApiResponse(responseCode = "404", description = "Курс не найден"),
-    @ApiResponse(responseCode = "400", description = "Некоректный ввод")})
-    @GetMapping("/get-by-user/{id}")
-    public ResponseEntity<?> getByUser(@Parameter(description = "Id пользовавателя")@PathVariable Long id) throws BaseException {
-            return ResponseEntity.ok(CourseMapper.toCourseDtoRequestList(courseService.getCourseByUser(id)));
+
+    @DeleteMapping("/delete-by-id/{id}")
+    public void deleteById(@PathVariable("id") Long id) {
+        courseService.deleteById(id);
     }
 }

@@ -1,15 +1,14 @@
 package com.example.site_pl_99.service;
 
-import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.entity.NewsEntity;
-import com.example.site_pl_99.entity.UserEntity;
+import com.example.site_pl_99.enums.Active;
 
 import java.util.List;
+import java.util.Set;
 
-public interface NewsService {
-    NewsEntity saveNews(NewsDtoRequest newsDtoRequest, UserEntity user);
-    NewsEntity saveNews(NewsEntity newsEntity);
-    NewsEntity getNewsId(Long id);
-    List<NewsEntity> getAllNews();
-   List<NewsEntity> getNewsByUser(UserEntity user);
+public interface NewsService extends BaseService<NewsEntity> {
+    NewsEntity getTitle(String title);
+    List<NewsEntity> getAllContentTitle(String title);
+    List<NewsEntity> getAllContentSubTitle(String subTitle);
+    List<NewsEntity> getAllActiveStatus(Active status);
 }

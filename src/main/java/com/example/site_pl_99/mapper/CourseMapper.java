@@ -1,45 +1,41 @@
 package com.example.site_pl_99.mapper;
 
 import com.example.site_pl_99.dto.CourseDtoRequest;
-import com.example.site_pl_99.dto.CourseDtoResponse;
+import com.example.site_pl_99.dto.CourseDtoResponseKg;
+import com.example.site_pl_99.dto.CourseDtoResponseRu;
 import com.example.site_pl_99.entity.CourseEntity;
-import com.example.site_pl_99.entity.UserEntity;
-import com.example.site_pl_99.entity.WorkerEntity;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class CourseMapper {
-
-    public static CourseEntity toCourseEntity(CourseDtoRequest courseDtoRequest, UserEntity userEntity, WorkerEntity workerEntity) {
-        return new CourseEntity().setTitle(courseDtoRequest.getTitle())
-                .setDescription(courseDtoRequest.getDescription())
-                .setPrice(courseDtoRequest.getPrice())
-                .setDateStart(courseDtoRequest.getDateStart())
-                .setDateEnd(courseDtoRequest.getDateEnd())
-                .setWorker(workerEntity)
-                .setUser(userEntity)
-                .setUserCreated(userEntity)
-                .setUserUpdated(userEntity);
+    public static CourseEntity toEntity(CourseDtoRequest request){
+        CourseEntity courseEntity = new CourseEntity();
+        courseEntity.setType(request.getCourseType());
+        courseEntity.setTitleRu(request.getTitleRu());
+        courseEntity.setTitleKg(request.getTitleKg());
+        courseEntity.setDescriptionRu(request.getDescriptionRu());
+        courseEntity.setDescriptionKg(request.getDescriptionKg());
+        courseEntity.setPrice(request.getPrice());
+        return courseEntity;
     }
 
-    public static CourseDtoResponse toCourseDtoResponse(CourseEntity courseEntity) {
-        CourseDtoResponse courseDtoResponse = new CourseDtoResponse().setId(courseEntity.getId())
-                .setTitle(courseEntity.getTitle())
-                .setDescription(courseEntity.getDescription())
-                .setPrice(courseEntity.getPrice())
-                .setDateStart(courseEntity.getDateStart())
-                .setDateEnd(courseEntity.getDateEnd());
-                if(Objects.nonNull(courseEntity.getWorker())) courseDtoResponse.setWorkerId(courseEntity.getWorker().getId())
-                .setDateCreated(courseEntity.getDateCreated())
-                .setDateUpdated(courseEntity.getDateUpdated())
-                .setUserId(courseEntity.getUser().getId())
-                .setUserIdUpdated(courseEntity.getUserUpdated().getId());
-                return courseDtoResponse;
-    }
 
-    public static List<CourseDtoResponse> toCourseDtoRequestList(List<CourseEntity> courseEntityList) {
-        return courseEntityList.stream().map(CourseMapper::toCourseDtoResponse).collect(Collectors.toList());
+    public static CourseDtoResponseRu mapEntityToDtoResponse(CourseEntity byTitle) {
+        CourseDtoResponseRu courseDtoResponse = new CourseDtoResponseRu();
+        courseDtoResponse.setCourseType(byTitle.getType());
+        courseDtoResponse.setTitleRu(byTitle.getTitleRu());
+        courseDtoResponse.setDescriptionRu(byTitle.getDescriptionRu());
+        courseDtoResponse.setPrice(byTitle.getPrice());
+        courseDtoResponse.setDateStart(byTitle.getDateStart());
+        courseDtoResponse.setDateEnd(byTitle.getDateEnd());
+        return courseDtoResponse;
+    }
+    public static CourseDtoResponseKg CourseDtoResponseKg(CourseEntity entity){
+        CourseDtoResponseKg courseDtoResponseKg = new CourseDtoResponseKg();
+        courseDtoResponseKg.setCourseType(entity.getType());
+        courseDtoResponseKg.setTitleKg(entity.getTitleKg());
+        courseDtoResponseKg.setDescriptionKg(entity.getDescriptionKg());
+        courseDtoResponseKg.setPrice(entity.getPrice());
+        courseDtoResponseKg.setDateStart(entity.getDateStart());
+        courseDtoResponseKg.setDateEnd(entity.getDateEnd());
+        return courseDtoResponseKg;
     }
 }

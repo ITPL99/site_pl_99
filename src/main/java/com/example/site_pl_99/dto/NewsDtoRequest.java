@@ -1,30 +1,69 @@
 package com.example.site_pl_99.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.RequiredArgsConstructor;
-@Schema(description = "DTO-запрос с информацией о новостях")
-@RequiredArgsConstructor
+import java.util.List;
+
 public class NewsDtoRequest {
-    @Schema(description = "Заголовок новости", example = "Важное обновление на сайте")
     private String title;
-    @Schema(description = "Описание новостей", example = "Сегодня мы запустили новую версию сайта")
+    private String subTitle;
     private String description;
+    private long imageSmallId;
+    private long imageFullId;
+    private List<Long> imagesId;
+    private long VideoId;
 
     public String getTitle() {
         return title;
     }
 
-    public NewsDtoRequest setTitle(String title) {
+    public void setTitle(String title) {
         this.title = title;
-        return this;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public NewsDtoRequest setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
-        return this;
+    }
+
+    public long getImageSmallId() {
+        return imageSmallId;
+    }
+
+    public void setImageSmallId(long imageSmallId) {
+        this.imageSmallId = imageSmallId;
+    }
+
+    public long getImageFullId() {
+        return imageFullId;
+    }
+
+    public void setImageFullId(long imageFullId) {
+        this.imageFullId = imageFullId;
+    }
+
+    public List<Long> getImagesId() {
+        return imagesId;
+    }
+
+    public void setImagesId(List<Long> imagesId) {
+        this.imagesId = imagesId;
+    }
+
+    public long getVideoId() {
+        return VideoId;
+    }
+
+    public void setVideoId(long videoId) {
+        VideoId = videoId;
     }
 }

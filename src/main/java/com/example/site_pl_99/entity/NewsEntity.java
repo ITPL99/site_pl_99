@@ -1,135 +1,145 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.Active;
 import jakarta.persistence.*;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "news")
-@RequiredArgsConstructor
 public class NewsEntity extends BaseEntity {
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "description", nullable = false)
-    private String description;
-    @Column(name = "date_created")
-    private LocalDateTime dateCreated;
-    @Column(name = "date_updated")
-    private LocalDateTime dateUpdated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_create", referencedColumnName = "id")
-    private UserEntity userCreated;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_updated", referencedColumnName = "id")
-    private UserEntity userUpdated;
-    @OneToMany(mappedBy = "newsEntity",fetch = FetchType.EAGER)
-    private List<ImageNewsEntity> images;
-    @OneToMany(mappedBy = "newsEntity",fetch = FetchType.EAGER)
-    private List<VideoNewsEntity> videos;
-    @Column(name = "status_deleted")
-    private Boolean statusDeleted;
 
-    @PrePersist
-    public void prePersist() {
-        dateCreated = LocalDateTime.now();
-        dateUpdated = LocalDateTime.now();
-        statusDeleted = false;
+    private String titleRu;
+    private String titleKg;
+    private String subTitleRu;
+    private String subTitleKg;
+    private String descriptionRu;
+    private String descriptionKg;
+    private LocalDateTime dateCreate;
+    @OneToOne
+    @JoinColumn(name = "image_small")
+    private ImageEntity imageSmall;
+    @OneToOne
+    @JoinColumn(name = "image_full")
+    private ImageEntity imageFull;
+
+    @OneToMany
+    @JoinColumn(name = "image_content")
+    private List<ImageEntity> images;
+
+    @OneToOne
+   @JoinColumn(name = "video_content")
+    private VideoEntity video;
+
+    @Enumerated(EnumType.STRING)
+    private Active active;
+
+    public String getTitleRu() {
+        return titleRu;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public NewsEntity setTitle(String title) {
-        this.title = title;
+    public NewsEntity setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitleKg() {
+        return titleKg;
     }
 
-    public NewsEntity setDescription(String description) {
-        this.description = description;
+    public NewsEntity setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
         return this;
     }
 
-    public LocalDateTime getDateCreated() {
-        return dateCreated;
+    public String getSubTitleRu() {
+        return subTitleRu;
     }
 
-    public NewsEntity setDateCreated(LocalDateTime dateCreated) {
-        this.dateCreated = dateCreated;
+    public NewsEntity setSubTitleRu(String subTitleRu) {
+        this.subTitleRu = subTitleRu;
         return this;
     }
 
-    public LocalDateTime getDateUpdated() {
-        return dateUpdated;
+    public String getSubTitleKg() {
+        return subTitleKg;
     }
 
-    public NewsEntity setDateUpdated(LocalDateTime dateUpdated) {
-        this.dateUpdated = dateUpdated;
+    public NewsEntity setSubTitleKg(String subTitleKg) {
+        this.subTitleKg = subTitleKg;
         return this;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getDescriptionRu() {
+        return descriptionRu;
     }
 
-    public NewsEntity setUser(UserEntity user) {
-        this.user = user;
+    public NewsEntity setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
         return this;
     }
 
-    public UserEntity getUserCreated() {
-        return userCreated;
+    public String getDescriptionKg() {
+        return descriptionKg;
     }
 
-    public NewsEntity setUserCreated(UserEntity userCreated) {
-        this.userCreated = userCreated;
+    public NewsEntity setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
         return this;
     }
 
-    public UserEntity getUserUpdated() {
-        return userUpdated;
+    public LocalDateTime getDateCreate() {
+        return dateCreate;
     }
 
-    public NewsEntity setUserUpdated(UserEntity userUpdated) {
-        this.userUpdated = userUpdated;
+    public NewsEntity setDateCreate(LocalDateTime dateCreate) {
+        this.dateCreate = dateCreate;
         return this;
     }
 
-    public Boolean getStatusDeleted() {
-        return statusDeleted;
+    public ImageEntity getImageSmall() {
+        return imageSmall;
     }
 
-    public NewsEntity setStatusDeleted(Boolean statusDeleted) {
-        this.statusDeleted = statusDeleted;
+    public NewsEntity setImageSmall(ImageEntity imageSmall) {
+        this.imageSmall = imageSmall;
         return this;
     }
 
-    public List<ImageNewsEntity> getImages() {
+    public ImageEntity getImageFull() {
+        return imageFull;
+    }
+
+    public NewsEntity setImageFull(ImageEntity imageFull) {
+        this.imageFull = imageFull;
+        return this;
+    }
+
+    public List<ImageEntity> getImages() {
         return images;
     }
 
-    public NewsEntity setImages(List<ImageNewsEntity> images) {
+    public NewsEntity setImages(List<ImageEntity> images) {
         this.images = images;
         return this;
     }
 
-    public List<VideoNewsEntity> getVideos() {
-        return videos;
+    public VideoEntity getVideo() {
+        return video;
     }
 
-    public NewsEntity setVideos(List<VideoNewsEntity> videos) {
-        this.videos = videos;
+    public NewsEntity setVideo(VideoEntity video) {
+        this.video = video;
         return this;
     }
 
+    public Active getActive() {
+        return active;
+    }
 
+    public NewsEntity setActive(Active active) {
+        this.active = active;
+        return this;
+    }
 }

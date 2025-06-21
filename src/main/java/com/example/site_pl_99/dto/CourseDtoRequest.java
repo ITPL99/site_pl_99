@@ -1,65 +1,89 @@
 package com.example.site_pl_99.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.RequiredArgsConstructor;
+import com.example.site_pl_99.enums.CourseType;
 
-import java.time.LocalDateTime;
-@Schema(description = "DTO-запрос с информацией об курсах")
-@RequiredArgsConstructor
+import java.time.LocalDate;
+
 public class CourseDtoRequest {
-    @Schema(description = "Заголовок курса",example = "Английский язык")
-    private String title;
-    @Schema(description = "Описание курсов",example = "Обучение до B1 уровня")
-    private String description;
-    @Schema(description = "Цена курса",example = "2000")
-    private Long price;
-    @Schema(description = "Дата начала курса", example = "2025-09-01T10:00:00")
-    private LocalDateTime dateStart;
-    @Schema(description = "Дата окончания курса", example = "2025-12-01T18:00:00")
-    private LocalDateTime dateEnd;
+    private CourseType courseType;
+    private String titleKg;
+    private String titleRu;
+    private String descriptionKg;
+    private String descriptionRu;
+    private Double price;
+    private long imageId;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public CourseDtoRequest setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public CourseDtoRequest setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public CourseDtoRequest setPrice(Long price) {
-        this.price = price;
-        return this;
-    }
-
-    public LocalDateTime getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public CourseDtoRequest setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
-        return this;
     }
 
-    public LocalDateTime getDateEnd() {
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
 
-    public CourseDtoRequest setDateEnd(LocalDateTime dateEnd) {
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
-        return this;
+    }
+
+    public CourseType getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(CourseType courseType) {
+        this.courseType = courseType;
+    }
+
+    public String getTitleKg() {
+        return titleKg;
+    }
+
+    public void setTitleKg(String titleKg) {
+        this.titleKg = titleKg;
+    }
+
+    public String getTitleRu() {
+        return titleRu;
+    }
+
+    public void setTitleRu(String titleRu) {
+        this.titleRu = titleRu;
+    }
+
+    public String getDescriptionKg() {
+        return descriptionKg;
+    }
+
+    public void setDescriptionKg(String descriptionKg) {
+        this.descriptionKg = descriptionKg;
+    }
+
+    public String getDescriptionRu() {
+        return descriptionRu;
+    }
+
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(long imageId) {
+        this.imageId = imageId;
     }
 }

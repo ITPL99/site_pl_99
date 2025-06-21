@@ -6,6 +6,7 @@ import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -13,19 +14,23 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
+// TODO: На продакшен убрать удалить данный класс
 @Profile({"develop","local","test"})
 @Component
 public class ApplicationBootInitStartParam implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ApplicationBootInitStartParam(
             UserRepository userRepository,
-            RoleRepository roleRepository
+            RoleRepository roleRepository, PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,67 +41,10 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-                 .setPassword("$2a$04$gkj/BP6UzLvrwsa/gZRuru/U/zjERZmb4a8P5SkLqPKnliOOD2z2G")
+                 .setPassword(passwordEncoder.encode("admin"))
                  .setUsername("admin")
-                 .setRoleEntityList(roleEntitySet)
-                 .setMail("admin@admin.com");
-            userRepository.save(admin);
-        }
-
-        if(userRepository.findByUsername("guest").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setPassword("$2a$04$7U.0RKQNnRkz1OqJaojHL..z9Ll2UTg.3pc.x3Xuulvw5upn8mxly")
-                    .setUsername("guest")
-                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("GUEST")).toList())
-                            .setMail("guest@guest.com");
-            userRepository.save(admin);
-        }
-
-        if(userRepository.findByUsername("user").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setPassword("$2a$04$5indimnTZCLKPAUBmtpEG.jEpsjzWPTGU89n2syyGwdm8l7OKaq4a")
-                    .setUsername("user")
-                    .setRoleEntityList(roleEntitySet.stream().filter(x->x.getTitle().equals("USER")).toList())
-                            .setMail("user@user.com");
-            userRepository.save(admin);
-        }
-
-        if(userRepository.findByUsername("user-guest").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setPassword("$2a$04$qAwZSoRuSJQ1qwMHjoOZs.WGGG8SwRvg5ykdHv/VMZsDbdLtwtIWe")
-                    .setUsername("user-guest")
-                    .setRoleEntityList(
-                            roleEntitySet.stream()
-                                    .filter(x->x.getTitle().equals("USER") || x.getTitle().equals("GUEST") )
-                                    .toList())
-                            .setMail("user-guest@guest.com");
-            userRepository.save(admin);
-        }
-        if(userRepository.findByUsername("admin-guest").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setPassword("$2a$04$EpZ6YO3NHHTG9aqmiQSwU.wXSu2IRDkI4JBkStTcnYmC/RT7icdsy")
-                    .setUsername("admin-guest")
-                    .setRoleEntityList(
-                            roleEntitySet.stream()
-                                    .filter(x->x.getTitle().equals("ADMIN") || x.getTitle().equals("GUEST") )
-                                    .toList())
-                            .setMail("admin-guest@admin.com");
-            userRepository.save(admin);
-        }
-        if(userRepository.findByUsername("admin-user").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setPassword("$2a$04$OFIedzNScUNbyJWp12QGteqEmUbYLfuxdzwWlrF9x5MW2XSXLqbGa")
-                    .setUsername("admin-user")
-                    .setRoleEntityList(
-                            roleEntitySet.stream()
-                                    .filter(x->x.getTitle().equals("ADMIN") || x.getTitle().equals("USER") )
-                                    .toList())
-                            .setMail("admin-user@admin.com");
+                 .setRoles(roleEntitySet)
+                 .setEmail("admin@admin.com");
             userRepository.save(admin);
         }
     }
