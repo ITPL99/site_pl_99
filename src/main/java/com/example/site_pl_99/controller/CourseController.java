@@ -1,6 +1,5 @@
 package com.example.site_pl_99.controller;
 
-import com.example.site_pl_99.dto.CourseDtoResponseRu;
 import com.example.site_pl_99.dto.CourseDtoRequest;
 import com.example.site_pl_99.enums.CourseType;
 
