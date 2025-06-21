@@ -11,7 +11,4 @@ public class ImageMapper {
         return entity;
     }
 
-    public static ImageDto mapEntityToDto(ImageEntity entity) {
-        return new ImageDto(entity);
-    }
 }
