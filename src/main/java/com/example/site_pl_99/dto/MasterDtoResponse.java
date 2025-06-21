@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public class MasterDtoResponse {
     private String fullName;
     private LocalDate birthDate;
-    private ImageEntity image;
-    private String professionRu;
+    private ImageDto image;
+    private String profession;
     private Active active;
     private LocalDate dateEmployment;
     private LocalDate dateDismissal;
@@ -30,21 +30,20 @@ public class MasterDtoResponse {
         this.birthDate = birthDate;
     }
 
-    public ImageEntity getImage() {
+    public ImageDto getImage() {
         return image;
     }
 
-    public void setImage(ImageEntity image) {
+    public void setImage(ImageDto image) {
         this.image = image;
     }
 
-
-    public String getProfessionRu() {
-        return professionRu;
+    public String getProfession() {
+        return profession;
     }
 
-    public void setProfessionRu(String professionRu) {
-        this.professionRu = professionRu;
+    public void setProfession(String profession) {
+        this.profession = profession;
     }
 
     public Active getActive() {
@@ -70,4 +69,5 @@ public class MasterDtoResponse {
     public void setDateDismissal(LocalDate dateDismissal) {
         this.dateDismissal = dateDismissal;
     }
+
 }
