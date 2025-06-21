@@ -11,7 +11,7 @@ public class EmployeeDtoRequest {
     private String departmentRu;
     private String departmentKg;
     private LocalDate dateEmployment;
-    private LocalDate dateDismissal;
+
 
     public String getFullName() {
         return fullName;
@@ -67,12 +67,5 @@ public class EmployeeDtoRequest {
         return this;
     }
 
-    public LocalDate getDateDismissal() {
-        return dateDismissal;
-    }
 
-    public EmployeeDtoRequest setDateDismissal(LocalDate dateDismissal) {
-        this.dateDismissal = dateDismissal;
-        return this;
-    }
 }

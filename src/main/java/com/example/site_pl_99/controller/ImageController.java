@@ -1,6 +1,7 @@
 package com.example.site_pl_99.controller;
 
-import com.example.site_pl_99.entity.ImageEntity;
+import com.example.site_pl_99.dto.ImageDto;
+import com.example.site_pl_99.mapper.ImageMapper;
 import com.example.site_pl_99.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -20,15 +21,22 @@ public class ImageController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ImageEntity> save(@ModelAttribute ImageEntity imageEntity,@RequestParam("image") MultipartFile image) {
-        return ResponseEntity.ok(imageService.save(imageEntity, image));
+    public ResponseEntity<ImageDto> save(@RequestParam("image") MultipartFile image) {
+        return ResponseEntity.ok(ImageMapper.mapEntityToDto(imageService.save(image)));
     }
 
-    @GetMapping("/stream-file-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    @GetMapping("/upload-file-by-id/{id}")
+    public ResponseEntity<InputStreamResource> uploadById(@PathVariable("id") Long id) {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(imageService.getContentType(id)))
-                .body(new InputStreamResource(imageService.getById(id)));
+                .body(new InputStreamResource(imageService.uploadById(id)));
+    }
+
+    @GetMapping("/upload-file-by-id/{file_name}")
+    public ResponseEntity<InputStreamResource> uploadByFileName(@PathVariable("file_name") String fileName) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(imageService.getContentType(fileName)))
+                .body(new InputStreamResource(imageService.uploadByFileName(fileName)));
     }
 
 }

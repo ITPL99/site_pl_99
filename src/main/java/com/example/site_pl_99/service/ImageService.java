@@ -6,7 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.InputStream;
 
 public interface ImageService{
-    InputStream getById(Long id);
-    ImageEntity save(ImageEntity entity, MultipartFile file);
+    InputStream uploadById(Long id);
+
+    InputStream uploadByFileName(String fileName);
+
+    ImageEntity save(MultipartFile file);
     String getContentType(Long id);
+
+    String getContentType(String fileName);
 }
