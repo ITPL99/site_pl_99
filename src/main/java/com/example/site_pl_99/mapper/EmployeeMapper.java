@@ -1,41 +1,37 @@
 package com.example.site_pl_99.mapper;
 
+
 import com.example.site_pl_99.dto.EmployeeDtoRequest;
-import com.example.site_pl_99.dto.EmployeeDtoResponseKg;
-import com.example.site_pl_99.dto.EmployeeDtoResponseRu;
+import com.example.site_pl_99.dto.EmployeeDtoResponse;
 import com.example.site_pl_99.entity.EmployeeEntity;
+import com.example.site_pl_99.utils.Internalization;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Component
 public class EmployeeMapper {
-    public static EmployeeDtoResponseRu mapEntityToDtoResponse(EmployeeEntity employeeEntity) {
-       EmployeeDtoResponseRu dto = new EmployeeDtoResponseRu();
-       dto.setFullName(employeeEntity.getFullName());
-       dto.setBirthDate(employeeEntity.getDateBerth());
-       dto.setDepartment(employeeEntity.getDepartmentRu());
-       dto.setActive(employeeEntity.getActive());
-       dto.setDateEmployment(employeeEntity.getDateEmployment());
-       dto.setDateDismissal(employeeEntity.getDateDismissal());
-       return dto;
-    }
-    public static EmployeeDtoResponseKg mapEntityToDtoResponseKg(EmployeeEntity employee) {
-        EmployeeDtoResponseKg dtoKg = new EmployeeDtoResponseKg();
-        dtoKg.setFullName(employee.getFullName());
-        dtoKg.setBirthDate(employee.getDateBerth());
-        dtoKg.setDepartment(employee.getDepartmentKg());
-        dtoKg.setActive(employee.getActive());
-        dtoKg.setDateEmployment(employee.getDateEmployment());
-        dtoKg.setDateDismissal(employee.getDateDismissal());
-        return dtoKg;
+
+
+    public EmployeeDtoResponse mapEntityToDtoResponse(EmployeeEntity entity) {
+        EmployeeDtoResponse dtoResponse = new EmployeeDtoResponse();
+        dtoResponse.setId(entity.getId());
+        dtoResponse.setDateBerth(entity.getDateBerth());
+        dtoResponse.setFullName(entity.getFullName());
+        dtoResponse.setImageFileName(entity.getImage().getFileName());
+        dtoResponse.setDepartment(
+                LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")?
+                        entity.getDepartmentRu() :
+                        entity.getDepartmentKg()
+        );
+
+        return dtoResponse;
     }
 
-    public static EmployeeEntity mapDtoToEntity(EmployeeDtoRequest entity) {
-        EmployeeEntity employeeEntity = new EmployeeEntity();
-        employeeEntity.setFullName(entity.getFullName());
-        employeeEntity.setDateBerth(entity.getBirthDate());
-        employeeEntity.setDepartmentKg(entity.getDepartment());
-        employeeEntity.setDepartmentRu(entity.getDepartment());
-        return employeeEntity;
+    public EmployeeEntity mapDtoToEntity(EmployeeDtoRequest dtoRequest) {
+        return new EmployeeEntity()
+                .setFullName(dtoRequest.getFullName())
+                .setDateBerth(dtoRequest.getDateBerth())
+                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()));
     }
 }
