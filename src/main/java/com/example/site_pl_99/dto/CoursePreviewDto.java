@@ -2,11 +2,12 @@ package com.example.site_pl_99.dto;
 
 import java.time.LocalDate;
 
-public class CourseMultiResponse {
+public class CoursePreviewDto {
     private String CourseType;
     private String title;
-    private String imageFileName;
+    private ImageDto image;
     private LocalDate dateCreated;
+    private int price;
 
     public String getCourseType() {
         return CourseType;
@@ -24,12 +25,12 @@ public class CourseMultiResponse {
         this.title = title;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public ImageDto getImage() {
+        return image;
     }
 
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setImage(ImageDto image) {
+        this.image = image;
     }
 
     public LocalDate getDateCreated() {
@@ -38,5 +39,13 @@ public class CourseMultiResponse {
 
     public void setDateCreated(LocalDate dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

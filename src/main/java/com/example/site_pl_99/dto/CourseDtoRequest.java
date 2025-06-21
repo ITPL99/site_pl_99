@@ -11,7 +11,7 @@ public class CourseDtoRequest {
     private String descriptionKg;
     private String descriptionRu;
     private Double price;
-    private String imageFileName;
+    private ImageDto image;
     private LocalDate dateStart;
     private LocalDate dateEnd;
 
@@ -63,12 +63,12 @@ public class CourseDtoRequest {
         this.price = price;
     }
 
-    public String getImageFileName() {
-        return imageFileName;
+    public ImageDto getImage() {
+        return image;
     }
 
-    public void setImageFileName(String imageFileName) {
-        this.imageFileName = imageFileName;
+    public void setImage(ImageDto image) {
+        this.image = image;
     }
 
     public LocalDate getDateStart() {
