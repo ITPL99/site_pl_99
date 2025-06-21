@@ -10,4 +10,8 @@ public class ImageMapper {
         entity.setId(image.getId() != null? image.getId(): null);
         return entity;
     }
+
+    public static ImageDto mapEntityToDto(ImageEntity entity) {
+        return new ImageDto(entity);
+    }
 }

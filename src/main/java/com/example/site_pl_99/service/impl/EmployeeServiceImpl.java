@@ -80,6 +80,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteById(Long id) {
         EmployeeEntity employeeEntity = getById(id);
+        employeeEntity.setDateDismissal(LocalDate.now());
         employeeEntity.setActive(Active.DELETED);
         employeeRepository.save(employeeEntity);
     }
