@@ -10,4 +10,5 @@ public class ImageMapper {
         entity.setId(image.getId() != null? image.getId(): null);
         return entity;
     }
+
 }
