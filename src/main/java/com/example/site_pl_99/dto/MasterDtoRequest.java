@@ -7,6 +7,15 @@ public class MasterDtoRequest {
     private LocalDate birthDate;
     private String professionKg;
     private String professionRu;
+    private ImageDto image;
+
+    public ImageDto getImage() {
+        return image;
+    }
+
+    public void setImage(ImageDto image) {
+        this.image = image;
+    }
 
     public String getFullName() {
         return fullName;
