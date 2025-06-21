@@ -1,5 +1,7 @@
 package com.example.site_pl_99.service.impl;
 
+import com.example.site_pl_99.excaption.BaseException;
+import com.example.site_pl_99.excaption.UploadException;
 import com.example.site_pl_99.service.MinIoService;
 import io.minio.*;
 import io.minio.errors.ErrorResponseException;
@@ -29,7 +31,8 @@ public class MinIoServiceImpl implements MinIoService {
                             .build()
             );
         }catch (Exception e){
-            throw new RuntimeException(e);
+            throw new UploadException(e.getMessage()) {
+            };
         }
     }
 
