@@ -15,7 +15,7 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoEntity getById(Long id) {
-        return videoRepository.getById(id);
+        return videoRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого видео нет"));
     }
 
     @Override
