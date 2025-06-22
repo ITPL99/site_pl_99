@@ -4,8 +4,6 @@ import com.example.site_pl_99.dto.CourseDtoRequest;
 import com.example.site_pl_99.dto.CourseDtoResponse;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.CourseType;
-import com.example.site_pl_99.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

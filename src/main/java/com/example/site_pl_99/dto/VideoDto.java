@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VideoDto {
     private Long id;
-    private String videoFileName;
+    private String FileName;
 
     public Long getId() {
         return id;
@@ -16,12 +16,12 @@ public class VideoDto {
         return this;
     }
 
-    public String getVideoFileName() {
-        return videoFileName;
+    public String getFileName() {
+        return FileName;
     }
 
-    public VideoDto setVideoFileName(String videoFileName) {
-        this.videoFileName = videoFileName;
+    public VideoDto setFileName(String fileName) {
+        this.FileName = fileName;
         return this;
     }
 }

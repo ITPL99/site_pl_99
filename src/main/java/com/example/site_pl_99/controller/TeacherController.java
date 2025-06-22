@@ -1,7 +1,6 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.TeacherDtoRequest;
-import com.example.site_pl_99.entity.TeacherEntity;
 import com.example.site_pl_99.mapper.TeacherMapper;
 import com.example.site_pl_99.service.TeacherService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

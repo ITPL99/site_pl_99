@@ -2,7 +2,6 @@ package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.MasterDtoRequest;
 import com.example.site_pl_99.dto.MasterDtoResponse;
-import com.example.site_pl_99.entity.MasterEntity;
 import com.example.site_pl_99.mapper.MasterMapper;
 import com.example.site_pl_99.service.impl.MasterServiceImpl;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

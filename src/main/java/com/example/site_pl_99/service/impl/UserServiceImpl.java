@@ -1,19 +1,13 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.dto.UserDtoRequestRegister;
-import com.example.site_pl_99.entity.RoleEntity;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.enums.Active;
-import com.example.site_pl_99.excaption.AuthorizeException;
 import com.example.site_pl_99.excaption.UserNotFoundException;
-import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.repository.RoleRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.service.UserService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

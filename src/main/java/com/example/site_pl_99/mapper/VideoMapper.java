@@ -7,7 +7,11 @@ public class VideoMapper {
     public static VideoEntity mapDtoToEntity(VideoDto dto) {
         VideoEntity entity = new VideoEntity();
         entity.setId(dto.getId());
-        entity.setFileName(dto.getVideoFileName());
+        entity.setFileName(dto.getFileName());
         return entity;
+    }
+
+    public static VideoDto mapEntityToDto(VideoEntity entity) {
+        return new VideoDto().setId(entity.getId()).setFileName(entity.getFileName());
     }
 }
