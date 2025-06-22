@@ -32,6 +32,8 @@ public class EmployeeMapper {
         return new EmployeeEntity()
                 .setFullName(dtoRequest.getFullName())
                 .setDateBerth(dtoRequest.getDateBerth())
-                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()));
+                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()))
+                .setDepartmentRu(dtoRequest.getDepartmentRu())
+                .setDepartmentKg(dtoRequest.getDepartmentKg());
     }
 }

@@ -65,7 +65,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<MasterEntity> getAll() {
-        return masterRepository.findAll().stream().filter(m -> m.getActive() == Active.ACTIVE).collect(Collectors.toList());
+        return masterRepository.findAll();
     }
 
     @Override

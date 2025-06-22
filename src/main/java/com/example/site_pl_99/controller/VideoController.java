@@ -2,6 +2,7 @@ package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.entity.VideoEntity;
 import com.example.site_pl_99.service.VideoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/video")
+@SecurityRequirement(name = "bearerAuth")
 public class VideoController {
     private final VideoService videoService;
 

@@ -1,6 +1,7 @@
 package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.ImageEntity;
+import com.example.site_pl_99.excaption.FileIsNotFoundException;
 import com.example.site_pl_99.repository.ImageRepository;
 import com.example.site_pl_99.service.ImageService;
 import com.example.site_pl_99.service.MinIoService;
@@ -23,12 +24,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public InputStream uploadById(Long id) {
-        ImageEntity imageNews = imageRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого фото нет"));
+    public InputStream getById(Long id) {
+        ImageEntity imageNews = imageRepository.findById(id).orElseThrow(() -> new FileIsNotFoundException("error.fileIsNotFound"));
         return minIoService.streamFile(bucketName, imageNews.getFileName());
     }
     @Override
-    public InputStream uploadByFileName(String fileName) {
+    public InputStream getByFileName(String fileName) {
         return minIoService.streamFile(bucketName, fileName);
     }
 
@@ -46,7 +47,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public String getContentType(Long id){
-        ImageEntity image = imageRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого фото нет"));
+        ImageEntity image = imageRepository.findById(id).orElseThrow(() -> new FileIsNotFoundException("error.fileIsNotFound"));
         return minIoService.getContentType(bucketName, image.getFileName());
     }
 

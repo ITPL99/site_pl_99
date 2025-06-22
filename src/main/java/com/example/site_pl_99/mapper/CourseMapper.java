@@ -19,6 +19,8 @@ public class CourseMapper {
         courseEntity.setDescriptionKg(request.getDescriptionKg());
         courseEntity.setImage(ImageMapper.mapDtoToEntity(request.getImage()));
         courseEntity.setPrice(request.getPrice());
+        courseEntity.setDateStart(request.getDateStart());
+        courseEntity.setDateEnd(request.getDateEnd());
         return courseEntity;
     }
 

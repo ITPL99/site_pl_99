@@ -9,13 +9,19 @@ import java.util.List;
 @Entity
 @Table(name = "news")
 public class NewsEntity extends BaseEntity {
-
+    @Column(name = "title_ru")
     private String titleRu;
+    @Column(name = "title_kg")
     private String titleKg;
+    @Column(name = "subtitle_ru")
     private String subTitleRu;
+    @Column(name = "subtitle_kg")
     private String subTitleKg;
+    @Column(name = "description_ru")
     private String descriptionRu;
+    @Column(name = "description_kg")
     private String descriptionKg;
+    @Column(name = "date_create")
     private LocalDateTime dateCreate;
     @OneToOne
     @JoinColumn(name = "image_small")
@@ -24,8 +30,11 @@ public class NewsEntity extends BaseEntity {
     @JoinColumn(name = "image_full")
     private ImageEntity imageFull;
 
-    @OneToMany
-    @JoinColumn(name = "image_content")
+    @ManyToMany
+    @JoinTable(name = "m2m_images_news",
+            joinColumns = @JoinColumn(name = "news_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id", referencedColumnName = "id")
+    )
     private List<ImageEntity> images;
 
     @OneToOne
@@ -34,6 +43,13 @@ public class NewsEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Active active;
+
+
+    @PrePersist
+    public void prePersist(){
+        dateCreate = LocalDateTime.now();
+        active = Active.ACTIVE;
+    }
 
     public String getTitleRu() {
         return titleRu;
