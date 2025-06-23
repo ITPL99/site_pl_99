@@ -2,7 +2,7 @@ package com.example.site_pl_99.dto;
 
 import java.time.LocalDate;
 
-public class CourseDtoRequest {
+public class    CourseDtoRequest {
     private String courseType;
     private String titleKg;
     private String titleRu;
