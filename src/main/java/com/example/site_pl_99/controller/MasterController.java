@@ -28,27 +28,27 @@ public class MasterController {
 
     @GetMapping("/get-all-by-content-name")
     public ResponseEntity<?> getMasterByContentName(@RequestParam String contentName) {
-        return ResponseEntity.ok(masterService.getAllMastersContentName(contentName).stream().map(MasterMapper::toDto).toList());
+        return ResponseEntity.ok(masterService.getContentName(contentName).stream().map(MasterMapper::toDto).toList());
     }
 
     @GetMapping("/get-all-by-date-berth")
     public ResponseEntity<?> getMasterByDateBerth(@RequestParam LocalDate dateBerth) {
-        return ResponseEntity.ok(masterService.getAllMastersByDateBerth(dateBerth).stream().map(MasterMapper::toDto).toList());
+        return ResponseEntity.ok(masterService.getByDateBerth(dateBerth).stream().map(MasterMapper::toDto).toList());
     }
 
     @GetMapping("/get-all-by-profession")
     public ResponseEntity<?> getMasterByProfession(@RequestParam String profession) {
-        return ResponseEntity.ok(masterService.getAllMastersByProfession(profession).stream().map(MasterMapper::toDto).toList());
+        return ResponseEntity.ok(masterService.getByProfession(profession).stream().map(MasterMapper::toDto).toList());
     }
 
     @GetMapping("/get-all-by-date-employment")
     public ResponseEntity<?> getMasterByDateEmployment(@RequestParam LocalDate dateEmployment) {
-        return ResponseEntity.ok(masterService.getAllMastersByDateEmployment(dateEmployment).stream().map(MasterMapper::toDto).toList());
+        return ResponseEntity.ok(masterService.getByDateEmployment(dateEmployment).stream().map(MasterMapper::toDto).toList());
     }
 
     @GetMapping("/get-all-by-date-dismissal")
     public ResponseEntity<?> getMasterByDateDismissal(@RequestParam LocalDate dateDismissal) {
-        return ResponseEntity.ok(masterService.getAllMastersByDateDismissal(dateDismissal).stream().map(MasterMapper::toDto).toList());
+        return ResponseEntity.ok(masterService.getByDateDismissal(dateDismissal).stream().map(MasterMapper::toDto).toList());
     }
 
     @GetMapping("/get-by-id/{id}")
