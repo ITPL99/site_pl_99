@@ -1,0 +1,20 @@
+
+
+###
+GET http://localhost:8080/api/auth/current
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzUwNDgyMDM1LCJleHAiOjE3NTA0ODIzOTV9.uFSB3MHIuVZ4_UhFktc1L7y7o5En-KNy2qKL_FuSbXRmKSNaaW0JJMbAPpmnLf4C
+
+###
+GET http://localhost:8080/api/test
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzUwNDgyMDM1LCJleHAiOjE3NTA0ODIzOTV9.uFSB3MHIuVZ4_UhFktc1L7y7o5En-KNy2qKL_FuSbXRmKSNaaW0JJMbAPpmnLf4C
+
+
+
+
+
+
+
+###
+POST http://localhost:8080/api/auth/login?
+    username=admin&
+    password=admin
