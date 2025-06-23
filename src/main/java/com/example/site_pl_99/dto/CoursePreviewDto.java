@@ -3,11 +3,22 @@ package com.example.site_pl_99.dto;
 import java.time.LocalDate;
 
 public class CoursePreviewDto {
+    private Long id;
     private String CourseType;
     private String title;
     private ImageDto image;
     private LocalDate dateCreated;
-    private int price;
+    private LocalDate dateEnd;
+    private Double price;
+
+    public Long getId() {
+        return id;
+    }
+
+    public CoursePreviewDto setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getCourseType() {
         return CourseType;
@@ -41,11 +52,21 @@ public class CoursePreviewDto {
         this.dateCreated = dateCreated;
     }
 
-    public int getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public CoursePreviewDto setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public CoursePreviewDto setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
+        return this;
     }
 }

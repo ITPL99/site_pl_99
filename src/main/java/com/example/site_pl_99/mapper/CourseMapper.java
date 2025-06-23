@@ -2,8 +2,10 @@ package com.example.site_pl_99.mapper;
 
 import com.example.site_pl_99.dto.CourseDtoRequest;
 import com.example.site_pl_99.dto.CourseDtoResponse;
+import com.example.site_pl_99.dto.CoursePreviewDto;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.CourseType;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,14 +28,33 @@ public class CourseMapper {
     public static CourseDtoResponse mapEntityToDtoResponse(CourseEntity byTitle) {
         CourseDtoResponse courseDtoResponse = new CourseDtoResponse();
         courseDtoResponse.setCourseType(byTitle.getType().name());
-        courseDtoResponse.setTitle(byTitle.getTitleRu());
-        courseDtoResponse.setTitle(byTitle.getTitleKg());
-        courseDtoResponse.setDescription(byTitle.getDescriptionRu());
-        courseDtoResponse.setDescription(byTitle.getDescriptionKg());
+        if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")) {
+            courseDtoResponse.setTitle(byTitle.getTitleRu());
+            courseDtoResponse.setDescription(byTitle.getDescriptionRu());
+        }else{
+            courseDtoResponse.setTitle(byTitle.getTitleKg());
+            courseDtoResponse.setDescription(byTitle.getDescriptionKg());
+        }
         courseDtoResponse.setPrice(byTitle.getPrice());
         courseDtoResponse.setImageFileName(byTitle.getImage().getFileName());
         courseDtoResponse.setDateStart(byTitle.getDateStart());
         courseDtoResponse.setDateEnd(byTitle.getDateEnd());
         return courseDtoResponse;
+    }
+
+    public static CoursePreviewDto mapToPreviewEntity(CourseEntity courseEntity) {
+        CoursePreviewDto coursePreviewDto = new CoursePreviewDto();
+        coursePreviewDto.setId(courseEntity.getId());
+        coursePreviewDto.setCourseType(courseEntity.getType().name());
+        if(LocaleContextHolder.getLocaleContext().getLocale().getLanguage().equalsIgnoreCase("ru")) {
+            coursePreviewDto.setTitle(courseEntity.getTitleRu());
+        }else {
+            coursePreviewDto.setTitle(courseEntity.getTitleKg());
+        }
+        coursePreviewDto.setPrice(courseEntity.getPrice());
+        coursePreviewDto.setDateCreated(courseEntity.getDateStart());
+        coursePreviewDto.setDateEnd(courseEntity.getDateEnd());
+        if(courseEntity.getImage() != null) coursePreviewDto.setImage(ImageMapper.mapEntityToDto(courseEntity.getImage()));
+        return coursePreviewDto;
     }
 }

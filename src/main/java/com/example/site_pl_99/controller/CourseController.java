@@ -1,6 +1,8 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.CourseDtoRequest;
+import com.example.site_pl_99.dto.CourseDtoResponse;
+import com.example.site_pl_99.dto.CoursePreviewDto;
 import com.example.site_pl_99.enums.CourseType;
 
 import com.example.site_pl_99.mapper.CourseMapper;
@@ -25,43 +27,43 @@ public class CourseController  {
     }
 
     @GetMapping("/get-by-title")
-    public ResponseEntity<?> getByTitle(@RequestParam String title) {
+    public ResponseEntity<CourseDtoResponse> getByTitle(@RequestParam String title) {
         return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.getByTitle(title)));
     }
 
     @GetMapping("/get-all-by-type")
-    public ResponseEntity<List<?>> getAllCourseByType(@RequestParam CourseType type) {
-        return ResponseEntity.ok(courseService.getAllCourseByType(type).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    public ResponseEntity<List<CoursePreviewDto>> getAllCourseByType(@RequestParam CourseType type) {
+        return ResponseEntity.ok(courseService.getAllCourseByType(type).stream().map(CourseMapper::mapToPreviewEntity).collect(toList()));
     }
 
     @GetMapping("/get-all-by-price")
-    public ResponseEntity<List<?>> getAllCourseByPrice(@RequestParam Double price) {
-        return ResponseEntity.ok(courseService.getAllCourseByPrice(price).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    public ResponseEntity<List<CoursePreviewDto>> getAllCourseByPrice(@RequestParam Double price) {
+        return ResponseEntity.ok(courseService.getAllCourseByPrice(price).stream().map(CourseMapper::mapToPreviewEntity).collect(toList()));
     }
 
     @GetMapping("/get-all-by-date-start")
-    public ResponseEntity<List<?>> getAllCourseByDateStart(@RequestParam LocalDate dateStart) {
-        return ResponseEntity.ok(courseService.getAllCourseByDateStart(dateStart).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    public ResponseEntity<List<CoursePreviewDto>> getAllCourseByDateStart(@RequestParam LocalDate dateStart) {
+        return ResponseEntity.ok(courseService.getAllCourseByDateStart(dateStart).stream().map(CourseMapper::mapToPreviewEntity).collect(toList()));
     }
 
     @GetMapping("/get-all-by-date-end")
-    public ResponseEntity<List<?>> getAllCourseByDateEnd(@RequestParam LocalDate dateEnd) {
-        return ResponseEntity.ok(courseService.getAllCourseByDateEnd(dateEnd).stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    public ResponseEntity<List<CoursePreviewDto>> getAllCourseByDateEnd(@RequestParam LocalDate dateEnd) {
+        return ResponseEntity.ok(courseService.getAllCourseByDateEnd(dateEnd).stream().map(CourseMapper::mapToPreviewEntity).collect(toList()));
     }
 
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<CourseDtoResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.getById(id)));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody CourseDtoRequest entity) {
+    public ResponseEntity<CourseDtoResponse> save(@RequestBody CourseDtoRequest entity) {
         return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.save(CourseMapper.toEntity(entity))));
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<?>> getAll() {
-        return ResponseEntity.ok(courseService.getAll().stream().map(CourseMapper::mapEntityToDtoResponse).collect(toList()));
+    public ResponseEntity<List<CoursePreviewDto>> getAll() {
+        return ResponseEntity.ok(courseService.getAll().stream().map(CourseMapper::mapToPreviewEntity).collect(toList()));
     }
 
     @DeleteMapping("/delete-by-id/{id}")

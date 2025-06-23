@@ -5,9 +5,14 @@ import com.example.site_pl_99.enums.Active;
 
 import java.util.List;
 
-public interface NewsService extends BaseService<NewsEntity> {
-    NewsEntity getTitle(String title);
-    List<NewsEntity> getAllContentTitle(String title);
-    List<NewsEntity> getAllContentSubTitle(String subTitle);
-    List<NewsEntity> getAllActiveStatus(Active status);
+public interface NewsService {
+    NewsEntity addNews(NewsEntity newsEntity);
+    List<NewsEntity> getAll();
+    List<NewsEntity> getAllFull();
+    NewsEntity getByTitle(String title);
+    List<NewsEntity> getAllByContentTitle(String title);
+    List<NewsEntity> getAllByContentSubTitle(String subTitle);
+    List<NewsEntity> getAllByActiveStatus(String status);
+    void deleteById(Long id);
+    NewsEntity getById(Long id);
 }
