@@ -25,6 +25,7 @@ public class CourseMapper {
 
     public static CourseDtoResponse mapEntityToDtoResponse(CourseEntity byTitle) {
         CourseDtoResponse courseDtoResponse = new CourseDtoResponse();
+        courseDtoResponse.setActive(byTitle.getActive().name());
         courseDtoResponse.setCourseType(byTitle.getType().name());
         courseDtoResponse.setTitle(byTitle.getTitleRu());
         courseDtoResponse.setTitle(byTitle.getTitleKg());

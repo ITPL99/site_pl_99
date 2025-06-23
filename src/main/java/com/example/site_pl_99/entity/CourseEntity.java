@@ -1,5 +1,6 @@
 package com.example.site_pl_99.entity;
 
+import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.enums.CourseType;
 import jakarta.persistence.*;
 
@@ -21,6 +22,16 @@ public class CourseEntity extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "image_id")
     private ImageEntity image;
+    @Enumerated(EnumType.STRING)
+    private Active active;
+
+    public Active getActive() {
+        return active;
+    }
+
+    public void setActive(Active active) {
+        this.active = active;
+    }
 
     public CourseType getType(){
         return type;
