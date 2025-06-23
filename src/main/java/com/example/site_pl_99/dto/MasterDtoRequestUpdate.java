@@ -2,7 +2,8 @@ package com.example.site_pl_99.dto;
 
 import java.time.LocalDate;
 
-public class MasterDtoRequest {
+public class MasterDtoRequestUpdate {
+    private Long id;
     private String fullName;
     private LocalDate birthDate;
     private String professionKg;
@@ -10,20 +11,12 @@ public class MasterDtoRequest {
     private ImageDto image;
     private LocalDate dateEmployment;
 
-    public LocalDate getDateEmployment() {
-        return dateEmployment;
+    public Long getId() {
+        return id;
     }
 
-    public void setDateEmployment(LocalDate dateEmployment) {
-        this.dateEmployment = dateEmployment;
-    }
-
-    public ImageDto getImage() {
-        return image;
-    }
-
-    public void setImage(ImageDto image) {
-        this.image = image;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -56,5 +49,21 @@ public class MasterDtoRequest {
 
     public void setProfessionRu(String professionRu) {
         this.professionRu = professionRu;
+    }
+
+    public ImageDto getImage() {
+        return image;
+    }
+
+    public void setImage(ImageDto image) {
+        this.image = image;
+    }
+
+    public LocalDate getDateEmployment() {
+        return dateEmployment;
+    }
+
+    public void setDateEmployment(LocalDate dateEmployment) {
+        this.dateEmployment = dateEmployment;
     }
 }

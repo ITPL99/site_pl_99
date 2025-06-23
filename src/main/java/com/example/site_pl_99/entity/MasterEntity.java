@@ -23,7 +23,6 @@ public class MasterEntity extends BaseEntity {
     @PrePersist
     public void prePersist() {
         active = Active.NEW;
-        dateEmployment=LocalDate.now();
     }
 
     public String getFullName() {
