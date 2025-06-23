@@ -55,6 +55,7 @@ public class CourseMapper {
         coursePreviewDto.setPrice(courseEntity.getPrice());
         coursePreviewDto.setDateCreated(courseEntity.getDateStart());
         coursePreviewDto.setDateEnd(courseEntity.getDateEnd());
+        coursePreviewDto.setActive(courseEntity.getActive().name());
         if(courseEntity.getImage() != null) coursePreviewDto.setImage(ImageMapper.mapEntityToDto(courseEntity.getImage()));
         return coursePreviewDto;
     }

@@ -3,6 +3,7 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.enums.CourseType;
+import com.example.site_pl_99.excaption.IncorectInputException;
 import com.example.site_pl_99.excaption.NotFoundException;
 import com.example.site_pl_99.repository.CourseRepository;
 import com.example.site_pl_99.service.CourseService;
@@ -22,27 +23,27 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getByTitle(String title) {
-        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title).orElseThrow(()-> new NotFoundException("error.findCourse"));
+        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title).orElse(List.of());
     }
 
     @Override
     public List<CourseEntity> getAllCourseByType(CourseType type) {
-        return courseRepository.findAllByType(type).orElseThrow(() ->  new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByType(type).orElse(List.of());
     }
 
     @Override
     public List<CourseEntity> getAllCourseByPrice(Double price) {
-        return courseRepository.findAllByPrice(price).orElseThrow(() ->  new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByPrice(price).orElse(List.of());
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateStart(LocalDate dateStart) {
-        return courseRepository.findAllByDateStart(dateStart).orElseThrow(() ->  new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByDateStart(dateStart).orElse(List.of());
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateEnd(LocalDate dateEnd) {
-        return courseRepository.findAllByDateEnd(dateEnd).orElseThrow(() ->  new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByDateEnd(dateEnd).orElse(List.of());
 
     }
 
@@ -53,8 +54,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseEntity save(CourseEntity entity) {
-        if (entity.getId() == null) {
-            entity.setActive(Active.NEW);
+        if (entity.getId() == null) {entity.setActive(Active.NEW);
         }
         return courseRepository.save(entity);
     }
