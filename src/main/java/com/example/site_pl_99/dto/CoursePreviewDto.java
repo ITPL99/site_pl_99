@@ -8,6 +8,15 @@ public class CoursePreviewDto {
     private ImageDto image;
     private LocalDate dateCreated;
     private int price;
+    private String active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
 
     public String getCourseType() {
         return CourseType;

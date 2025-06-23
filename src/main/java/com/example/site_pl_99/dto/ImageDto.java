@@ -1,7 +1,5 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.entity.ImageEntity;
-
 public class ImageDto {
     private Long Id;
     private String fileName;

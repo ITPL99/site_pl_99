@@ -1,6 +1,6 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.enums.CourseType;
+import com.example.site_pl_99.enums.Active;
 
 import java.time.LocalDate;
 
@@ -12,6 +12,15 @@ public class CourseDtoResponse {
     private LocalDate dateStart;
     private LocalDate dateEnd;
     private String imageFileName;
+    private String active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
 
     public String getCourseType() {
         return courseType;

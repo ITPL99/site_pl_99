@@ -5,11 +5,7 @@ import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.dto.NewsDtoResponse;
 import com.example.site_pl_99.entity.ImageEntity;
 import com.example.site_pl_99.entity.NewsEntity;
-import com.example.site_pl_99.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;

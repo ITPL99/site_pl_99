@@ -20,6 +20,11 @@ public class EmployeeEntity extends BaseEntity{
     private LocalDate dateEmployment;
     private LocalDate dateDismissal;
 
+    @PrePersist
+    public void prePersist(){
+        active = Active.ACTIVE;
+    }
+
     public String getFullName() {
         return fullName;
     }

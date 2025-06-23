@@ -4,8 +4,6 @@ package com.example.site_pl_99.mapper;
 import com.example.site_pl_99.dto.EmployeeDtoRequest;
 import com.example.site_pl_99.dto.EmployeeDtoResponse;
 import com.example.site_pl_99.entity.EmployeeEntity;
-import com.example.site_pl_99.utils.Internalization;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +30,8 @@ public class EmployeeMapper {
         return new EmployeeEntity()
                 .setFullName(dtoRequest.getFullName())
                 .setDateBerth(dtoRequest.getDateBerth())
-                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()));
+                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()))
+                .setDepartmentRu(dtoRequest.getDepartmentRu())
+                .setDepartmentKg(dtoRequest.getDepartmentKg());
     }
 }

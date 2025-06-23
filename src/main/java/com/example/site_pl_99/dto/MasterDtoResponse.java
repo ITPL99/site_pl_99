@@ -1,6 +1,5 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.entity.ImageEntity;
 import com.example.site_pl_99.enums.Active;
 
 import java.time.LocalDate;

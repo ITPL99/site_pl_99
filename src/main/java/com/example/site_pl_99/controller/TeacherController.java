@@ -1,9 +1,9 @@
 package com.example.site_pl_99.controller;
 
 import com.example.site_pl_99.dto.TeacherDtoRequest;
-import com.example.site_pl_99.entity.TeacherEntity;
 import com.example.site_pl_99.mapper.TeacherMapper;
 import com.example.site_pl_99.service.TeacherService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/teacher")
+@SecurityRequirement(name = "bearerAuth")
 public class TeacherController {
     public final TeacherService teacherService;
 

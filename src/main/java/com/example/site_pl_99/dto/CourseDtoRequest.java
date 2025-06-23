@@ -1,6 +1,6 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.enums.CourseType;
+import com.example.site_pl_99.enums.Active;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,6 @@ public class CourseDtoRequest {
     private ImageDto image;
     private LocalDate dateStart;
     private LocalDate dateEnd;
-
     public String getCourseType() {
         return courseType;
     }

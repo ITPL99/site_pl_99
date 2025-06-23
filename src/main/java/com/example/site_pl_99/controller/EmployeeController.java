@@ -5,6 +5,7 @@ import com.example.site_pl_99.dto.EmployeeDtoResponse;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.mapper.EmployeeMapper;
 import com.example.site_pl_99.service.EmployeeService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/employee")
+@SecurityRequirement(name = "bearerAuth")
 public class EmployeeController  {
 
     private final EmployeeService employeeService;
@@ -69,7 +71,7 @@ public class EmployeeController  {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> save(EmployeeDtoRequest dtoRequest) {
+    public ResponseEntity<?> save(@RequestBody EmployeeDtoRequest dtoRequest) {
         return ResponseEntity.ok(employeeMapper.mapEntityToDtoResponse(employeeService.save(employeeMapper.mapDtoToEntity(dtoRequest))));
     }
 
