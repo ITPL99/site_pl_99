@@ -26,7 +26,7 @@ public class ImageController {
         this.minIoService = minIoService;
     }
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ImageDto> save(@RequestParam("image") MultipartFile image) {
         minIoService.save(image);
         ImageEntity imageEntity = new ImageEntity();

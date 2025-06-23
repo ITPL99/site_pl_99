@@ -26,7 +26,7 @@ public class VideoController {
         this.minIoService = minIoService;
     }
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<VideoDto> save(@RequestParam("video") MultipartFile video) {
         minIoService.save(video);
         VideoEntity videoEntity = new VideoEntity().setFileName(video.getOriginalFilename());
