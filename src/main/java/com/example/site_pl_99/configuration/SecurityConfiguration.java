@@ -49,6 +49,8 @@ public class SecurityConfiguration {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/password-restoration").permitAll()
+                        .requestMatchers("/api/auth/update-password/").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/api/test/open-all").permitAll()
                         .requestMatchers(

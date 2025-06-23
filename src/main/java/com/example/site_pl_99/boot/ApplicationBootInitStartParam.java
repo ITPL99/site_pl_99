@@ -42,11 +42,22 @@ public class ApplicationBootInitStartParam implements CommandLineRunner {
         if(userRepository.findByUsername("admin").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
-//                    .setActive(Active.NEW)
+                    .setActive(Active.ACTIVE)
                  .setPassword(passwordEncoder.encode("admin"))
                  .setUsername("admin")
                  .setRoles(roleEntitySet)
                  .setEmail("admin@admin.com");
+            userRepository.save(admin);
+        }
+
+        if(userRepository.findByUsername("alex").isEmpty()) {
+            UserEntity admin = new UserEntity();
+            admin
+                    .setActive(Active.ACTIVE)
+                    .setPassword(passwordEncoder.encode("alex"))
+                    .setUsername("alex")
+                    .setRoles(roleEntitySet)
+                    .setEmail("89515014507@mail.ru");
             userRepository.save(admin);
         }
     }
