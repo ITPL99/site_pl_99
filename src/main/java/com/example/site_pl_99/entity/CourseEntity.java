@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "video_content")
+@Table(name = "course")
 public class CourseEntity extends BaseEntity{
 
     @Enumerated(EnumType.STRING)

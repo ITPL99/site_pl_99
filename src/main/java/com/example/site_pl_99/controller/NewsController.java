@@ -3,12 +3,14 @@ package com.example.site_pl_99.controller;
 import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.service.NewsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/news")
+@SecurityRequirement(name = "bearerAuth")
 public class NewsController {
     private final NewsService newsService;
 

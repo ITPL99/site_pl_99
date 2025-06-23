@@ -1,13 +1,11 @@
 package com.example.site_pl_99.repository;
 
 
-import com.example.site_pl_99.entity.ImageEntity;
 import com.example.site_pl_99.entity.MasterEntity;
 import com.example.site_pl_99.enums.Active;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

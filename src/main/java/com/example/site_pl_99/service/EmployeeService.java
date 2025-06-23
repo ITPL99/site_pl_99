@@ -15,6 +15,5 @@ public interface EmployeeService extends BaseService<EmployeeEntity> {
     List<EmployeeEntity> getAllEmployeesByDateEmployment(LocalDate dateEmployment);
     List<EmployeeEntity> getAllEmployeesByDateDismissal(LocalDate dateDismissal);
 
-
     List<EmployeeEntity> getFullAll();
 }

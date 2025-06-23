@@ -1,6 +1,5 @@
 package com.example.site_pl_99.service.impl;
 
-import com.example.site_pl_99.excaption.BaseException;
 import com.example.site_pl_99.excaption.UploadException;
 import com.example.site_pl_99.service.MinIoService;
 import io.minio.*;

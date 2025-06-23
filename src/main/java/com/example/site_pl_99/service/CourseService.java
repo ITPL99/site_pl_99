@@ -5,7 +5,6 @@ import com.example.site_pl_99.enums.CourseType;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface CourseService extends BaseService<CourseEntity> {
     CourseEntity getByTitle(String title);
