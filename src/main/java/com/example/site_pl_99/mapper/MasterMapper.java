@@ -32,6 +32,7 @@ public class MasterMapper {
 
     public static MasterDtoResponse toDto(MasterEntity masterEntity) {
         MasterDtoResponse masterDtoResponse = new MasterDtoResponse();
+        masterDtoResponse.setId(masterEntity.getId());
         masterDtoResponse.setFullName(masterEntity.getFullName());
         masterDtoResponse.setBirthDate(masterEntity.getDateBerth());
         if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")){

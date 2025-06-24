@@ -5,6 +5,7 @@ import com.example.site_pl_99.enums.Active;
 import java.time.LocalDate;
 
 public class MasterDtoResponse {
+    private Long id;
     private String fullName;
     private LocalDate birthDate;
     private ImageDto image;
@@ -69,4 +70,12 @@ public class MasterDtoResponse {
         this.dateDismissal = dateDismissal;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public MasterDtoResponse setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

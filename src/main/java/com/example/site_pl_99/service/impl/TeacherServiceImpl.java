@@ -22,7 +22,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherEntity getById(Long id) {
         return teacherRepository.findById(id)
-                .filter(teacherEntity -> teacherEntity.getActive().equals(Active.DELETED))
+                .filter(teacherEntity -> teacherEntity.getActive().equals(Active.ACTIVE))
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
     }
 

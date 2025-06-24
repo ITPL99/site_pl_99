@@ -29,6 +29,7 @@ public class TeacherMapper {
 
     public static TeacherDtoResponse dtoResponse(TeacherEntity teacherEntity) {
         TeacherDtoResponse teacherDtoResponse = new TeacherDtoResponse();
+        teacherDtoResponse.setId(teacherEntity.getId());
         teacherDtoResponse.setFullName(teacherEntity.getFullName());
         teacherDtoResponse.setDateBirth(teacherEntity.getDateBerth());
         teacherDtoResponse.setLinkPortfolio(teacherEntity.getLinkPortfolio());
