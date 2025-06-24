@@ -5,7 +5,8 @@ import com.example.site_pl_99.dto.TeacherDtoRequestUpdate;
 import com.example.site_pl_99.dto.TeacherDtoResponse;
 import com.example.site_pl_99.entity.TeacherEntity;
 
-public class TeacherMapper {
+public class
+TeacherMapper {
     public static TeacherEntity toEntity(TeacherDtoRequest teacherDtoRequest) {
         TeacherEntity teacherEntity = new TeacherEntity();
         teacherEntity.setFullName(teacherDtoRequest.getFullName());
