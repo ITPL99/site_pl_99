@@ -54,7 +54,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseEntity save(CourseEntity entity) {
-        if (entity.getId() == null) {entity.setActive(Active.NEW);
+        if (entity.getActive() == null) {
+            entity.setActive(Active.NEW);
         }
         return courseRepository.save(entity);
     }

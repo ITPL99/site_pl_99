@@ -7,7 +7,7 @@ import com.example.site_pl_99.entity.MailEntity;
 import java.util.List;
 
 public interface MailService {
-    void sendMessage(String title, String content);
+    void sendMessage(String email,String title, String content);
     List<MailEntity> getAllMessages();
     MailEntity getMessageById(Long id);
     List<MailEntity> getMessagesByTitle(String title);

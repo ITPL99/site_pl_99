@@ -19,8 +19,8 @@ public class MailController {
     }
 
     @PostMapping("/send-message")
-    public ResponseEntity<?> sendMessage(@RequestParam String title, @RequestParam String content) {
-        mailService.sendMessage(title, content);
+    public ResponseEntity<?> sendMessage(@RequestParam String email ,@RequestParam String title, @RequestParam String content) {
+        mailService.sendMessage(email,title, content);
         return ResponseEntity.ok("success.messageSend");
     }
 

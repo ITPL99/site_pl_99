@@ -38,12 +38,12 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendMessage(String title, String content){
+    public void sendMessage(String email,String title, String content){
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         try {
             mimeMessageHelper.setFrom(mailName);
-            mimeMessageHelper.setTo(mailName);
+            mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject(title);
             mimeMessageHelper.setText(content);
             mailSender.send(mimeMessage);
