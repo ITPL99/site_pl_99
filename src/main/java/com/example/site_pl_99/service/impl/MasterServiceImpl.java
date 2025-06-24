@@ -19,58 +19,119 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public MasterEntity getFullName(String fullName) {
-        return masterRepository.findByFullName(fullName).orElseThrow(() -> new NotFoundException("Не найден"));
+        return masterRepository.findByFullName(fullName)
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
     }
 
     @Override
-    public List<MasterEntity> getAllMastersContentName(String fullName) {
-        return masterRepository.findAllByFullNameContaining(fullName).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> searchByName(String namePart) {
+        return masterRepository.findAllByFullNameContaining(namePart)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
 
     @Override
-    public List<MasterEntity> getAllMastersByDateBerth(LocalDate dateBerth) {
-        return masterRepository.findAllByDateBerth(dateBerth).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> getAllActiveStatus(Active status) {
+        return masterRepository.findAllByActive(status)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"));
     }
 
     @Override
-    public List<MasterEntity> getAllMastersByStatusActive(Active status) {
-        return masterRepository.findAllByActive(status).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> getByDateBerth(LocalDate dateBerth) {
+        return masterRepository.findAllByDateBerth(dateBerth)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
 
     @Override
-    public List<MasterEntity> getAllMastersByProfession(String department) {
-        return masterRepository.findAllByProfessionRuOrProfessionKg(department,department).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> getByProfession(String department) {
+        return masterRepository.findAllByProfessionRuOrProfessionKg(department, department)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
 
     @Override
-    public List<MasterEntity> getAllMastersByDateEmployment(LocalDate dateEmployment) {
-        return masterRepository.findAllByDateEmployment(dateEmployment).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> getByDateEmployment(LocalDate dateEmployment) {
+        return masterRepository.findAllByDateEmployment(dateEmployment)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
 
     @Override
-    public List<MasterEntity> getAllMastersByDateDismissal(LocalDate dateDismissal) {
-        return masterRepository.findAllByDateDismissal(dateDismissal).orElseThrow(() -> new NotFoundException("Не найден"));
+    public List<MasterEntity> getByDateDismissal(LocalDate dateDismissal) {
+        return masterRepository.findAllByDateDismissal(dateDismissal)
+                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
+
+    @Override
+    public MasterEntity update(MasterEntity entity) {
+        MasterEntity existing = masterRepository.findById(entity.getId())
+                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
+
+        if (entity.getActive().equals(Active.DELETED)) {
+            throw new RuntimeException("Нельзя обновить удалённого мастера");
+        }
+
+        existing.setFullName(entity.getFullName());
+        existing.setProfessionKg(entity.getProfessionKg());
+        existing.setProfessionRu(entity.getProfessionRu());
+        existing.setDateBerth(entity.getDateBerth());
+        existing.setDateDismissal(entity.getDateDismissal());
+        existing.setImage(entity.getImage());
+        existing.setDateEmployment(entity.getDateEmployment());
+        existing.setActive(Active.UPDATED);
+
+        return masterRepository.save(existing);
+    }
+
 
     @Override
     public MasterEntity getById(Long id) {
-        return masterRepository.findById(id).orElseThrow(() -> new NotFoundException("Не найден"));
+        return masterRepository.findById(id)
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
     }
 
     @Override
     public MasterEntity save(MasterEntity entity) {
+        if (entity.getFullName() == null || entity.getFullName().isBlank()) {
+            throw new RuntimeException("Поле fullName не может быть пустым");
+        }
+        if (entity.getProfessionKg() == null && entity.getProfessionRu() == null) {
+            throw new RuntimeException("Должна быть указана хотя бы одна профессия");
+        }
+        if (entity.getDateBerth() == null) {
+            throw new RuntimeException("Дата рождения обязательна");
+        }
+
         return masterRepository.save(entity);
     }
 
     @Override
     public List<MasterEntity> getAll() {
-        return masterRepository.findAll();
+        return masterRepository.findAll()
+                .stream()
+                .filter(master -> !master.getActive().equals(Active.DELETED))
+                .toList();
     }
 
     @Override
     public void deleteById(Long id) {
-        MasterEntity masterEntity = getById(id);
-        masterEntity.setActive(Active.DELETED);
-        masterRepository.save(masterEntity);
+        MasterEntity master = getById(id);
+        master.setActive(Active.DELETED);
+        master.setDateDismissal(LocalDate.now());
+        masterRepository.save(master);
     }
 }

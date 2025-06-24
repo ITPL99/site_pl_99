@@ -2,19 +2,20 @@ package com.example.site_pl_99.dto;
 
 import java.time.LocalDate;
 
-public class TeacherDtoRequest {
+public class TeacherDtoRequestUpdate {
+    private Long id;
     private String fullName;
     private LocalDate dateBirth;
     private ImageDto image;
     private String linkPortfolio;
     private LocalDate dateEmployment;
 
-    public LocalDate getDateEmployment() {
-        return dateEmployment;
+    public Long getId() {
+        return id;
     }
 
-    public void setDateEmployment(LocalDate dateEmployment) {
-        this.dateEmployment = dateEmployment;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -47,5 +48,13 @@ public class TeacherDtoRequest {
 
     public void setLinkPortfolio(String linkPortfolio) {
         this.linkPortfolio = linkPortfolio;
+    }
+
+    public LocalDate getDateEmployment() {
+        return dateEmployment;
+    }
+
+    public void setDateEmployment(LocalDate dateEmployment) {
+        this.dateEmployment = dateEmployment;
     }
 }

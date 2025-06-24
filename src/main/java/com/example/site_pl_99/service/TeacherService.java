@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface TeacherService extends BaseService<TeacherEntity> {
     TeacherEntity getFullName(String fullName);
-    List<TeacherEntity> getAllMastersContentName(String fullName);
-    List<TeacherEntity> getAllMastersByDateBerth(LocalDate dateBerth);
-    List<TeacherEntity> getAllMastersByStatusActive(Active status);
-    List<TeacherEntity> getAllMastersByPortfolio(String department);
-    List<TeacherEntity> getAllMastersByDateEmployment(LocalDate dateEmployment);
-    List<TeacherEntity> getAllMastersByDateDismissal(LocalDate dateDismissal);
-
+    List<TeacherEntity> searchByName(String namePart);
+    List<TeacherEntity> getByDateBerth(LocalDate dateBerth);
+    List<TeacherEntity> getByStatusActive(Active status);
+    List<TeacherEntity> getByPortfolio(String department);
+    List<TeacherEntity> getByDateEmployment(LocalDate dateEmployment);
+    List<TeacherEntity> getDateDismissal(LocalDate dateDismissal);
+    TeacherEntity update(TeacherEntity entity);
 
 }

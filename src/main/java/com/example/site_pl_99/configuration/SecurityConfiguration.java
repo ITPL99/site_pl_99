@@ -3,6 +3,7 @@ package com.example.site_pl_99.configuration;
 import com.example.site_pl_99.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -49,6 +50,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authRequest -> authRequest
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/employee/get-all").permitAll()
+                        .requestMatchers("/api/auth/password-restoration").permitAll()
+                        .requestMatchers("/api/auth/update-password/").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
                         .requestMatchers("/api/test/open-all").permitAll()
                         .requestMatchers(

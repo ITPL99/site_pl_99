@@ -5,9 +5,10 @@ import com.example.site_pl_99.enums.Active;
 import java.time.LocalDate;
 
 public class TeacherDtoResponse {
+    private Long id;
     private String fullName;
     private LocalDate dateBirth;
-    private long imageId;
+    private ImageDto image;
     private String LinkPortfolio;
     private Active active;
     private LocalDate dateEmployment;
@@ -29,12 +30,12 @@ public class TeacherDtoResponse {
         this.dateBirth = dateBirth;
     }
 
-    public long getImageId() {
-        return imageId;
+    public ImageDto getImage() {
+        return image;
     }
 
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
+    public void setImage(ImageDto image) {
+        this.image = image;
     }
 
     public String getLinkPortfolio() {
@@ -67,5 +68,14 @@ public class TeacherDtoResponse {
 
     public void setDateDismissal(LocalDate dateDismissal) {
         this.dateDismissal = dateDismissal;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public TeacherDtoResponse setId(Long id) {
+        this.id = id;
+        return this;
     }
 }

@@ -1,8 +1,11 @@
 package com.example.site_pl_99.dto;
 
+import com.example.site_pl_99.enums.Active;
+
 import java.time.LocalDate;
 
 public class CourseDtoResponse {
+    private Long id;
     private String courseType;
     private String title;
     private String description;
@@ -10,6 +13,24 @@ public class CourseDtoResponse {
     private LocalDate dateStart;
     private LocalDate dateEnd;
     private String imageFileName;
+    private String active;
+
+    public Long getId() {
+        return id;
+    }
+
+    public CourseDtoResponse setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
 
     public String getCourseType() {
         return courseType;

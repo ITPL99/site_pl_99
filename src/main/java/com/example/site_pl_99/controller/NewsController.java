@@ -1,25 +1,21 @@
 package com.example.site_pl_99.controller;
 
+import com.example.site_pl_99.dto.NewsDtoPreviewResponse;
 import com.example.site_pl_99.dto.NewsDtoRequest;
+import com.example.site_pl_99.dto.NewsDtoResponse;
 import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.service.NewsService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/news")
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "Новости", description = "Операции для управления новостями (поиск, сохранение, удаление)")
 public class NewsController {
-
     private final NewsService newsService;
 
     @Autowired
@@ -27,59 +23,48 @@ public class NewsController {
         this.newsService = newsService;
     }
 
-    @Operation(summary = "Найти новость по заголовку")
     @GetMapping("/get-by-title")
-    public ResponseEntity<?> findByTitle(
-            @RequestParam @Parameter(description = "Заголовок новости") String title) {
-        return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.getTitle(title)));
+    public ResponseEntity<NewsDtoResponse> findByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.getByTitle(title)));
     }
 
-    @Operation(summary = "Найти все новости по содержимому заголовка")
     @GetMapping("/get-all-by-content-title")
-    public ResponseEntity<?> findByContentTitle(
-            @RequestParam @Parameter(description = "Подстрока в заголовке") String contentTitle) {
-        return ResponseEntity.ok(
-                newsService.getAllContentTitle(contentTitle)
-                        .stream().map(NewsMapper::toNewsDtoResponse).toList()
-        );
+    public ResponseEntity<List<NewsDtoPreviewResponse>> findByContentTitle(@RequestParam String contentTitle) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllByContentTitle(contentTitle)));
     }
 
-    @Operation(summary = "Найти все новости по содержимому подзаголовка")
+    @GetMapping("/get-all")
+    public ResponseEntity<List<NewsDtoPreviewResponse>> findAllNews(){
+        return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAll()));
+    }
+
+    @GetMapping("/get-all-full")
+    public ResponseEntity<List<NewsDtoPreviewResponse>> findAllFullNews(){
+        return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllFull()));
+    }
+
     @GetMapping("/get-all-by-content-sub-title")
-    public ResponseEntity<?> findByContentSubTitle(
-            @RequestParam @Parameter(description = "Подстрока в подзаголовке") String contentSubTitle) {
-        return ResponseEntity.ok(
-                newsService.getAllContentSubTitle(contentSubTitle)
-                        .stream().map(NewsMapper::toNewsDtoResponse).toList()
-        );
+    public ResponseEntity<List<NewsDtoPreviewResponse>> findByContentSubTitle(@RequestParam String contentSubTitle) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllByContentSubTitle(contentSubTitle)));
     }
 
-    @Operation(summary = "Найти новость по ID")
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<?> findById(
-            @PathVariable("id") @Parameter(description = "ID новости") Long id) {
+    public ResponseEntity<NewsDtoResponse> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.getById(id)));
     }
 
-    @Operation(
-            summary = "Создать или обновить новость",
-            requestBody = @RequestBody(
-                    description = "Новость для сохранения",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = NewsDtoRequest.class))
-            )
-    )
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody NewsDtoRequest entity) {
-        return ResponseEntity.ok(
-                NewsMapper.toNewsDtoResponse(newsService.save(NewsMapper.toNewsEntity(entity)))
-        );
+    public ResponseEntity<NewsDtoResponse> save(@RequestBody NewsDtoRequest entity) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.addNews(NewsMapper.toNewsEntity(entity))));
     }
 
-    @Operation(summary = "Удалить новость по ID")
     @DeleteMapping("/delete-by-id")
-    public void deleteById(
-            @RequestParam @Parameter(description = "ID новости") Long id) {
+    public void deleteById(@RequestParam Long id) {
         newsService.deleteById(id);
+    }
+
+    @GetMapping("/get-by-status")
+    public ResponseEntity<List<NewsDtoPreviewResponse>> getByStatus(@RequestParam String status) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllByActiveStatus(status)));
     }
 }

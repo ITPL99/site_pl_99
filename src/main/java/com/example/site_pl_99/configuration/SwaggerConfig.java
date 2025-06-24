@@ -6,10 +6,11 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(info = @Info(
-        title = "site_pl_99",
-        version = "1.0",
+        title = "Профессиональный Лицей Информационных Технологий 99",
+        version = "0.1.36",
         // TODO: Добавить в описание дефолтных пользователей с паролями и логинами
-        description = "API для сайта лицея"
+        description = "Документация для работы с серверной частью для формирование запросов и определения функционала Пользовательского интерфейса"
+
 ))
 @SecurityScheme(
         name = "bearerAuth",
