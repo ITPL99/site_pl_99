@@ -9,7 +9,6 @@ import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 @Service
 public class MasterServiceImpl implements MasterService {
     private final MasterRepository masterRepository;
@@ -65,7 +64,7 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<MasterEntity> getAll() {
-        return masterRepository.findAll().stream().filter(m -> m.getActive() == Active.ACTIVE).collect(Collectors.toList());
+        return masterRepository.findAll();
     }
 
     @Override

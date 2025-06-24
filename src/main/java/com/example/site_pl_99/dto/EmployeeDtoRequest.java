@@ -1,42 +1,85 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
+@Schema(description = "Объект запроса для сотрудника")
 public class EmployeeDtoRequest {
+
+    @Schema(description = "Полное имя сотрудника",
+            example = "Муслимов Муслим Муслимович")
     private String fullName;
-    private LocalDate birthDate;
-    private long imageId;
-    private String department;
+
+    @Schema(description = "Дата рождения сотрудника в формате ГГГГ-ММ-ДД",
+            example = "1990-04-25")
+    private LocalDate dateBerth;
+
+    @Schema(description = "Фотография сотрудника")
+    private ImageDto image;
+
+    @Schema(description = "Название отдела на русском языке",
+            example = "Отдел разработки")
+    private String departmentRu;
+
+    @Schema(description = "Название отдела на кыргызском языке",
+            example = "Иштеп чыгуучу бөлүм")
+    private String departmentKg;
+
+    @Schema(description = "Дата приема на работу в формате ГГГГ-ММ-ДД",
+            example = "2025-01-10")
+    private LocalDate dateEmployment;
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public EmployeeDtoRequest setFullName(String fullName) {
         this.fullName = fullName;
+        return this;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
+    public LocalDate getDateBerth() {
+        return dateBerth;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
+    public EmployeeDtoRequest setDateBerth(LocalDate dateBerth) {
+        this.dateBerth = dateBerth;
+        return this;
     }
 
-    public long getImageId() {
-        return imageId;
+    public ImageDto getImage() {
+        return image;
     }
 
-    public void setImageId(long imageId) {
-        this.imageId = imageId;
+    public EmployeeDtoRequest setImage(ImageDto image) {
+        this.image = image;
+        return this;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getDepartmentRu() {
+        return departmentRu;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public EmployeeDtoRequest setDepartmentRu(String departmentRu) {
+        this.departmentRu = departmentRu;
+        return this;
+    }
+
+    public String getDepartmentKg() {
+        return departmentKg;
+    }
+
+    public EmployeeDtoRequest setDepartmentKg(String departmentKg) {
+        this.departmentKg = departmentKg;
+        return this;
+    }
+
+    public LocalDate getDateEmployment() {
+        return dateEmployment;
+    }
+
+    public EmployeeDtoRequest setDateEmployment(LocalDate dateEmployment) {
+        this.dateEmployment = dateEmployment;
+        return this;
     }
 }

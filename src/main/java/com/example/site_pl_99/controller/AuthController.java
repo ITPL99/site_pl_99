@@ -39,6 +39,7 @@ public class AuthController {
             @Parameter(description = "Пароль пользователя")
             @RequestParam String password
             ) throws BaseException {
+        System.out.println("userName: "  + username + " Password: " + password);
         log.info("----->>>>>  получили запрос в систему ");
             return authService.login(username, password);
     }

@@ -1,11 +1,11 @@
 package com.example.site_pl_99.controller;
 
-import com.example.site_pl_99.dto.CourseDtoResponseRu;
 import com.example.site_pl_99.dto.CourseDtoRequest;
 import com.example.site_pl_99.enums.CourseType;
 
 import com.example.site_pl_99.mapper.CourseMapper;
 import com.example.site_pl_99.service.CourseService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +16,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/course")
+@SecurityRequirement(name = "bearerAuth")
 public class CourseController  {
     private final CourseService courseService;
 

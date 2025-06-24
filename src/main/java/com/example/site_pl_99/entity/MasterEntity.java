@@ -20,6 +20,11 @@ public class MasterEntity extends BaseEntity {
     private LocalDate dateEmployment;
     private LocalDate dateDismissal;
 
+    @PrePersist
+    public void prePersist() {
+        active = Active.NEW;
+    }
+
     public String getFullName() {
         return fullName;
     }

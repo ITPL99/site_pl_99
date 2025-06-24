@@ -1,90 +1,110 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.enums.Active;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class NewsDtoResponse {
+    private Long id;
     private String title;
     private String subTitle;
     private String description;
     private LocalDateTime dateCreate;
-    private long imageSmallId;
-    private long imagefullId;
-    private List<Long> imagesId;
-    private long videoId;
-    private Active active;
+    private String imageSmallFileName;
+    private String imageFullFileName;
+    private List<String> imagesFilesName;
+    private String videoFile;
+    private String active;
+
+    public Long getId() {
+        return id;
+    }
+
+    public NewsDtoResponse setId(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public NewsDtoResponse setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public String getSubTitle() {
         return subTitle;
     }
 
-    public void setSubTitle(String subTitle) {
+    public NewsDtoResponse setSubTitle(String subTitle) {
         this.subTitle = subTitle;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public NewsDtoResponse setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public LocalDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(LocalDateTime dateCreate) {
+    public NewsDtoResponse setDateCreate(LocalDateTime dateCreate) {
         this.dateCreate = dateCreate;
+        return this;
     }
 
-    public long getImageSmallId() {
-        return imageSmallId;
+    public String getImageSmallFileName() {
+        return imageSmallFileName;
     }
 
-    public void setImageSmallId(long imageSmallId) {
-        this.imageSmallId = imageSmallId;
+    public NewsDtoResponse setImageSmallFileName(String imageSmallFileName) {
+        this.imageSmallFileName = imageSmallFileName;
+        return this;
     }
 
-    public long getImagefullId() {
-        return imagefullId;
+    public String getImageFullFileName() {
+        return imageFullFileName;
     }
 
-    public void setImagefullId(long imagefullId) {
-        this.imagefullId = imagefullId;
+    public NewsDtoResponse setImageFullFileName(String imageFullFileName) {
+        this.imageFullFileName = imageFullFileName;
+        return this;
     }
 
-    public List<Long> getImagesId() {
-        return imagesId;
+    public List<String> getImagesFilesName() {
+        return imagesFilesName;
     }
 
-    public void setImagesId(List<Long> imagesId) {
-        this.imagesId = imagesId;
+    public NewsDtoResponse setImagesFilesName(List<String> imagesFilesName) {
+        this.imagesFilesName = imagesFilesName;
+        return this;
     }
 
-    public long getVideoId() {
-        return videoId;
+    public String getVideoFile() {
+        return videoFile;
     }
 
-    public void setVideoId(long videoId) {
-        this.videoId = videoId;
+    public NewsDtoResponse setVideoFile(String videoFile) {
+        this.videoFile = videoFile;
+        return this;
     }
 
-    public Active getActive() {
+    public String getActive() {
         return active;
     }
 
-    public void setActive(Active active) {
+    public NewsDtoResponse setActive(String active) {
         this.active = active;
+        return this;
     }
 }
