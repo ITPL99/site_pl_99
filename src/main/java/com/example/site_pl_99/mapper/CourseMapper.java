@@ -27,6 +27,7 @@ public class CourseMapper {
 
     public static CourseDtoResponse mapEntityToDtoResponse(CourseEntity byTitle) {
         CourseDtoResponse courseDtoResponse = new CourseDtoResponse();
+        courseDtoResponse.setId(byTitle.getId());
         courseDtoResponse.setActive(byTitle.getActive().name());
         courseDtoResponse.setCourseType(byTitle.getType().name());
         if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")) {
