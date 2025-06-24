@@ -38,7 +38,23 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendMessage(String email,String title, String content){
+    public void sendMessageTo(String email,String title, String content){
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        try {
+            mimeMessageHelper.setFrom(mailName);
+            mimeMessageHelper.setTo(email);
+            mimeMessageHelper.setSubject(title);
+            mimeMessageHelper.setText(content);
+            mailSender.send(mimeMessage);
+        }catch (MessagingException e) {
+            log.error(e.getMessage());
+            throw new MassageSendException("error.messageSend");
+        }
+    }
+
+    @Override
+    public void sendReportMessage(String email, String title, String content) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
         try {
@@ -51,7 +67,7 @@ public class MailServiceImpl implements MailService {
             mailRepository.save(mailEntity);
         }catch (MessagingException e) {
             log.error(e.getMessage());
-            throw new MassageSendException("error.mailSend");
+            throw new MassageSendException("error.messageSend");
         }
     }
 

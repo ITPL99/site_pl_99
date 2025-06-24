@@ -3,10 +3,13 @@ package com.example.site_pl_99.controller;
 import com.example.site_pl_99.entity.MailEntity;
 import com.example.site_pl_99.service.MailService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/api/mail")
@@ -19,9 +22,12 @@ public class MailController {
     }
 
     @PostMapping("/send-message")
-    public ResponseEntity<?> sendMessage(@RequestParam String email ,@RequestParam String title, @RequestParam String content) {
-        mailService.sendMessage(email,title, content);
-        return ResponseEntity.ok("success.messageSend");
+    public String sendReportMessage(@RequestParam String email ,@RequestParam String title, @RequestParam String content) {
+        mailService.sendReportMessage(email,title, content);
+        Locale locale = LocaleContextHolder.getLocale();
+        return locale.getLanguage().equals("ru")? "Сообщение отправленно":
+                locale.getLanguage().equals("kg")? "Сообщение жөнөтүлдү":
+                        "Message sent successfully";
     }
 
     @GetMapping("/get-all")

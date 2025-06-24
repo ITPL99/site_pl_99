@@ -1,0 +1,1 @@
+alter table users drop constraint users_active_key;
