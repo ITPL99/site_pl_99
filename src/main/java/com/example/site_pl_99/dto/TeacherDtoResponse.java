@@ -5,6 +5,7 @@ import com.example.site_pl_99.enums.Active;
 import java.time.LocalDate;
 
 public class TeacherDtoResponse {
+    private Long id;
     private String fullName;
     private LocalDate dateBirth;
     private ImageDto image;
@@ -12,6 +13,14 @@ public class TeacherDtoResponse {
     private Active active;
     private LocalDate dateEmployment;
     private LocalDate dateDismissal;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFullName() {
         return fullName;

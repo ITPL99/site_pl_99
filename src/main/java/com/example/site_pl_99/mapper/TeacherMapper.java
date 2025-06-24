@@ -5,7 +5,8 @@ import com.example.site_pl_99.dto.TeacherDtoRequestUpdate;
 import com.example.site_pl_99.dto.TeacherDtoResponse;
 import com.example.site_pl_99.entity.TeacherEntity;
 
-public class TeacherMapper {
+public class
+TeacherMapper {
     public static TeacherEntity toEntity(TeacherDtoRequest teacherDtoRequest) {
         TeacherEntity teacherEntity = new TeacherEntity();
         teacherEntity.setFullName(teacherDtoRequest.getFullName());
@@ -29,6 +30,7 @@ public class TeacherMapper {
 
     public static TeacherDtoResponse dtoResponse(TeacherEntity teacherEntity) {
         TeacherDtoResponse teacherDtoResponse = new TeacherDtoResponse();
+        teacherDtoResponse.setId(teacherEntity.getId());
         teacherDtoResponse.setFullName(teacherEntity.getFullName());
         teacherDtoResponse.setDateBirth(teacherEntity.getDateBerth());
         teacherDtoResponse.setLinkPortfolio(teacherEntity.getLinkPortfolio());
