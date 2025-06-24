@@ -66,17 +66,17 @@ public class EmployeeController  {
     }
 
     @PostMapping("/get-by-id/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<EmployeeDtoResponse> getById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(employeeMapper.mapEntityToDtoResponse(employeeService.getById(id)));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> save(@RequestBody EmployeeDtoRequest dtoRequest) {
+    public ResponseEntity<EmployeeDtoResponse> save(@RequestBody EmployeeDtoRequest dtoRequest) {
         return ResponseEntity.ok(employeeMapper.mapEntityToDtoResponse(employeeService.save(employeeMapper.mapDtoToEntity(dtoRequest))));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<?>> getAll() {
+    public ResponseEntity<List<EmployeeDtoResponse>> getAll() {
         return ResponseEntity.ok(employeeService.getAll().stream().map(employeeMapper::mapEntityToDtoResponse).toList());
     }
 
