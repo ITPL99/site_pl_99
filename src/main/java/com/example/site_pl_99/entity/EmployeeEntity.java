@@ -8,16 +8,22 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "employees")
 public class EmployeeEntity extends BaseEntity{
+    @Column(name = "full_name")
     private String fullName;
+    @Column(name = "date_berth")
     private LocalDate dateBerth;
     @OneToOne
     @JoinColumn(name = "image_id",referencedColumnName = "id")
     private ImageEntity image;
+    @Column(name = "department_ru")
     private String departmentRu;
+    @Column(name = "department_kg")
     private String departmentKg;
     @Enumerated(EnumType.STRING)
     private Active active;
+    @Column(name = "date_employment")
     private LocalDate dateEmployment;
+    @Column(name = "date_dismissal")
     private LocalDate dateDismissal;
 
     @PrePersist

@@ -1,20 +1,41 @@
 package com.example.site_pl_99.dto;
 
 import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
+@Schema(description = "DTO запроса для создания или обновления новости")
 @RequiredArgsConstructor
 public class NewsDtoRequest {
+    @Schema(description = "Заголовок новости на русском языке", example = "Новая программа обучения")
     private String titleRu;
+
+    @Schema(description = "Заголовок новости на кыргызском языке", example = "Жаңы окуу программасы")
     private String titleKg;
+
+    @Schema(description = "Подзаголовок новости на русском языке", example = "Старт уже скоро")
     private String subTitleRu;
+
+    @Schema(description = "Подзаголовок новости на кыргызском языке", example = "Башталышы жакын")
     private String subTitleKg;
+
+    @Schema(description = "Полное описание новости на русском языке", example = "Подробное описание новости...")
     private String descriptionRu;
+
+    @Schema(description = "Полное описание новости на кыргызском языке", example = "Жаңылыктын толук баяны...")
     private String descriptionKg;
+
+    @Schema(description = "Миниатюрное изображение новости")
     private ImageDto imageSmall;
+
+    @Schema(description = "Полноразмерное изображение новости")
     private ImageDto imageFull;
+
+    @Schema(description = "Список дополнительных изображений")
     private List<ImageDto> imagesFile;
+
+    @Schema(description = "Видео, связанное с новостью")
     private VideoDto VideoFileName;
 
     public String getTitleRu() {

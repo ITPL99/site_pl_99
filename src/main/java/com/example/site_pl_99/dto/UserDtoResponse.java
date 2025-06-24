@@ -1,14 +1,20 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 
-
+@Schema(description = "Данные пользователя")
 @RequiredArgsConstructor
 public class UserDtoResponse {
-    private Long id;
-    private String username;
-    private String email;
 
+    @Schema(description = "Уникальный идентификатор пользователя", example = "123")
+    private Long id;
+
+    @Schema(description = "Имя пользователя", example = "john_doe")
+    private String username;
+
+    @Schema(description = "Email пользователя", example = "john.doe@example.com")
+    private String email;
     public Long getId() {
         return id;
     }

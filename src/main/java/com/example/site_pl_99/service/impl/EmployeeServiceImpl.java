@@ -9,57 +9,73 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-
     public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-
     @Override
     public EmployeeEntity getFullName(String fullName) {
-        return employeeRepository.findByFullName(fullName).orElseThrow(() ->  new NotFoundException("Not Found"));
+        return employeeRepository.findByFullName(fullName)
+                .orElseThrow(() -> new NotFoundException("Работник по такому имени " + fullName + " не найден"));
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesContentName(String fullName) {
-        return employeeRepository.findByFullNameContaining(fullName).orElseThrow(() ->  new NotFoundException("Not Found"));
+    public List<EmployeeEntity> searchByName(String namePart) {
+        return employeeRepository.findByFullNameContainingIgnoreCase(namePart);
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesByDateBerth(LocalDate dateBerth) {
-        return employeeRepository.findAllByDateBerth(dateBerth).orElseThrow(() ->  new NotFoundException("Not Found"));
+    public List<EmployeeEntity> getByDateBerth(LocalDate dateBerth) {
+        return employeeRepository.findByDateBerth(dateBerth);
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesByStatusActive(Active status) {
-        return employeeRepository.findAllByActive(status).orElseThrow(() ->  new NotFoundException("Not Found"));
+    public List<EmployeeEntity> getByStatusActive(Active status) {
+        return employeeRepository.findByActive(status);
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesByDepartment(String department) {
-        return employeeRepository.findAllByDepartmentKgOrDepartmentRu(department, department).orElseThrow(() ->  new NotFoundException("Not Found"));
+    public List<EmployeeEntity> getByDepartment(String department) {
+        return employeeRepository.findByDepartmentRuIgnoreCaseOrDepartmentKgIgnoreCase(department, department);
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesByDateEmployment(LocalDate dateEmployment) {
-       return employeeRepository.findAllByDateEmployment(dateEmployment).orElseThrow(() ->  new NotFoundException("Not Found"));
+    public List<EmployeeEntity> getByDateEmployment(LocalDate dateEmployment) {
+        return employeeRepository.findByDateEmployment(dateEmployment);
     }
 
     @Override
-    public List<EmployeeEntity> getAllEmployeesByDateDismissal(LocalDate dateDismissal) {
-        return employeeRepository.findAllByDateDismissal(dateDismissal).orElseThrow(()->new NotFoundException("Not Found"));
+    public List<EmployeeEntity> getByDateDismissal(LocalDate dateDismissal) {
+        return employeeRepository.findByDateDismissal(dateDismissal);
+    }
+
+    @Override
+    public EmployeeEntity update(EmployeeEntity employeeEntity) {
+        EmployeeEntity existing = employeeRepository.findById(employeeEntity.getId())
+                .orElseThrow(() -> new NotFoundException("Рабоник по такому айди не найден: " + employeeEntity.getId()));
+
+        existing.setFullName(employeeEntity.getFullName())
+                .setDateBerth(employeeEntity.getDateBerth())
+                .setImage(employeeEntity.getImage())
+                .setDepartmentRu(employeeEntity.getDepartmentRu())
+                .setDepartmentKg(employeeEntity.getDepartmentKg())
+                .setActive(employeeEntity.getActive())
+                .setDateEmployment(employeeEntity.getDateEmployment())
+                .setDateDismissal(employeeEntity.getDateDismissal())
+                .setActive(Active.UPDATED);
+        return employeeRepository.save(existing);
     }
 
     @Override
     public EmployeeEntity getById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() ->  new NotFoundException("Not Found"));
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Рабоник по такому айди не найден: " + id));
     }
 
     @Override
@@ -69,19 +85,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeEntity> getAll() {
-        return employeeRepository.findAll().stream().filter(e -> e.getActive() == Active.ACTIVE).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<EmployeeEntity> getFullAll() {
         return employeeRepository.findAll();
     }
 
     @Override
     public void deleteById(Long id) {
-        EmployeeEntity employeeEntity = getById(id);
-        employeeEntity.setDateDismissal(LocalDate.now());
-        employeeEntity.setActive(Active.DELETED);
-        employeeRepository.save(employeeEntity);
+        EmployeeEntity entity = getById(id);
+        entity.setActive(Active.DELETED);
+        entity.setDateDismissal(LocalDate.now());
+        employeeRepository.save(entity);
     }
 }

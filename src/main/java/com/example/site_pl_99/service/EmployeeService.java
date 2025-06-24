@@ -8,12 +8,11 @@ import java.util.List;
 
 public interface EmployeeService extends BaseService<EmployeeEntity> {
     EmployeeEntity getFullName(String fullName);
-    List<EmployeeEntity> getAllEmployeesContentName(String fullName);
-    List<EmployeeEntity> getAllEmployeesByDateBerth(LocalDate dateBerth);
-    List<EmployeeEntity> getAllEmployeesByStatusActive(Active status);
-    List<EmployeeEntity> getAllEmployeesByDepartment(String department);
-    List<EmployeeEntity> getAllEmployeesByDateEmployment(LocalDate dateEmployment);
-    List<EmployeeEntity> getAllEmployeesByDateDismissal(LocalDate dateDismissal);
-
-    List<EmployeeEntity> getFullAll();
+    List<EmployeeEntity> searchByName(String namePart);
+    List<EmployeeEntity> getByDateBerth(LocalDate dateBerth);
+    List<EmployeeEntity> getByStatusActive(Active status);
+    List<EmployeeEntity> getByDepartment(String department);
+    List<EmployeeEntity> getByDateEmployment(LocalDate dateEmployment);
+    List<EmployeeEntity> getByDateDismissal(LocalDate dateDismissal);
+    EmployeeEntity update(EmployeeEntity employeeEntity);
 }

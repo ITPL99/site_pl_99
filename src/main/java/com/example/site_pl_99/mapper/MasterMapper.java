@@ -35,12 +35,9 @@ public class MasterMapper {
         masterDtoResponse.setId(masterEntity.getId());
         masterDtoResponse.setFullName(masterEntity.getFullName());
         masterDtoResponse.setBirthDate(masterEntity.getDateBerth());
-        if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")){
-            masterDtoResponse.setProfession(masterEntity.getProfessionRu());
-        }
-        if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("kg")){
-            masterDtoResponse.setProfession(masterEntity.getProfessionKg());
-        }
+        masterDtoResponse.setProfession(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru") ?
+                masterEntity.getProfessionRu() : masterEntity.getProfessionKg()
+        );
         masterDtoResponse.setActive(masterEntity.getActive());
         masterDtoResponse.setDateDismissal(masterEntity.getDateDismissal());
         masterDtoResponse.setDateEmployment(masterEntity.getDateEmployment());
