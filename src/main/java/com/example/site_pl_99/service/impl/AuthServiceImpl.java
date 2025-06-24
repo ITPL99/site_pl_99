@@ -86,6 +86,7 @@ public class AuthServiceImpl implements AuthService {
         String message = LocaleContextHolder.getLocale().getLanguage().equals("ru")?"Для восстановления пароля пройдите по данной ссылке http://195.38.165.33:8080/api/auth/update-password/"+ user.getActiveCode():
                 LocaleContextHolder.getLocale().getLanguage().equals("kg")?"Сырсөздү калыбына келтирүү үчүн, ушул шилтемеге өтүңүз http://195.38.165.33:8080/api/auth/update-password/"+ user.getActiveCode():
                         "To restore the password, go to this link http://195.38.165.33:8080/api/auth/update-password/"+ user.getActiveCode();
+        userRepository.save(user);
         mailSender.sendMessage(user.getEmail(), titleMessage,message);
     }
 
