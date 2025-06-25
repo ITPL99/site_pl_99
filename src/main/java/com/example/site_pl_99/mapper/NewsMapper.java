@@ -41,6 +41,7 @@ public class NewsMapper {
             newsDtoResponse.setDescription(newsEntity.getDescriptionKg());
         }
         newsDtoResponse.setDateCreate(newsEntity.getDateCreate());
+        newsDtoResponse.setActive(newsEntity.getActive().name());
         if(newsEntity.getImageSmall() != null) newsDtoResponse.setImageSmallFileName(newsEntity.getImageSmall().getFileName());
         if(newsEntity.getImageFull() != null) newsDtoResponse.setImageFullFileName(newsEntity.getImageFull().getFileName());
         if(newsEntity.getImages() != null) newsDtoResponse.setImagesFilesName(newsEntity.getImages().stream().map(ImageEntity::getFileName).collect(Collectors.toList()));
@@ -61,5 +62,9 @@ public class NewsMapper {
         newsDtoPreviewResponse.setDateCreated(newsEntity.getDateCreate());
         if(newsEntity.getImageSmall() != null) newsDtoPreviewResponse.setImageSmall(newsEntity.getImageSmall().getFileName());
         return newsDtoPreviewResponse;
+    }
+
+    public static List<NewsDtoPreviewResponse> toNewsDtoPreviewResponseList(List<NewsEntity> newsEntityList) {
+        return newsEntityList.stream().map(NewsMapper::toNewsDtoPreviewResponse).collect(Collectors.toList());
     }
 }

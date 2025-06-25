@@ -24,6 +24,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     private String email;
     @ManyToMany(mappedBy = "userEntityList",fetch = FetchType.EAGER)
     private List<RoleEntity> roles;
+    private String activeCode;
 
     public String getUsername() {
         return username;
@@ -72,6 +73,15 @@ public class UserEntity extends BaseEntity implements UserDetails {
 
     public UserEntity setRoles(List<RoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public UserEntity setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
         return this;
     }
 }

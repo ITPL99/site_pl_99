@@ -47,8 +47,8 @@ public class NewsEntity extends BaseEntity {
 
     @PrePersist
     public void prePersist(){
-        dateCreate = LocalDateTime.now();
         active = Active.ACTIVE;
+        dateCreate = LocalDateTime.now();
     }
 
     public String getTitleRu() {

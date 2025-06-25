@@ -10,13 +10,10 @@ import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
     Optional<EmployeeEntity> findByFullName(String fullName);
-    Optional<List<EmployeeEntity>> findByFullNameContaining(String fullName);
-    Optional<List<EmployeeEntity>> findAllByDateBerth(LocalDate dateBerth);
-    Optional<List<EmployeeEntity>> findAllByDateEmployment(LocalDate dateEmployment);
-    Optional<List<EmployeeEntity>> findAllByDateDismissal(LocalDate dateDismissal);
-    Optional<List<EmployeeEntity>> findAllByActive(Active active);
-    Optional<List<EmployeeEntity>> findAllByDepartmentKgOrDepartmentRu(String departmentKg, String departmentRu);
-
-
-
+    List<EmployeeEntity> findByFullNameContainingIgnoreCase(String name);
+    List<EmployeeEntity> findByDateBerth(LocalDate dateBerth);
+    List<EmployeeEntity> findByActive(Active active);
+    List<EmployeeEntity> findByDepartmentRuIgnoreCaseOrDepartmentKgIgnoreCase(String depRu, String depKg);
+    List<EmployeeEntity> findByDateEmployment(LocalDate dateEmployment);
+    List<EmployeeEntity> findByDateDismissal(LocalDate dateDismissal);
 }

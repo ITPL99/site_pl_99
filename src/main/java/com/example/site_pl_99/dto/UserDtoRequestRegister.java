@@ -1,10 +1,18 @@
 package com.example.site_pl_99.dto;
 
-public class UserDtoRequestRegister {
-    private String username;
-    private String password;
-    private String email;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Данные для регистрации нового пользователя")
+public class UserDtoRequestRegister {
+
+    @Schema(description = "Имя пользователя", example = "john_doe", required = true)
+    private String username;
+
+    @Schema(description = "Пароль пользователя", example = "P@ssw0rd!", required = true)
+    private String password;
+
+    @Schema(description = "Email пользователя", example = "john.doe@example.com", required = true)
+    private String email;
     public String getUsername() {
         return username;
     }

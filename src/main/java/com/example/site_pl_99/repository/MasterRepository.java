@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public interface MasterRepository extends JpaRepository<MasterEntity, Long> {
     Optional<MasterEntity> findByFullName(String fullName);
-    Optional<List<MasterEntity>> findAllByFullNameContaining(String fullName);
-    Optional<List<MasterEntity>> findAllByDateBerth(LocalDate berth);
-    Optional<List<MasterEntity>> findAllByActive(Active active);
-    Optional<List<MasterEntity>> findAllByDateEmployment(LocalDate dateEmployment);
-    Optional<List<MasterEntity>> findAllByDateDismissal(LocalDate dateDismissal);
-    Optional<List<MasterEntity>> findAllByProfessionRuOrProfessionKg(String professionRu, String professionKg);
+    List<MasterEntity> findAllByFullNameContaining(String fullName);
+    List<MasterEntity> findAllByDateBerth(LocalDate berth);
+    List<MasterEntity> findAllByActive(Active active);
+    List<MasterEntity> findAllByDateEmployment(LocalDate dateEmployment);
+    List<MasterEntity> findAllByDateDismissal(LocalDate dateDismissal);
+    List<MasterEntity> findAllByProfessionRuOrProfessionKg(String professionRu, String professionKg);
 }
