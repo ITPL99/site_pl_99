@@ -8,6 +8,8 @@ import com.example.site_pl_99.entity.EmployeeEntity;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class EmployeeMapper {
 
@@ -28,12 +30,16 @@ public class EmployeeMapper {
     }
 
     public EmployeeEntity mapDtoToEntity(EmployeeDtoRequest dtoRequest) {
-        return new EmployeeEntity()
+         EmployeeEntity employeeEntity = new EmployeeEntity()
                 .setFullName(dtoRequest.getFullName())
-                .setDateBerth(dtoRequest.getDateBerth())
-                .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()))
+                .setDateBerth(dtoRequest.getDateBerth());
+                if(dtoRequest.getImage() != null) employeeEntity.setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()))
                 .setDepartmentRu(dtoRequest.getDepartmentRu())
                 .setDepartmentKg(dtoRequest.getDepartmentKg());
+                if(dtoRequest.getDateEmployment() != null) employeeEntity.setDateEmployment(dtoRequest.getDateEmployment());
+                if(dtoRequest.getDateEmployment() == null) employeeEntity.setDateDismissal(LocalDate.now());
+                if(dtoRequest.getDateDismissal() != null) employeeEntity.setDateDismissal(dtoRequest.getDateDismissal());
+                return employeeEntity;
     }
 
     public EmployeeEntity mapDtoToEntityUpdate(EmployeeDtoRequestUpdate dtoRequest){

@@ -110,11 +110,18 @@ public class CourseController {
         return ResponseEntity.ok(CourseMapper.mapEntityToDtoResponse(courseService.save(CourseMapper.toEntity(entity))));
     }
 
-    @Operation(summary = "Получить все курсы",
+    @Operation(summary = "Получить все курсы, кроме удаленных",
             description = "Возвращает список всех курсов (в виде превью).")
     @GetMapping("/get-all")
     public ResponseEntity<List<CoursePreviewDto>> getAll() {
-        return ResponseEntity.ok(courseService.getAll().stream().map(CourseMapper::mapToPreviewEntity).toList());
+        return ResponseEntity.ok(CourseMapper.mapListEntityToPreviewDtoList(courseService.getAll()));
+    }
+
+    @Operation(summary = "Получить все курсы",
+            description = "Возвращает список всех курсов (в виде превью).")
+    @GetMapping("/get-all-full")
+    public ResponseEntity<List<CoursePreviewDto>> getAllFull() {
+        return ResponseEntity.ok(CourseMapper.mapListEntityToPreviewDtoList(courseService.getAllFull()));
     }
 
     @Operation(summary = "Удалить курс по ID",

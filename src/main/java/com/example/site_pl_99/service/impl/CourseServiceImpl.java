@@ -67,6 +67,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getAll() {
+        return courseRepository.findAll().stream().filter(courseEntity -> courseEntity.getActive().equals(Active.DELETED)).toList();
+    }
+
+    @Override
+    public List<CourseEntity> getAllFull(){
         return courseRepository.findAll();
     }
 
