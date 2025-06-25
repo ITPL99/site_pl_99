@@ -66,7 +66,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherEntity> searchByName(String namePart) {
         return teacherRepository.findByFullNameContaining(namePart)
-                .orElseThrow(() -> new NotFoundException("Teacher not found")).stream()
+                .stream()
                 .filter(teacherEntity -> !teacherEntity.getActive().equals(Active.DELETED))
                 .toList();
     }
@@ -74,21 +74,20 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherEntity> getByDateBerth(LocalDate dateBerth) {
         return teacherRepository.findAllByDateBerth(dateBerth)
-                .orElseThrow(() -> new NotFoundException("Teacher not found")).stream()
+                .stream()
                 .filter(teacherEntity -> !teacherEntity.getActive().equals(Active.DELETED))
                 .toList();
     }
 
     @Override
     public List<TeacherEntity> getByStatusActive(Active status) {
-        return teacherRepository.findAllByActive(status)
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        return teacherRepository.findAllByActive(status);
     }
 
     @Override
     public List<TeacherEntity> getByPortfolio(String department) {
         return teacherRepository.findAllByLinkPortfolio(department)
-                .orElseThrow(() -> new NotFoundException("Teacher not found")).stream()
+                .stream()
                 .filter(teacherEntity -> !teacherEntity.getActive().equals(Active.DELETED))
                 .toList();
     }
@@ -96,7 +95,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherEntity> getByDateEmployment(LocalDate dateEmployment) {
         return teacherRepository.findAllByDateEmployment(dateEmployment)
-                .orElseThrow(() -> new NotFoundException("Teacher not found")).stream()
+                .stream()
                 .filter(teacherEntity -> !teacherEntity.getActive().equals(Active.DELETED))
                 .toList();
     }
@@ -104,7 +103,7 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<TeacherEntity> getDateDismissal(LocalDate dateDismissal) {
         return teacherRepository.findAllByDateDismissal(dateDismissal)
-                .orElseThrow(() -> new NotFoundException("Teacher not found")).stream()
+                .stream()
                 .filter(teacherEntity -> !teacherEntity.getActive().equals(Active.DELETED))
                 .toList();
     }

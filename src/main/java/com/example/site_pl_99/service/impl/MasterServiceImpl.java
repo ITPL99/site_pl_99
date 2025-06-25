@@ -27,7 +27,6 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<MasterEntity> searchByName(String namePart) {
         return masterRepository.findAllByFullNameContaining(namePart)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
                 .stream()
                 .filter(master -> !master.getActive().equals(Active.DELETED))
                 .toList();
@@ -35,15 +34,12 @@ public class MasterServiceImpl implements MasterService {
 
     @Override
     public List<MasterEntity> getAllActiveStatus(Active status) {
-        return masterRepository.findAllByActive(status)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"));
+        return masterRepository.findAllByActive(status);
     }
 
     @Override
     public List<MasterEntity> getByDateBerth(LocalDate dateBerth) {
-        return masterRepository.findAllByDateBerth(dateBerth)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
-                .stream()
+        return masterRepository.findAllByDateBerth(dateBerth).stream()
                 .filter(master -> !master.getActive().equals(Active.DELETED))
                 .toList();
     }
@@ -51,7 +47,6 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<MasterEntity> getByProfession(String department) {
         return masterRepository.findAllByProfessionRuOrProfessionKg(department, department)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
                 .stream()
                 .filter(master -> !master.getActive().equals(Active.DELETED))
                 .toList();
@@ -60,7 +55,6 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<MasterEntity> getByDateEmployment(LocalDate dateEmployment) {
         return masterRepository.findAllByDateEmployment(dateEmployment)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
                 .stream()
                 .filter(master -> !master.getActive().equals(Active.DELETED))
                 .toList();
@@ -69,7 +63,6 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public List<MasterEntity> getByDateDismissal(LocalDate dateDismissal) {
         return masterRepository.findAllByDateDismissal(dateDismissal)
-                .orElseThrow(() -> new NotFoundException("Мастера не найдены"))
                 .stream()
                 .filter(master -> !master.getActive().equals(Active.DELETED))
                 .toList();

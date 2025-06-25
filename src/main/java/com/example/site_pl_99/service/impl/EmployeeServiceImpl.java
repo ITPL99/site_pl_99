@@ -80,6 +80,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeEntity save(EmployeeEntity entity) {
+        if (entity.getFullName() == null || entity.getFullName().isBlank()) {
+            throw new RuntimeException("Поле fullName не может быть пустым");
+        }
+        if(entity.getDateEmployment() == null){
+            throw new RuntimeException("Поле дата принятия обезадельна");
+        }
+        if (entity.getDateBerth() == null) {
+            throw new RuntimeException("Дата рождения обязательна");
+        }
         return employeeRepository.save(entity);
     }
 
