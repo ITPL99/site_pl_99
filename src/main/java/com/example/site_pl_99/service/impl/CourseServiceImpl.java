@@ -54,6 +54,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseEntity save(CourseEntity entity) {
+        if(entity.getType() == null){
+            throw new IncorectInputException("error.incorrectRequest");
+        }if (entity.getTitleRu() == null || entity.getTitleRu().isBlank()){
+            throw new IncorectInputException("error.incorrectRequest");
+        }if (entity.getTitleKg() == null || entity.getTitleKg().isBlank() ){
+            throw new IncorectInputException("error.incorrectRequest");
+        }if (entity.getImage() == null){
+            throw new IncorectInputException("error.incorrectRequest");
+        }if (entity.getPrice() == null || entity.getPrice() <= 0) {
+            throw new IncorectInputException("error.incorrectRequest");
+        }
         if (entity.getActive() == null) {
             entity.setActive(Active.NEW);
         }

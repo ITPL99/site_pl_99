@@ -5,6 +5,7 @@ import com.example.site_pl_99.dto.CourseDtoResponse;
 import com.example.site_pl_99.dto.CoursePreviewDto;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.CourseType;
+import com.example.site_pl_99.excaption.IncorectInputException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
