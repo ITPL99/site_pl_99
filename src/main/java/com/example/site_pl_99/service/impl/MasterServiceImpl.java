@@ -73,7 +73,7 @@ public class MasterServiceImpl implements MasterService {
         MasterEntity existing = masterRepository.findById(entity.getId())
                 .orElseThrow(() -> new NotFoundException("Мастер не найден"));
 
-        if (entity.getActive().equals(Active.DELETED)) {
+        if (existing.getActive().equals(Active.DELETED)) {
             throw new RuntimeException("Нельзя обновить удалённого мастера");
         }
 

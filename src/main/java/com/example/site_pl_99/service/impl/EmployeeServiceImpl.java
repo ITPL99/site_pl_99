@@ -65,7 +65,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .setImage(employeeEntity.getImage())
                 .setDepartmentRu(employeeEntity.getDepartmentRu())
                 .setDepartmentKg(employeeEntity.getDepartmentKg())
-                .setActive(employeeEntity.getActive())
                 .setDateEmployment(employeeEntity.getDateEmployment())
                 .setDateDismissal(employeeEntity.getDateDismissal())
                 .setActive(Active.UPDATED);

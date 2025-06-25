@@ -24,6 +24,7 @@ public class EmployeeMapper {
         );
         dtoResponse.setDateEmployment(entity.getDateEmployment());
         dtoResponse.setDateDismissal(entity.getDateDismissal());
+        dtoResponse.setActive(entity.getActive());
         return dtoResponse;
     }
 
@@ -33,7 +34,9 @@ public class EmployeeMapper {
                 .setDateBerth(dtoRequest.getDateBerth())
                 .setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()))
                 .setDepartmentRu(dtoRequest.getDepartmentRu())
-                .setDepartmentKg(dtoRequest.getDepartmentKg());
+                .setDepartmentKg(dtoRequest.getDepartmentKg())
+                .setDateDismissal(dtoRequest.getDateDismissal())
+                .setDateEmployment(dtoRequest.getDateEmployment());
     }
 
     public EmployeeEntity mapDtoToEntityUpdate(EmployeeDtoRequestUpdate dtoRequest){

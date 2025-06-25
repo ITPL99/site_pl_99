@@ -1,5 +1,6 @@
 package com.example.site_pl_99.dto;
 
+import com.example.site_pl_99.enums.Active;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
@@ -27,6 +28,17 @@ public class EmployeeDtoResponse {
 
     @Schema(description = "Дата увольнения, если применимо", example = "2024-06-01", type = "string", format = "date")
     private LocalDate dateDismissal;
+
+    @Schema(description = "Активный статус мастера", example = "ACTIVE")
+    private Active active;
+
+    public Active getActive() {
+        return active;
+    }
+
+    public void setActive(Active active) {
+        this.active = active;
+    }
 
     public Long getId() {
         return id;
