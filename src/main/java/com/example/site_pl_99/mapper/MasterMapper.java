@@ -38,6 +38,7 @@ public class MasterMapper {
         masterDtoResponse.setProfession(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru") ?
                 masterEntity.getProfessionRu() : masterEntity.getProfessionKg()
         );
+        masterDtoResponse.setImage(ImageMapper.mapEntityToDto(masterEntity.getImage()));
         masterDtoResponse.setActive(masterEntity.getActive());
         masterDtoResponse.setDateDismissal(masterEntity.getDateDismissal());
         masterDtoResponse.setDateEmployment(masterEntity.getDateEmployment());

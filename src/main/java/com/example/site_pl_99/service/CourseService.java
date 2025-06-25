@@ -13,7 +13,7 @@ public interface CourseService extends BaseService<CourseEntity> {
     List<CourseEntity> getAllCourseByPrice(Double price);
     List<CourseEntity> getAllCourseByDateStart(LocalDate dateStart);
     List<CourseEntity> getAllCourseByDateEnd(LocalDate dateEnd);
-
+    List<CourseEntity> getAllFull();
     List<CourseEntity> getAllActive();
 
     List<CourseEntity> getAllStatus(Active status);

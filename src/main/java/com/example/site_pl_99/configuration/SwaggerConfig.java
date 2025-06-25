@@ -2,6 +2,7 @@ package com.example.site_pl_99.configuration;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Configuration;
@@ -9,8 +10,14 @@ import org.springframework.context.annotation.Configuration;
         title = "Профессиональный Лицей Информационных Технологий 99",
         version = "0.1.36",
         // TODO: Добавить в описание дефолтных пользователей с паролями и логинами
-        description = "Документация для работы с серверной частью для формирование запросов и определения функционала Пользовательского интерфейса"
-
+        description = """
+                Документация для работы с серверной частью для формирование запросов и определения функционала Пользовательского интерфейса,
+               
+                Разработывали серверную часть:
+                Даутов Муслим
+                Доктурбаев Азирет
+                Жаныбаев Нурэл
+                """
 ))
 @SecurityScheme(
         name = "bearerAuth",
