@@ -15,12 +15,12 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoEntity getById(Long id) {
-        return videoRepository.findById(id).orElseThrow(() -> new RuntimeException("Такого видео нет"));
+        return videoRepository.findById(id).orElseThrow(() -> new RuntimeException("error.isNotFoundVideo"));
     }
 
     @Override
     public VideoEntity getByFileName(String fileName) {
-        return videoRepository.findByFileName(fileName).orElseThrow(() -> new RuntimeException("Такого видео нет"));
+        return videoRepository.findByFileName(fileName).orElseThrow(() -> new RuntimeException("error.isNotFoundVideo"));
     }
 
     @Override
