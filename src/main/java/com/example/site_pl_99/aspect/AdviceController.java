@@ -50,6 +50,6 @@ public class AdviceController {
         if(ex.getMessage().contains("video")){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(internalization.getMessage("error.blockVideos", locale));
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Произошла ошибка на сервере");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(internalization.getMessage("error.server", locale));
     }
 }
