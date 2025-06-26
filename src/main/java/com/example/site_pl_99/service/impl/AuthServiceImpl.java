@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return  userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("Неверный логин или пароль"));
+        return  userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("error.authorization"));
     }
 
     @Override
@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
         UserEntity authUser = userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("error.authorization"));
         log.info("------>>>>> Пришел пароль пользователя  {}", authUser.getPassword());
         if(!passwordEncoder.matches(password, authUser.getPassword())) {
-            throw new AuthorizeException("Неверный логин или пароль");
+            throw new AuthorizeException("error.authorization");
         }
         return jwtHandler.jwtGenerator(authUser);
     }
@@ -91,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String updatePassword(String activeCode, String newPassword) {
-        UserEntity user = userRepository.findByActiveCode(activeCode).orElseThrow(()-> new InvalidPasswordRestore("Поврежденный код Активации"));
+        UserEntity user = userRepository.findByActiveCode(activeCode).orElseThrow(()-> new InvalidPasswordRestore("error.invalidPasswordRestore"));
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setActiveCode(null);
         user.setActive(Active.ACTIVE);

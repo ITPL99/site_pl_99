@@ -23,19 +23,19 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherEntity getById(Long id) {
         return teacherRepository.findById(id)
                 .filter(teacherEntity -> teacherEntity.getActive().equals(Active.ACTIVE))
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
     }
 
     @Override
     public TeacherEntity save(TeacherEntity entity) {
         if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("Поле fullName не может быть пустым");
+            throw new RuntimeException("error.isEmptyFullName");
         }
         if (entity.getLinkPortfolio() == null) {
-            throw new RuntimeException("Должна быть указана хотя бы одна портфолио");
+            throw new RuntimeException("error.isEmptyPortfolio");
         }
         if (entity.getDateBerth() == null) {
-            throw new RuntimeException("Дата рождения обязательна");
+            throw new RuntimeException("error.isEmptyDateBerth");
         }
 
         return teacherRepository.save(entity);
@@ -60,7 +60,7 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherEntity getFullName(String fullName) {
         return teacherRepository.findByFullName(fullName)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
     }
 
     @Override
@@ -111,10 +111,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherEntity update(TeacherEntity entity) {
         TeacherEntity existing = teacherRepository.findById(entity.getId())
-                .orElseThrow(() -> new NotFoundException("Учитель не найден"));
+                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
 
-        if (entity.getActive().equals(Active.DELETED)) {
-            throw new RuntimeException("Нельзя обновить удалённого мастера");
+        if (existing.getActive().equals(Active.DELETED)) {
+            throw new RuntimeException("error.NotUpdateDeleteTeacher");
         }
 
         existing.setFullName(entity.getFullName());

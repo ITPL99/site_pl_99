@@ -21,7 +21,7 @@ public class MasterServiceImpl implements MasterService {
     public MasterEntity getFullName(String fullName) {
         return masterRepository.findByFullName(fullName)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
+                .orElseThrow(() -> new NotFoundException("error.findMaster"));
     }
 
     @Override
@@ -71,10 +71,10 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public MasterEntity update(MasterEntity entity) {
         MasterEntity existing = masterRepository.findById(entity.getId())
-                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
+                .orElseThrow(() -> new NotFoundException("error.findMaster"));
 
-        if (entity.getActive().equals(Active.DELETED)) {
-            throw new RuntimeException("Нельзя обновить удалённого мастера");
+        if (existing.getActive().equals(Active.DELETED)) {
+            throw new RuntimeException("error.NotUpdateDelete");
         }
 
         existing.setFullName(entity.getFullName());
@@ -94,19 +94,22 @@ public class MasterServiceImpl implements MasterService {
     public MasterEntity getById(Long id) {
         return masterRepository.findById(id)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("Мастер не найден"));
+                .orElseThrow(() -> new NotFoundException("error.findMaster"));
     }
 
     @Override
     public MasterEntity save(MasterEntity entity) {
         if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("Поле fullName не может быть пустым");
+            throw new RuntimeException("error.isEmptyFullName");
         }
         if (entity.getProfessionKg() == null && entity.getProfessionRu() == null) {
-            throw new RuntimeException("Должна быть указана хотя бы одна профессия");
+            throw new RuntimeException("error.isEmptyProfession");
+        }
+        if(entity.getDateEmployment() == null){
+            throw new RuntimeException("error.isEmptyDateEmployment");
         }
         if (entity.getDateBerth() == null) {
-            throw new RuntimeException("Дата рождения обязательна");
+            throw new RuntimeException("error.isEmptyDateBerth");
         }
 
         return masterRepository.save(entity);

@@ -28,7 +28,7 @@ public class VideoMinIoServiceImpl implements VideoMinIoService {
     @Override
     public void save(MultipartFile file) {
         if (minIoService.fileExists(bucketName, file.getOriginalFilename())) {
-            throw new RuntimeException("Файл с таким именем уже существует. Переименуйте файл и попробуйте снова");
+            throw new RuntimeException("error.doubleName");
         }
         minIoService.upload(file, bucketName);
     }

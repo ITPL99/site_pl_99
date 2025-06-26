@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getFullName(String fullName) {
         return employeeRepository.findByFullName(fullName)
-                .orElseThrow(() -> new NotFoundException("Работник по такому имени " + fullName + " не найден"));
+                .orElseThrow(() -> new NotFoundException("error.findEmplByFullName"));
     }
 
     @Override
@@ -58,14 +58,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity update(EmployeeEntity employeeEntity) {
         EmployeeEntity existing = employeeRepository.findById(employeeEntity.getId())
-                .orElseThrow(() -> new NotFoundException("Рабоник по такому айди не найден: " + employeeEntity.getId()));
+                .orElseThrow(() -> new NotFoundException("error.findEmplById"));
 
         existing.setFullName(employeeEntity.getFullName())
                 .setDateBerth(employeeEntity.getDateBerth())
                 .setImage(employeeEntity.getImage())
                 .setDepartmentRu(employeeEntity.getDepartmentRu())
                 .setDepartmentKg(employeeEntity.getDepartmentKg())
-                .setActive(employeeEntity.getActive())
                 .setDateEmployment(employeeEntity.getDateEmployment())
                 .setDateDismissal(employeeEntity.getDateDismissal())
                 .setActive(Active.UPDATED);
@@ -75,19 +74,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getById(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Рабоник по такому айди не найден: " + id));
+                .orElseThrow(() -> new NotFoundException("error.findEmplById"));
     }
 
     @Override
     public EmployeeEntity save(EmployeeEntity entity) {
         if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("Поле fullName не может быть пустым");
+            throw new RuntimeException("error.isEmptyFullName");
         }
         if(entity.getDateEmployment() == null){
-            throw new RuntimeException("Поле дата принятия обезадельна");
+            throw new RuntimeException("error.isEmptyDateEmployment");
         }
         if (entity.getDateBerth() == null) {
-            throw new RuntimeException("Дата рождения обязательна");
+            throw new RuntimeException("error.isEmptyDateBerth");
         }
         return employeeRepository.save(entity);
     }
