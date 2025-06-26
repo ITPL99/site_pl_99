@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface NewsRepository extends JpaRepository<NewsEntity, Long> {
     Optional<NewsEntity> findByTitleRuOrTitleKg(String titleRu, String titleKg);
-    Optional<List<NewsEntity>> findAllByTitleRuContainingOrTitleKgContaining(String titleRu, String titleKg);
-    Optional<List<NewsEntity>> findAllBySubTitleRuOrSubTitleKg(String subTitleRu, String subTitleKg);
-    Optional<List<NewsEntity>> findAllByActive(Active active);
+    List<NewsEntity> findAllByTitleRuContainingOrTitleKgContaining(String titleRu, String titleKg);
+    List<NewsEntity> findAllBySubTitleRuOrSubTitleKg(String subTitleRu, String subTitleKg);
+    List<NewsEntity> findAllByActive(Active active);
 }

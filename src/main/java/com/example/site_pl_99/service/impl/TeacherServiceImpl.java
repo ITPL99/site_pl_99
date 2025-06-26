@@ -2,10 +2,13 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.TeacherEntity;
 import com.example.site_pl_99.enums.Active;
+import com.example.site_pl_99.excaption.UniquenessViolationException;
+import com.example.site_pl_99.excaption.TeacherNotFoundException;
+import com.example.site_pl_99.excaption.ValidationError;
 import com.example.site_pl_99.repository.TeacherRepository;
 import com.example.site_pl_99.service.TeacherService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -23,22 +26,26 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherEntity getById(Long id) {
         return teacherRepository.findById(id)
                 .filter(teacherEntity -> teacherEntity.getActive().equals(Active.ACTIVE))
-                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
+                .orElseThrow(() -> new TeacherNotFoundException("error.findTeacher"));
     }
 
     @Override
     public TeacherEntity save(TeacherEntity entity) {
-        if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("error.isEmptyFullName");
-        }
-        if (entity.getLinkPortfolio() == null) {
-            throw new RuntimeException("error.isEmptyPortfolio");
-        }
-        if (entity.getDateBerth() == null) {
-            throw new RuntimeException("error.isEmptyDateBerth");
-        }
+        try {
+            if (entity.getFullName() == null || entity.getFullName().isBlank()) {
+                throw new ValidationError("error.isEmptyFullName");
+            }
+            if (entity.getLinkPortfolio() == null) {
+                throw new ValidationError("error.isEmptyPortfolio");
+            }
+            if (entity.getDateBerth() == null) {
+                throw new ValidationError("error.isEmptyDateBerth");
+            }
 
-        return teacherRepository.save(entity);
+            return teacherRepository.save(entity);
+        }catch (DataIntegrityViolationException e){
+            throw new UniquenessViolationException(e.getMessage());
+        }
     }
 
     @Override
@@ -60,7 +67,7 @@ public class TeacherServiceImpl implements TeacherService {
     public TeacherEntity getFullName(String fullName) {
         return teacherRepository.findByFullName(fullName)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
+                .orElseThrow(() -> new TeacherNotFoundException("error.findTeacher"));
     }
 
     @Override
@@ -111,10 +118,10 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public TeacherEntity update(TeacherEntity entity) {
         TeacherEntity existing = teacherRepository.findById(entity.getId())
-                .orElseThrow(() -> new NotFoundException("error.findTeacher"));
+                .orElseThrow(() -> new TeacherNotFoundException("error.findTeacher"));
 
         if (existing.getActive().equals(Active.DELETED)) {
-            throw new RuntimeException("error.NotUpdateDeleteTeacher");
+            throw new ValidationError("error.NotUpdateDeleteTeacher");
         }
 
         existing.setFullName(entity.getFullName());

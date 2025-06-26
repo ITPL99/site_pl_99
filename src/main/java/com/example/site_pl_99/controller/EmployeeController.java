@@ -40,7 +40,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-full-name")
+    @GetMapping("/get-by-full-name")
     public ResponseEntity<EmployeeDtoResponse> getFullName(
             @Parameter(description = "Полное имя сотрудника", required = true) @RequestParam String fullName) {
         return ResponseEntity.ok(employeeMapper.mapEntityToDtoResponse(employeeService.getFullName(fullName)));
@@ -53,7 +53,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/search-by-Name")
+    @GetMapping("/search-by-Name")
     public ResponseEntity<List<EmployeeDtoResponse>> getContentName(
             @Parameter(description = "Часть имени сотрудника", required = true) @RequestParam String fullName) {
         return ResponseEntity.ok(employeeService.searchByName(fullName).stream()
@@ -68,7 +68,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-date-date-berth")
+    @GetMapping("/get-by-date-date-berth")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateBerth(
             @Parameter(description = "Дата рождения (формат YYYY-MM-DD)", required = true) @RequestParam LocalDate dateBerth) {
         return ResponseEntity.ok(employeeService.getByDateBerth(dateBerth).stream()
@@ -83,7 +83,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-date-status")
+    @GetMapping("/get-by-date-status")
     public ResponseEntity<List<EmployeeDtoResponse>> getByStatusActive(
             @Parameter(description = "Статус активности", required = true) @RequestParam Active status) {
         return ResponseEntity.ok(employeeService.getByStatusActive(status).stream()
@@ -98,7 +98,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-date-department")
+    @GetMapping("/get-by-date-department")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDepartment(
             @Parameter(description = "Название отдела", required = true) @RequestParam String department) {
         return ResponseEntity.ok(employeeService.getByDepartment(department).stream()
@@ -113,7 +113,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-date-employment")
+    @GetMapping("/get-by-date-employment")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateEmployment(
             @Parameter(description = "Дата трудоустройства (формат YYYY-MM-DD)", required = true) @RequestParam LocalDate dateEmployment) {
         return ResponseEntity.ok(employeeService.getByDateEmployment(dateEmployment).stream()
@@ -128,7 +128,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-date-dismissal")
+    @GetMapping("/get-by-date-dismissal")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateDismissal(
             @Parameter(description = "Дата увольнения (формат YYYY-MM-DD)", required = true) @RequestParam LocalDate dateDismissal) {
         return ResponseEntity.ok(employeeService.getByDateDismissal(dateDismissal).stream()
@@ -143,7 +143,7 @@ public class EmployeeController {
                     @ApiResponse(responseCode = "200", description = "Получены")
             }
     )
-    @PostMapping("/get-by-id/{id}")
+    @GetMapping("/get-by-id/{id}")
     public ResponseEntity<EmployeeDtoResponse> getById(
             @Parameter(description = "ID сотрудника", required = true) @PathVariable("id") Long id) {
         return ResponseEntity.ok(employeeMapper.mapEntityToDtoResponse(employeeService.getById(id)));

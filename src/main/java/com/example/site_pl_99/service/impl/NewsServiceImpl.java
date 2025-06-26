@@ -4,8 +4,10 @@ import com.example.site_pl_99.entity.NewsEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.excaption.IncorectInputException;
 import com.example.site_pl_99.excaption.NewsIsNotFoundException;
+import com.example.site_pl_99.excaption.UniquenessViolationException;
 import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.NewsService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
@@ -21,10 +23,17 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsEntity addNews(NewsEntity newsEntity) {
-        if(newsEntity.getTitleRu().isEmpty() && newsEntity.getTitleKg().isEmpty()) throw new IncorectInputException("");
-        if(newsEntity.getDescriptionRu().isEmpty() && newsEntity.getDescriptionKg().isEmpty()) throw new IncorectInputException("");
-        if(newsEntity.getSubTitleRu().isEmpty() && newsEntity.getSubTitleKg().isEmpty()) throw new IncorectInputException("");
-        return newsRepository.save(newsEntity);
+        try {
+            if (newsEntity.getTitleRu().isEmpty() && newsEntity.getTitleKg().isEmpty())
+                throw new IncorectInputException("");
+            if (newsEntity.getDescriptionRu().isEmpty() && newsEntity.getDescriptionKg().isEmpty())
+                throw new IncorectInputException("");
+            if (newsEntity.getSubTitleRu().isEmpty() && newsEntity.getSubTitleKg().isEmpty())
+                throw new IncorectInputException("");
+            return newsRepository.save(newsEntity);
+        }catch (DataIntegrityViolationException e){
+            throw new UniquenessViolationException(e.getMessage());
+        }
     }
 
     @Override
@@ -56,7 +65,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<NewsEntity> getAllByActiveStatus(String active) {
-        return newsRepository.findAllByActive(Active.valueOf(active)).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
+        return newsRepository.findAllByActive(Active.valueOf(active));
     }
 
     @Override
