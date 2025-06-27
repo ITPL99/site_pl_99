@@ -2,10 +2,13 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.MasterEntity;
 import com.example.site_pl_99.enums.Active;
+import com.example.site_pl_99.excaption.MasterNotFoundException;
+import com.example.site_pl_99.excaption.UniquenessViolationException;
+import com.example.site_pl_99.excaption.ValidationError;
 import com.example.site_pl_99.repository.MasterRepository;
 import com.example.site_pl_99.service.MasterService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +24,7 @@ public class MasterServiceImpl implements MasterService {
     public MasterEntity getFullName(String fullName) {
         return masterRepository.findByFullName(fullName)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("error.findMaster"));
+                .orElseThrow(() -> new MasterNotFoundException("error.findMaster"));
     }
 
     @Override
@@ -71,10 +74,10 @@ public class MasterServiceImpl implements MasterService {
     @Override
     public MasterEntity update(MasterEntity entity) {
         MasterEntity existing = masterRepository.findById(entity.getId())
-                .orElseThrow(() -> new NotFoundException("error.findMaster"));
+                .orElseThrow(() -> new MasterNotFoundException("error.findMaster"));
 
         if (existing.getActive().equals(Active.DELETED)) {
-            throw new RuntimeException("error.NotUpdateDelete");
+            throw new ValidationError("error.NotUpdateDelete");
         }
 
         existing.setFullName(entity.getFullName());
@@ -94,25 +97,29 @@ public class MasterServiceImpl implements MasterService {
     public MasterEntity getById(Long id) {
         return masterRepository.findById(id)
                 .filter(master -> !master.getActive().equals(Active.DELETED))
-                .orElseThrow(() -> new NotFoundException("error.findMaster"));
+                .orElseThrow(() -> new MasterNotFoundException("error.findMaster"));
     }
 
     @Override
     public MasterEntity save(MasterEntity entity) {
-        if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("error.isEmptyFullName");
-        }
-        if (entity.getProfessionKg() == null && entity.getProfessionRu() == null) {
-            throw new RuntimeException("error.isEmptyProfession");
-        }
-        if(entity.getDateEmployment() == null){
-            throw new RuntimeException("error.isEmptyDateEmployment");
-        }
-        if (entity.getDateBerth() == null) {
-            throw new RuntimeException("error.isEmptyDateBerth");
-        }
+        try {
+            if (entity.getFullName() == null || entity.getFullName().isBlank()) {
+                throw new ValidationError("error.isEmptyFullName");
+            }
+            if (entity.getProfessionKg() == null && entity.getProfessionRu() == null) {
+                throw new ValidationError("error.isEmptyProfession");
+            }
+            if (entity.getDateEmployment() == null) {
+                throw new ValidationError("error.isEmptyDateEmployment");
+            }
+            if (entity.getDateBerth() == null) {
+                throw new ValidationError("error.isEmptyDateBerth");
+            }
 
-        return masterRepository.save(entity);
+            return masterRepository.save(entity);
+        }catch (DataIntegrityViolationException e){
+            throw new UniquenessViolationException(e.getMessage());
+        }
     }
 
     @Override

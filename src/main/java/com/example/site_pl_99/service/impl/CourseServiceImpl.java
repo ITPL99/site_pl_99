@@ -3,9 +3,12 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.enums.CourseType;
-import com.example.site_pl_99.excaption.NotFoundException;
+import com.example.site_pl_99.excaption.CourseNoFoundException;
+import com.example.site_pl_99.excaption.UniquenessViolationException;
+import com.example.site_pl_99.excaption.ValidationError;
 import com.example.site_pl_99.repository.CourseRepository;
 import com.example.site_pl_99.service.CourseService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,47 +25,46 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getByTitle(String title) {
-        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title)
-                .orElseThrow(() -> new NotFoundException("error.findCourseByTitle"));
+        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title);
     }
 
     @Override
     public List<CourseEntity> getAllCourseByType(CourseType type) {
-        return courseRepository.findAllByType(type)
-                .orElseThrow(() -> new NotFoundException("Курсы с типом " + type + " не найдены"));
+        return courseRepository.findAllByType(type);
     }
 
     @Override
     public List<CourseEntity> getAllCourseByPrice(Double price) {
-        return courseRepository.findAllByPrice(price)
-                .orElseThrow(() -> new NotFoundException("Курсы по цене " + price + " не найдены"));
+        return courseRepository.findAllByPrice(price);
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateStart(LocalDate dateStart) {
-        return courseRepository.findAllByDateStart(dateStart)
-                .orElseThrow(() -> new NotFoundException("Курсы с началом " + dateStart + " не найдены"));
+        return courseRepository.findAllByDateStart(dateStart);
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateEnd(LocalDate dateEnd) {
-        return courseRepository.findAllByDateEnd(dateEnd)
-                .orElseThrow(() -> new NotFoundException("Курсы с окончанием " + dateEnd + " не найдены"));
+        return courseRepository.findAllByDateEnd(dateEnd);
     }
 
     @Override
     public CourseEntity getById(Long id) {
         return courseRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Курс с ID " + id + " не найден"));
+                .orElseThrow(() -> new CourseNoFoundException("error.findCourse"));
     }
 
     @Override
     public CourseEntity save(CourseEntity entity) {
-        if (entity.getTitleRu() == null || entity.getPrice() == null) {
-            throw new NotFoundException("error.isEmptyNameAndPrice");
-        }
+        try {
+            if (entity.getTitleRu() == null || entity.getPrice() == null) {
+                throw new ValidationError("error.isEmptyNameAndPrice");
+            }
 
-        return courseRepository.save(entity);
+            return courseRepository.save(entity);
+        }catch (DataIntegrityViolationException e){
+            throw new UniquenessViolationException(e.getMessage());
+        }
     }
 
     @Override
@@ -77,14 +79,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getAllActive() {
-        return courseRepository.findAllByActive(Active.ACTIVE)
-                .orElseThrow(() -> new NotFoundException("error.findActiveCourse"));
+        return courseRepository.findAllByActive(Active.ACTIVE);
     }
 
     @Override
     public List<CourseEntity> getAllStatus(Active status) {
-        return courseRepository.findAllByActive(status)
-                .orElseThrow(() -> new NotFoundException("Курсы со статусом " + status + " не найдены"));
+        return courseRepository.findAllByActive(status);
     }
 
     @Override

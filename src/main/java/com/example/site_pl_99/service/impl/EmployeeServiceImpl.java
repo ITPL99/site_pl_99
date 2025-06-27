@@ -2,9 +2,12 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.EmployeeEntity;
 import com.example.site_pl_99.enums.Active;
-import com.example.site_pl_99.excaption.NotFoundException;
+import com.example.site_pl_99.excaption.EmployeeNotFoundException;
+import com.example.site_pl_99.excaption.UniquenessViolationException;
+import com.example.site_pl_99.excaption.ValidationError;
 import com.example.site_pl_99.repository.EmployeeRepository;
 import com.example.site_pl_99.service.EmployeeService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getFullName(String fullName) {
         return employeeRepository.findByFullName(fullName)
-                .orElseThrow(() -> new NotFoundException("error.findEmplByFullName"));
+                .orElseThrow(() -> new EmployeeNotFoundException("error.findEmplByFullName"));
     }
 
     @Override
@@ -58,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity update(EmployeeEntity employeeEntity) {
         EmployeeEntity existing = employeeRepository.findById(employeeEntity.getId())
-                .orElseThrow(() -> new NotFoundException("error.findEmplById"));
+                .orElseThrow(() -> new EmployeeNotFoundException("error.findEmplById"));
 
         existing.setFullName(employeeEntity.getFullName())
                 .setDateBerth(employeeEntity.getDateBerth())
@@ -74,21 +77,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getById(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("error.findEmplById"));
+                .orElseThrow(() -> new EmployeeNotFoundException("error.findEmplById"));
     }
 
     @Override
     public EmployeeEntity save(EmployeeEntity entity) {
-        if (entity.getFullName() == null || entity.getFullName().isBlank()) {
-            throw new RuntimeException("error.isEmptyFullName");
+        try {
+            if (entity.getFullName() == null || entity.getFullName().isBlank()) {
+                throw new ValidationError("error.isEmptyFullName");
+            }
+            if (entity.getDateEmployment() == null) {
+                throw new ValidationError("error.isEmptyDateEmployment");
+            }
+            if (entity.getDateBerth() == null) {
+                throw new ValidationError("error.isEmptyDateBerth");
+            }
+            return employeeRepository.save(entity);
+        }catch (DataIntegrityViolationException e){
+            throw new UniquenessViolationException(e.getMessage());
         }
-        if(entity.getDateEmployment() == null){
-            throw new RuntimeException("error.isEmptyDateEmployment");
-        }
-        if (entity.getDateBerth() == null) {
-            throw new RuntimeException("error.isEmptyDateBerth");
-        }
-        return employeeRepository.save(entity);
     }
 
     @Override

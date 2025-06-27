@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
-    Optional<List<CourseEntity>> findAllCoursesByTitleRuOrTitleKg(String titleRu, String titleKg);
-    Optional<List<CourseEntity>> findAllByType(CourseType type);
-    Optional<List<CourseEntity>> findAllByPrice(Double price);
-    Optional<List<CourseEntity>> findAllByDateStart(LocalDate dateStart);
-    Optional<List<CourseEntity>> findAllByDateEnd(LocalDate dateEnd);
-    Optional<List<CourseEntity>> findAllByActive(Active active);
+    List<CourseEntity> findAllCoursesByTitleRuOrTitleKg(String titleRu, String titleKg);
+    List<CourseEntity> findAllByType(CourseType type);
+    List<CourseEntity> findAllByPrice(Double price);
+    List<CourseEntity> findAllByDateStart(LocalDate dateStart);
+    List<CourseEntity> findAllByDateEnd(LocalDate dateEnd);
+    List<CourseEntity> findAllByActive(Active active);
 }
