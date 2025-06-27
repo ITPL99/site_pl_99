@@ -2,6 +2,7 @@ package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.NewsEntity;
 import com.example.site_pl_99.enums.Active;
+import com.example.site_pl_99.excaption.IncorectInputException;
 import com.example.site_pl_99.excaption.NewsIsNotFoundException;
 import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.NewsService;
@@ -20,6 +21,9 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsEntity addNews(NewsEntity newsEntity) {
+        if(newsEntity.getTitleRu().isEmpty() && newsEntity.getTitleKg().isEmpty()) throw new IncorectInputException("");
+        if(newsEntity.getDescriptionRu().isEmpty() && newsEntity.getDescriptionKg().isEmpty()) throw new IncorectInputException("");
+        if(newsEntity.getSubTitleRu().isEmpty() && newsEntity.getSubTitleKg().isEmpty()) throw new IncorectInputException("");
         return newsRepository.save(newsEntity);
     }
 

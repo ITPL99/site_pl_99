@@ -1,14 +1,13 @@
 package com.example.site_pl_99.dto;
 
-import com.example.site_pl_99.enums.Active;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
 
-@Schema(description = "Ответ с информацией о преподавателе")
-public class TeacherDtoResponse {
+@Schema(description = "Запрос на обновление информации о преподавателе")
+public class TeacherDtoRequestUpdate {
 
-    @Schema(description = "Уникальный идентификатор преподавателя", example = "10")
+    @Schema(description = "Идентификатор преподавателя", example = "1", required = true)
     private Long id;
 
     @Schema(description = "Полное имя преподавателя", example = "Иван Иванов")
@@ -21,16 +20,18 @@ public class TeacherDtoResponse {
     private ImageDto image;
 
     @Schema(description = "Ссылка на портфолио преподавателя", example = "https://portfolio.example.com/ivan_ivanov")
-    private String LinkPortfolio;
-
-    @Schema(description = "Активный статус преподавателя", example = "ACTIVE")
-    private Active active;
+    private String linkPortfolio;
 
     @Schema(description = "Дата начала работы преподавателя", example = "2010-09-01")
     private LocalDate dateEmployment;
 
-    @Schema(description = "Дата увольнения преподавателя", example = "2023-06-01", nullable = true)
-    private LocalDate dateDismissal;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFullName() {
         return fullName;
@@ -57,19 +58,11 @@ public class TeacherDtoResponse {
     }
 
     public String getLinkPortfolio() {
-        return LinkPortfolio;
+        return linkPortfolio;
     }
 
     public void setLinkPortfolio(String linkPortfolio) {
-        LinkPortfolio = linkPortfolio;
-    }
-
-    public Active getActive() {
-        return active;
-    }
-
-    public void setActive(Active active) {
-        this.active = active;
+        this.linkPortfolio = linkPortfolio;
     }
 
     public LocalDate getDateEmployment() {
@@ -78,22 +71,5 @@ public class TeacherDtoResponse {
 
     public void setDateEmployment(LocalDate dateEmployment) {
         this.dateEmployment = dateEmployment;
-    }
-
-    public LocalDate getDateDismissal() {
-        return dateDismissal;
-    }
-
-    public void setDateDismissal(LocalDate dateDismissal) {
-        this.dateDismissal = dateDismissal;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public TeacherDtoResponse setId(Long id) {
-        this.id = id;
-        return this;
     }
 }

@@ -1,19 +1,25 @@
 package com.example.site_pl_99.dto;
 
-public class ImageDto {
-    private Long Id;
-    private String fileName;
+import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "DTO изображения")
+public class ImageDto {
+
+    @Schema(description = "Уникальный идентификатор изображения", example = "123")
+    private Long id;
+
+    @Schema(description = "Имя файла изображения", example = "photo.jpg")
+    private String fileName;
     public String getFileName() {
         return fileName;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public ImageDto setId(Long id) {
-        Id = id;
+        this.id = id;
         return this;
     }
 

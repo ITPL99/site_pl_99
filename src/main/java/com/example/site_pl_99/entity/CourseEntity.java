@@ -25,6 +25,11 @@ public class CourseEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Active active;
 
+    @PrePersist
+    public void prePersist(){
+        active = Active.ACTIVE;
+    }
+
     public Active getActive() {
         return active;
     }

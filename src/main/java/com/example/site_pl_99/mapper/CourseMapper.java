@@ -9,6 +9,9 @@ import com.example.site_pl_99.excaption.IncorectInputException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class CourseMapper {
     public static CourseEntity toEntity(CourseDtoRequest request){
@@ -28,6 +31,7 @@ public class CourseMapper {
 
     public static CourseDtoResponse mapEntityToDtoResponse(CourseEntity byTitle) {
         CourseDtoResponse courseDtoResponse = new CourseDtoResponse();
+        courseDtoResponse.setId(byTitle.getId());
         courseDtoResponse.setActive(byTitle.getActive().name());
         courseDtoResponse.setCourseType(byTitle.getType().name());
         if(LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")) {
@@ -59,5 +63,9 @@ public class CourseMapper {
         coursePreviewDto.setActive(courseEntity.getActive().name());
         if(courseEntity.getImage() != null) coursePreviewDto.setImage(ImageMapper.mapEntityToDto(courseEntity.getImage()));
         return coursePreviewDto;
+    }
+
+    public static List<CoursePreviewDto> mapListEntityToPreviewDtoList(List<CourseEntity> courseEntityList) {
+        return courseEntityList.stream().map(CourseMapper::mapToPreviewEntity).collect(Collectors.toList());
     }
 }

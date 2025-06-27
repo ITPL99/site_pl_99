@@ -9,4 +9,8 @@ public interface AuthService extends UserDetailsService {
 
      String login(String username, String password);
      String logout();
+
+    void passwordRestoration(String emailOrLogin);
+
+    String updatePassword(String activeCode, String newPassword);
 }

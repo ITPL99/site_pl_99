@@ -11,10 +11,10 @@ import java.util.Optional;
 
 public interface TeacherRepository extends JpaRepository<TeacherEntity, Long> {
     Optional<TeacherEntity> findByFullName(String fullName);
-    Optional<List<TeacherEntity>> findByFullNameContaining(String fullName);
-    Optional<List<TeacherEntity>> findAllByDateBerth(LocalDate dateBerth);
-    Optional<List<TeacherEntity>> findAllByActive(Active active);
-    Optional<List<TeacherEntity>> findAllByLinkPortfolio(String linkPortfolio);
-    Optional<List<TeacherEntity>> findAllByDateEmployment(LocalDate dateEmployment);
-    Optional<List<TeacherEntity>> findAllByDateDismissal(LocalDate dateDismissal);
+    List<TeacherEntity> findByFullNameContaining(String fullName);
+    List<TeacherEntity> findAllByDateBerth(LocalDate dateBerth);
+    List<TeacherEntity> findAllByActive(Active active);
+    List<TeacherEntity> findAllByLinkPortfolio(String linkPortfolio);
+    List<TeacherEntity> findAllByDateEmployment(LocalDate dateEmployment);
+    List<TeacherEntity> findAllByDateDismissal(LocalDate dateDismissal);
 }

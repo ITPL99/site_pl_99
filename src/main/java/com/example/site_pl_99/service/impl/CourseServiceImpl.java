@@ -3,7 +3,6 @@ package com.example.site_pl_99.service.impl;
 import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.enums.CourseType;
-import com.example.site_pl_99.excaption.IncorectInputException;
 import com.example.site_pl_99.excaption.NotFoundException;
 import com.example.site_pl_99.repository.CourseRepository;
 import com.example.site_pl_99.service.CourseService;
@@ -23,67 +22,69 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getByTitle(String title) {
-        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title).orElse(List.of());
+        return courseRepository.findAllCoursesByTitleRuOrTitleKg(title, title)
+                .orElseThrow(() -> new NotFoundException("error.findCourseByTitle"));
     }
 
     @Override
     public List<CourseEntity> getAllCourseByType(CourseType type) {
-        return courseRepository.findAllByType(type).orElse(List.of());
+        return courseRepository.findAllByType(type)
+                .orElseThrow(() -> new NotFoundException("Курсы с типом " + type + " не найдены"));
     }
 
     @Override
     public List<CourseEntity> getAllCourseByPrice(Double price) {
-        return courseRepository.findAllByPrice(price).orElse(List.of());
+        return courseRepository.findAllByPrice(price)
+                .orElseThrow(() -> new NotFoundException("Курсы по цене " + price + " не найдены"));
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateStart(LocalDate dateStart) {
-        return courseRepository.findAllByDateStart(dateStart).orElse(List.of());
+        return courseRepository.findAllByDateStart(dateStart)
+                .orElseThrow(() -> new NotFoundException("Курсы с началом " + dateStart + " не найдены"));
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateEnd(LocalDate dateEnd) {
-        return courseRepository.findAllByDateEnd(dateEnd).orElse(List.of());
-
+        return courseRepository.findAllByDateEnd(dateEnd)
+                .orElseThrow(() -> new NotFoundException("Курсы с окончанием " + dateEnd + " не найдены"));
     }
 
     @Override
     public CourseEntity getById(Long id) {
-        return courseRepository.findById(id).orElseThrow(() ->  new NotFoundException("error.findCourse"));
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Курс с ID " + id + " не найден"));
     }
 
     @Override
     public CourseEntity save(CourseEntity entity) {
-        if(entity.getType() == null){
-            throw new IncorectInputException("error.incorrectRequest");
-        }if (entity.getTitleRu() == null || entity.getTitleRu().isBlank()){
-            throw new IncorectInputException("error.incorrectRequest");
-        }if (entity.getTitleKg() == null || entity.getTitleKg().isBlank() ){
-            throw new IncorectInputException("error.incorrectRequest");
-        }if (entity.getImage() == null){
-            throw new IncorectInputException("error.incorrectRequest");
-        }if (entity.getPrice() == null || entity.getPrice() <= 0) {
-            throw new IncorectInputException("error.incorrectRequest");
+        if (entity.getTitleRu() == null || entity.getPrice() == null) {
+            throw new NotFoundException("error.isEmptyNameAndPrice");
         }
-        if (entity.getActive() == null) {
-            entity.setActive(Active.NEW);
-        }
+
         return courseRepository.save(entity);
     }
 
     @Override
     public List<CourseEntity> getAll() {
+        return courseRepository.findAll().stream().filter(courseEntity -> courseEntity.getActive().equals(Active.DELETED)).toList();
+    }
+
+    @Override
+    public List<CourseEntity> getAllFull(){
         return courseRepository.findAll();
     }
 
     @Override
     public List<CourseEntity> getAllActive() {
-        return courseRepository.findAllByActive(Active.ACTIVE).orElseThrow(()-> new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByActive(Active.ACTIVE)
+                .orElseThrow(() -> new NotFoundException("error.findActiveCourse"));
     }
 
     @Override
     public List<CourseEntity> getAllStatus(Active status) {
-        return courseRepository.findAllByActive(status).orElseThrow(()-> new NotFoundException("error.findCourse"));
+        return courseRepository.findAllByActive(status)
+                .orElseThrow(() -> new NotFoundException("Курсы со статусом " + status + " не найдены"));
     }
 
     @Override

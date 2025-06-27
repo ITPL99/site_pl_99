@@ -1,17 +1,41 @@
 package com.example.site_pl_99.dto;
 
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
 
+@Schema(description = "Запрос на создание или обновление сотрудника")
 public class EmployeeDtoRequest {
+
+    @Schema(description = "Полное имя сотрудника", example = "Иванов Иван Иванович")
     private String fullName;
+
+    @Schema(description = "Дата рождения сотрудника", example = "1985-05-20", type = "string", format = "date")
     private LocalDate dateBerth;
+
+    @Schema(description = "Фотография сотрудника (объект изображения)")
     private ImageDto image;
+
+    @Schema(description = "Название отдела на русском языке", example = "Отдел маркетинга")
     private String departmentRu;
+
+    @Schema(description = "Название отдела на кыргызском языке", example = "Маркетинг бөлүмү")
     private String departmentKg;
+
+    @Schema(description = "Дата приёма на работу", example = "2020-01-15", type = "string", format = "date")
     private LocalDate dateEmployment;
 
+    @Schema(description = "Дата увольнения (если применимо)", example = "2024-06-01", type = "string", format = "date")
+    private LocalDate dateDismissal;
+
+
+    public LocalDate getDateDismissal() {
+        return dateDismissal;
+    }
+
+    public void setDateDismissal(LocalDate dateDismissal) {
+        this.dateDismissal = dateDismissal;
+    }
 
     public String getFullName() {
         return fullName;

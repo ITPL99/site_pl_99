@@ -1,17 +1,35 @@
 package com.example.site_pl_99.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.time.LocalDate;
 
+@Schema(description = "Краткая информация о курсе для предварительного просмотра")
 public class CoursePreviewDto {
-    private Long id;
-    private String CourseType;
-    private String title;
-    private ImageDto image;
-    private LocalDate dateCreated;
-    private LocalDate dateEnd;
-    private Double price;
-    private String active;
 
+    @Schema(description = "Уникальный идентификатор курса", example = "101")
+    private Long id;
+
+    @Schema(description = "Тип курса (например, online, offline)", example = "online")
+    private String CourseType;
+
+    @Schema(description = "Название курса", example = "Курс по веб-разработке")
+    private String title;
+
+    @Schema(description = "DTO объекта изображения курса")
+    private ImageDto image;
+
+    @Schema(description = "Дата создания курса", example = "2025-06-01", type = "string", format = "date")
+    private LocalDate dateCreated;
+
+    @Schema(description = "Дата окончания курса", example = "2025-08-01", type = "string", format = "date")
+    private LocalDate dateEnd;
+
+    @Schema(description = "Цена курса", example = "1499.99")
+    private Double price;
+
+    @Schema(description = "Статус активности курса", example = "ACTIVE")
+    private String active;
     public Long getId() {
         return id;
     }
