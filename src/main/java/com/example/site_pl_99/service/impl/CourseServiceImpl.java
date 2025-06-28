@@ -4,6 +4,7 @@ import com.example.site_pl_99.entity.CourseEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.enums.CourseType;
 import com.example.site_pl_99.excaption.CourseNoFoundException;
+import com.example.site_pl_99.excaption.EnumNotNullException;
 import com.example.site_pl_99.excaption.UniquenessViolationException;
 import com.example.site_pl_99.excaption.ValidationError;
 import com.example.site_pl_99.repository.CourseRepository;
@@ -63,18 +64,16 @@ public class CourseServiceImpl implements CourseService {
                 throw new ValidationError("error.titleNull");
             }if (entity.getTitleKg() == null || entity.getTitleKg().isBlank() ){
                 throw new ValidationError("error.titleNull");
-            }if (entity.getImage() == null){
-                throw new ValidationError("error.ImageNull");
             }if (entity.getPrice() == null || entity.getPrice() <= 0) {
                 throw new ValidationError("error.priceNull");
+            }if (entity.getDescriptionRu() == null || entity.getDescriptionRu().isBlank() || entity.getDescriptionKg() == null || entity.getDescriptionKg().isBlank() ){
+                throw new ValidationError("error.descriptionNotNull");
             }
-            if (entity.getTitleRu() == null || entity.getPrice() == null) {
-                throw new ValidationError("error.isEmptyNameAndPrice");
-            }
-
             return courseRepository.save(entity);
         }catch (DataIntegrityViolationException e){
             throw new UniquenessViolationException(e.getMessage());
+        }catch (IllegalArgumentException e){
+            throw new EnumNotNullException(e.getMessage());
         }
     }
 

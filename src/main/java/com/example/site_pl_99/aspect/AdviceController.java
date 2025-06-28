@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Locale;
 
@@ -52,4 +55,16 @@ public class AdviceController {
         }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(internalization.getMessage("error.server", locale));
     }
+    @ExceptionHandler(EnumNotNullException.class)
+    public ResponseEntity<String> exceptionHandler(EnumNotNullException ex, HttpServletRequest request) {
+        Locale locale = request.getLocale();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(internalization.getMessage("error.enumIsNullAndDoesnt", locale));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
+        Locale locale = request.getLocale();
+        return ResponseEntity.badRequest().body(internalization.getMessage("error.enumIsNullAndDoesnt", locale));
+    }
+
 }
