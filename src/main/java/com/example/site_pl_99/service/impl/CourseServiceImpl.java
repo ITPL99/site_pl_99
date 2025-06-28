@@ -30,22 +30,22 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getAllCourseByType(CourseType type) {
-        return courseRepository.findAllByType(type);
+        return courseRepository.findAllByType(type).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<CourseEntity> getAllCourseByPrice(Double price) {
-        return courseRepository.findAllByPrice(price);
+        return courseRepository.findAllByPrice(price).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateStart(LocalDate dateStart) {
-        return courseRepository.findAllByDateStart(dateStart);
+        return courseRepository.findAllByDateStart(dateStart).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<CourseEntity> getAllCourseByDateEnd(LocalDate dateEnd) {
-        return courseRepository.findAllByDateEnd(dateEnd);
+        return courseRepository.findAllByDateEnd(dateEnd).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
@@ -57,6 +57,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public CourseEntity save(CourseEntity entity) {
         try {
+            if(entity.getType() == null){
+                throw new ValidationError("error.typeNull");
+            }if (entity.getTitleRu() == null || entity.getTitleRu().isBlank()){
+                throw new ValidationError("error.titleNull");
+            }if (entity.getTitleKg() == null || entity.getTitleKg().isBlank() ){
+                throw new ValidationError("error.titleNull");
+            }if (entity.getImage() == null){
+                throw new ValidationError("error.ImageNull");
+            }if (entity.getPrice() == null || entity.getPrice() <= 0) {
+                throw new ValidationError("error.priceNull");
+            }
             if (entity.getTitleRu() == null || entity.getPrice() == null) {
                 throw new ValidationError("error.isEmptyNameAndPrice");
             }
@@ -69,12 +80,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<CourseEntity> getAll() {
-        return courseRepository.findAll().stream().filter(courseEntity -> courseEntity.getActive().equals(Active.DELETED)).toList();
+        return courseRepository.findAll().stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<CourseEntity> getAllFull(){
-        return courseRepository.findAll();
+        return courseRepository.findAll().stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override

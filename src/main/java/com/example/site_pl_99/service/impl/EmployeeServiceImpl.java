@@ -30,12 +30,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeEntity> searchByName(String namePart) {
-        return employeeRepository.findByFullNameContainingIgnoreCase(namePart);
+        return employeeRepository.findByFullNameContainingIgnoreCase(namePart).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<EmployeeEntity> getByDateBerth(LocalDate dateBerth) {
-        return employeeRepository.findByDateBerth(dateBerth);
+        return employeeRepository.findByDateBerth(dateBerth).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
@@ -45,17 +45,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeEntity> getByDepartment(String department) {
-        return employeeRepository.findByDepartmentRuIgnoreCaseOrDepartmentKgIgnoreCase(department, department);
+        return employeeRepository.findByDepartmentRuIgnoreCaseOrDepartmentKgIgnoreCase(department, department).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<EmployeeEntity> getByDateEmployment(LocalDate dateEmployment) {
-        return employeeRepository.findByDateEmployment(dateEmployment);
+        return employeeRepository.findByDateEmployment(dateEmployment).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
     public List<EmployeeEntity> getByDateDismissal(LocalDate dateDismissal) {
-        return employeeRepository.findByDateDismissal(dateDismissal);
+        return employeeRepository.findByDateDismissal(dateDismissal).stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<EmployeeEntity> getAll() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAll().stream().filter(entity -> entity.getActive().equals(Active.DELETED)).toList();
     }
 
     @Override

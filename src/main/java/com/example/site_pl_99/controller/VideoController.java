@@ -63,7 +63,7 @@ public class VideoController {
     public ResponseEntity<InputStreamResource> getById(
             @Parameter(description = "ID видео") @PathVariable("id") Long id) {
 
-        String fileName = videoService.getById(id).getFileName();
+        String fileName = videoService.getById(id).getFileName().trim();
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(minIoService.getContentType(fileName)))
                 .body(new InputStreamResource(minIoService.getByFileName(fileName)));
