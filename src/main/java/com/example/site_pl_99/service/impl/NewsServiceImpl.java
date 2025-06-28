@@ -76,6 +76,19 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public NewsEntity updateNews(Long id,NewsEntity news) {
+        NewsEntity newsEntity = newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
+        if(news.getTitleRu().isEmpty() && news.getTitleKg().isEmpty()) throw new IncorectInputException("");
+        if(news.getDescriptionRu().isEmpty() && news.getDescriptionKg().isEmpty()) throw new IncorectInputException("");
+        if(news.getSubTitleRu().isEmpty() && news.getSubTitleKg().isEmpty()) throw new IncorectInputException("");
+        if(news.getImageSmall() != null) newsEntity.setImageSmall(news.getImageSmall());
+        if(news.getImageFull() != null) newsEntity.setImageFull(news.getImageFull());
+        if(news.getImages() != null) newsEntity.setImages(news.getImages());
+        if(news.getVideo() != null) newsEntity.setVideo(news.getVideo());
+        return newsRepository.save(newsEntity);
+    }
+
+    @Override
     public NewsEntity getById(Long id) {
         return newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
     }

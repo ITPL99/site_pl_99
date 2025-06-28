@@ -14,5 +14,6 @@ public interface NewsService {
     List<NewsEntity> getAllByContentSubTitle(String subTitle);
     List<NewsEntity> getAllByActiveStatus(String status);
     void deleteById(Long id);
+    NewsEntity updateNews(Long id,NewsEntity newsEntity);
     NewsEntity getById(Long id);
 }
