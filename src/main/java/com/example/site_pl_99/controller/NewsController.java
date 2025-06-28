@@ -3,6 +3,7 @@ package com.example.site_pl_99.controller;
 import com.example.site_pl_99.dto.NewsDtoPreviewResponse;
 import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.dto.NewsDtoResponse;
+import com.example.site_pl_99.dto.NewsDtoUpdate;
 import com.example.site_pl_99.mapper.NewsMapper;
 import com.example.site_pl_99.service.NewsService;
 
@@ -165,5 +166,10 @@ public class NewsController {
     public ResponseEntity<List<NewsDtoPreviewResponse>> getByStatus(
             @Parameter(description = "Статус активности (например: ACTIVE, INACTIVE)", example = "ACTIVE") @RequestParam String status) {
         return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllByActiveStatus(status)));
+    }
+
+    @PutMapping("/update-by-id/{id}")
+    public ResponseEntity<NewsDtoResponse> updateById(@PathVariable Long id, @RequestBody NewsDtoUpdate newsDtoUpdate) {
+        return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.updateNews(id, NewsMapper.mapToNewsEntityFromUpdate(newsDtoUpdate))));
     }
 }

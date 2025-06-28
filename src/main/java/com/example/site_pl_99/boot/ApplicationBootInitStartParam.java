@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 // TODO: На продакшен убрать удалить данный класс
 @Profile({"develop","local","test"})
 @Component
-public class ApplicationBootInitStartParam implements CommandLineRunner {
+public class
+ApplicationBootInitStartParam implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;

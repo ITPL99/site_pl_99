@@ -1,5 +1,6 @@
 package com.example.site_pl_99.service.impl;
 
+import com.example.site_pl_99.excaption.FileNameDoubleException;
 import com.example.site_pl_99.service.ImageMinIoService;
 import com.example.site_pl_99.service.MinIoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ImageMinIoServiceImpl implements ImageMinIoService {
     @Override
     public void save(MultipartFile file) {
         if (minIoService.fileExists(bucketName, file.getOriginalFilename())) {
-            throw new RuntimeException("error.doubleName");
+            throw new FileNameDoubleException("error.doubleName");
         }
         minIoService.upload(file, bucketName);
     }

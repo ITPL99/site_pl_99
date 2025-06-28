@@ -1,6 +1,7 @@
 package com.example.site_pl_99.service.impl;
 
 import com.example.site_pl_99.entity.VideoEntity;
+import com.example.site_pl_99.excaption.VideoNotFoundException;
 import com.example.site_pl_99.repository.VideoRepository;
 import com.example.site_pl_99.service.VideoService;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,12 @@ public class VideoServiceImpl implements VideoService {
 
     @Override
     public VideoEntity getById(Long id) {
-        return videoRepository.findById(id).orElseThrow(() -> new RuntimeException("error.isNotFoundVideo"));
+        return videoRepository.findById(id).orElseThrow(() -> new VideoNotFoundException("error.isNotFoundVideo"));
     }
 
     @Override
     public VideoEntity getByFileName(String fileName) {
-        return videoRepository.findByFileName(fileName).orElseThrow(() -> new RuntimeException("error.isNotFoundVideo"));
+        return videoRepository.findByFileName(fileName).orElseThrow(() -> new VideoNotFoundException("error.isNotFoundVideo"));
     }
 
     @Override

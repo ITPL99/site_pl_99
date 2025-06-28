@@ -3,6 +3,7 @@ package com.example.site_pl_99.mapper;
 import com.example.site_pl_99.dto.NewsDtoPreviewResponse;
 import com.example.site_pl_99.dto.NewsDtoRequest;
 import com.example.site_pl_99.dto.NewsDtoResponse;
+import com.example.site_pl_99.dto.NewsDtoUpdate;
 import com.example.site_pl_99.entity.ImageEntity;
 import com.example.site_pl_99.entity.NewsEntity;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -66,5 +67,20 @@ public class NewsMapper {
 
     public static List<NewsDtoPreviewResponse> toNewsDtoPreviewResponseList(List<NewsEntity> newsEntityList) {
         return newsEntityList.stream().map(NewsMapper::toNewsDtoPreviewResponse).collect(Collectors.toList());
+    }
+
+    public static NewsEntity mapToNewsEntityFromUpdate(NewsDtoUpdate newsDtoUpdate){
+        NewsEntity newsEntity = new NewsEntity();
+        newsEntity.setTitleRu(newsDtoUpdate.getTitleRu())
+                .setTitleKg(newsDtoUpdate.getTitleKg())
+                .setSubTitleRu(newsDtoUpdate.getSubTitleRu())
+                .setSubTitleKg(newsDtoUpdate.getSubTitleKg())
+                .setDescriptionRu(newsDtoUpdate.getDescriptionRu())
+                .setDescriptionKg(newsDtoUpdate.getDescriptionKg());
+        if(newsDtoUpdate.getImageSmall() != null) newsEntity.setImageSmall(ImageMapper.mapDtoToEntity(newsDtoUpdate.getImageSmall()));
+        if(newsDtoUpdate.getImageFull() != null) newsEntity.setImageFull(ImageMapper.mapDtoToEntity(newsDtoUpdate.getImageFull()));
+        if(newsDtoUpdate.getVideo() != null) newsEntity.setVideo(VideoMapper.mapDtoToEntity(newsDtoUpdate.getVideo()));
+        if(newsDtoUpdate.getImages() != null) newsEntity.setImages(newsDtoUpdate.getImages().stream().map(ImageMapper::mapDtoToEntity).collect(Collectors.toList()));
+        return newsEntity;
     }
 }
