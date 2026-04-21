@@ -1,0 +1,139 @@
+spring:
+  application:
+    name: site_pl_99
+
+  profiles:
+    active: ${APP_PROFILE:develop}
+
+  messages:
+    basename: messages
+    encoding: UTF-8
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+server:
+  port: 9090
+
+jwt:
+  secret:
+    key: 958fabff1c020a4edea8a9a01e929e2baca29f59951998d7de5600a8a0fb9774
+  token:
+    time: 360000
+
+password:
+  strengh: ${ENCODE_STR:8}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: develop
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:develop_db
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test_db
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_URL:localhost}:${DB_PORT:5432}/${DB_NAME:site_pl_99}
+    username: postgres
+    password: ${DB_PASS:postgres_pl_99}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.hibernate.sql: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prodaction
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://db:5432/site_pl_99
+    username: postgres
+    password: ${DB_PASS:postgres_pl_99}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+logging:
+  level:
+    org.hibernate.sql: debug
