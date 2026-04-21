@@ -11,7 +11,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
     Optional<UserEntity> findByEmail(String email);
     Optional<UserEntity> findByActiveCode(String activeCode);
-//    Optional<List<UserEntity>> findByDateCreated(LocalDateTime dateTimeCreate);
-//    Optional<List<UserEntity>> findByDateUpdated(LocalDateTime dateTimeUpdate);
+//    Optional<List<UserEntity>> findByDateCreated(OffsetDateTime dateTimeCreate);
+//    Optional<List<UserEntity>> findByDateUpdated(OffsetDateTime dateTimeUpdate);
 //    Optional<List<UserEntity>> findAllByRoleEntityList(RoleEntity roleEntity);
 }

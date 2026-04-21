@@ -1,6 +1,6 @@
 services:
   pl99-app:
-    image: pl99-application:latest
+    build: .
     ports:
       - 8080:8080
     depends_on:
@@ -9,7 +9,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/site_pl_99
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres_pl_99
-      - MINIO_URL=http://172.17.0.3:9000
+      - MINIO_URL=http://10.0.0.3:9000
       - MINIO_ACCESS-KEY=minioadmin
       - MINIO_SECRET-KEY=minio_pl_99
       - MINIO_BUCKET_NAME_IMAGESNEWS=images-news
@@ -17,7 +17,7 @@ services:
       - MINIO_BUCKET_NAME_AVATAR=avatar
     networks:
       custom_net:
-        ipv4_address: 172.17.0.10
+        ipv4_address: 10.0.0.10
 
 
 
@@ -30,7 +30,7 @@ services:
       - POSTGRES_PASSWORD=postgres_pl_99
     networks:
       custom_net:
-        ipv4_address: 172.17.0.2
+        ipv4_address: 10.0.0.2
 
 
   minio:
@@ -50,7 +50,7 @@ services:
       - /data
     networks:
       custom_net:
-        ipv4_address: 172.17.0.3
+        ipv4_address: 10.0.0.3
 
 volumes:
   minio-data:
@@ -61,4 +61,4 @@ networks:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.17.0.0/24
+        - subnet: 10.0.0.0/24

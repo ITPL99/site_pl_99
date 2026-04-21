@@ -2,7 +2,7 @@ create table if not exists users(
     id bigserial primary key,
     username varchar not null unique,
     password varchar not null,
-    active varchar unique,
+    active varchar ,
     email varchar not null unique
 );
 

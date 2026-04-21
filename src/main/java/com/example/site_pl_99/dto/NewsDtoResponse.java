@@ -3,7 +3,7 @@ package com.example.site_pl_99.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Schema(description = "DTO ответа с полной информацией о новости")
@@ -23,7 +23,7 @@ public class NewsDtoResponse {
     private String description;
 
     @Schema(description = "Дата создания новости", example = "2025-06-25T10:15:30")
-    private LocalDateTime dateCreate;
+    private OffsetDateTime dateCreate;
 
     @Schema(description = "Имя файла миниатюрного изображения", example = "news_small_101.jpg")
     private String imageSmallFileName;
@@ -77,11 +77,11 @@ public class NewsDtoResponse {
         return this;
     }
 
-    public LocalDateTime getDateCreate() {
+    public OffsetDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public NewsDtoResponse setDateCreate(LocalDateTime dateCreate) {
+    public NewsDtoResponse setDateCreate(OffsetDateTime dateCreate) {
         this.dateCreate = dateCreate;
         return this;
     }

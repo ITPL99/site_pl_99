@@ -50,12 +50,12 @@ public class UserServiceImpl implements UserService {
     }
 
 //    @Override
-//    public List<UserEntity> getAllByCreateTime(LocalDateTime createTime) {
+//    public List<UserEntity> getAllByCreateTime(OffsetDateTime createTime) {
 //        return userRepository.findByDateCreated(createTime).orElseThrow(()-> new UserNotFoundException("error.userNotFound"));
 //    }
 //
 //    @Override
-//    public List<UserEntity> getAllByUpdatedTime(LocalDateTime updateTime) {
+//    public List<UserEntity> getAllByUpdatedTime(OffsetDateTime updateTime) {
 //        return userRepository.findByDateUpdated(updateTime).orElseThrow(()-> new UserNotFoundException("error.userNotFound"));
 //    }
 

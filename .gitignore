@@ -34,5 +34,5 @@ build/
 
 
 ### ignore File ###
-/src/main/resources/application-local.properties
+/src/main/resources/appProperties/application-local.properties
 /src/main/java/com/example/site_pl_99/controller/TestController.java

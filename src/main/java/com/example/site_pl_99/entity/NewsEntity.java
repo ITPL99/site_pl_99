@@ -3,7 +3,7 @@ package com.example.site_pl_99.entity;
 import com.example.site_pl_99.enums.Active;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Entity
@@ -22,7 +22,7 @@ public class NewsEntity extends BaseEntity {
     @Column(name = "description_kg")
     private String descriptionKg;
     @Column(name = "date_create")
-    private LocalDateTime dateCreate;
+    private OffsetDateTime dateCreate;
     @OneToOne
     @JoinColumn(name = "image_small")
     private ImageEntity imageSmall;
@@ -48,7 +48,7 @@ public class NewsEntity extends BaseEntity {
     @PrePersist
     public void prePersist(){
         active = Active.ACTIVE;
-        dateCreate = LocalDateTime.now();
+        dateCreate = OffsetDateTime.now();
     }
 
     public String getTitleRu() {
@@ -105,11 +105,11 @@ public class NewsEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getDateCreate() {
+    public OffsetDateTime getDateCreate() {
         return dateCreate;
     }
 
-    public NewsEntity setDateCreate(LocalDateTime dateCreate) {
+    public NewsEntity setDateCreate(OffsetDateTime dateCreate) {
         this.dateCreate = dateCreate;
         return this;
     }
