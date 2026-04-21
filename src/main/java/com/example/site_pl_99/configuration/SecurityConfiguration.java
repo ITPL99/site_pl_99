@@ -43,11 +43,16 @@ public class SecurityConfiguration {
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // Allow H2 console to be displayed in frame (required for H2 web interface)
+        http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
+
         // TODO: Разобраться с настройками Секьюрити почему то выдает 403 или 401 ошибку на открытые эндпоинты
         http
 //                .httpBasic(Customizer.withDefaults())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authRequest -> authRequest
+                        .requestMatchers("/h2-console").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/current").permitAll()
                         .requestMatchers("/api/auth/password-restoration").hasAnyAuthority("ADMIN")
