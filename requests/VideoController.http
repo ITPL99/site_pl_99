@@ -1,0 +1,33 @@
+### VideoController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== VIDEO OPERATIONS ====================
+
+### 1. Загрузить видео
+POST {{baseUrl}}/api/video/save
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Bearer {{accessToken}}
+
+--boundary
+Content-Disposition: form-data; name="video"; filename="test-video.mp4"
+Content-Type: video/mp4
+
+< /path/to/local/video.mp4
+--boundary--
+
+### 2. Стриминг видео по ID
+GET {{baseUrl}}/api/video/stream-file-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Получить видео файл по имени
+GET {{baseUrl}}/api/video/get-file-by-name/test-video.mp4
+Authorization: Bearer {{accessToken}}
+
+### 4. Получить видео по ID
+GET {{baseUrl}}/api/video/get-video-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить видео по имени файла
+GET {{baseUrl}}/api/video/get-video-by-fileName/test-video.mp4
+Authorization: Bearer {{accessToken}}

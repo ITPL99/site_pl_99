@@ -1,0 +1,57 @@
+### CourseController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== COURSE QUERIES ====================
+
+### 1. Получить все курсы
+GET {{baseUrl}}/api/course/get-all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить все курсы (полная информация, ADMIN)
+GET {{baseUrl}}/api/course/get-all-full
+Authorization: Bearer {{accessToken}}
+
+### 3. Получить курс по ID
+GET {{baseUrl}}/api/course/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 4. Поиск курса по названию
+GET {{baseUrl}}/api/course/get-by-title?title=Java
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить курсы по типу
+GET {{baseUrl}}/api/course/get-all-by-type?type=ONLINE
+Authorization: Bearer {{accessToken}}
+
+### 6. Получить курсы по цене
+GET {{baseUrl}}/api/course/get-all-by-price?price=1000
+Authorization: Bearer {{accessToken}}
+
+### 7. Получить курсы по дате начала
+GET {{baseUrl}}/api/course/get-all-by-date-start?dateStart=2024-01-01
+Authorization: Bearer {{accessToken}}
+
+### 8. Получить курсы по дате окончания
+GET {{baseUrl}}/api/course/get-all-by-date-end?dateEnd=2024-12-31
+Authorization: Bearer {{accessToken}}
+
+### ==================== COURSE MANAGEMENT (ADMIN) ====================
+
+### 9. Создать новый курс (ADMIN)
+POST {{baseUrl}}/api/course/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Новый курс",
+  "description": "Описание курса",
+  "type": "ONLINE",
+  "price": 1500,
+  "dateStart": "2024-01-15",
+  "dateEnd": "2024-03-15"
+}
+
+### 10. Удалить курс по ID (ADMIN)
+DELETE {{baseUrl}}/api/course/delete-by-id/1
+Authorization: Bearer {{accessToken}}

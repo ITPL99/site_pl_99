@@ -1,20 +1,59 @@
+### AuthController API Tests
+### Базовый URL: {{baseUrl}}
 
+### ==================== AUTHENTICATION ====================
 
-###
-GET http://localhost:8080/api/auth/current
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzUwNDgyMDM1LCJleHAiOjE3NTA0ODIzOTV9.uFSB3MHIuVZ4_UhFktc1L7y7o5En-KNy2qKL_FuSbXRmKSNaaW0JJMbAPpmnLf4C
+### 1. Логин администратора (сохраняет токен автоматически)
+# @name loginAdmin
+POST {{baseUrl}}/api/auth/login?username={{adminUsername}}&password={{adminPassword}}
 
-###
-GET http://localhost:8080/api/test
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInN1YiI6ImFkbWluIiwiaWF0IjoxNzUwNDgyMDM1LCJleHAiOjE3NTA0ODIzOTV9.uFSB3MHIuVZ4_UhFktc1L7y7o5En-KNy2qKL_FuSbXRmKSNaaW0JJMbAPpmnLf4C
+> {%
+    client.global.set("accessToken", response.body.accessToken);
+    client.global.set("refreshToken", response.body.refreshToken);
+    client.log("Access Token сохранен: " + response.body.accessToken);
+    client.log("Refresh Token сохранен: " + response.body.refreshToken);
+%}
 
+### 2. Логин обычного пользователя
+# @name loginUser
+POST {{baseUrl}}/api/auth/login?username={{userUsername}}&password={{userPassword}}
 
+> {%
+    client.global.set("userAccessToken", response.body.accessToken);
+    client.global.set("userRefreshToken", response.body.refreshToken);
+    client.log("User Access Token сохранен");
+%}
 
+### 3. Логин гостя
+# @name loginGuest
+POST {{baseUrl}}/api/auth/login?username={{guestUsername}}&password={{guestPassword}}
 
+> {%
+    client.global.set("guestAccessToken", response.body.accessToken);
+    client.log("Guest Access Token сохранен");
+%}
 
+### 4. Обновление токена (использует сохраненный refreshToken)
+# @name refreshToken
+POST {{baseUrl}}/api/auth/refresh
+Content-Type: application/json
 
+{
+  "refreshToken": "{{refreshToken}}"
+}
 
-###
-POST http://localhost:8080/api/auth/login?
-    username=admin&
-    password=admin
+> {%
+    client.global.set("accessToken", response.body.accessToken);
+    client.global.set("refreshToken", response.body.refreshToken);
+    client.log("Токены обновлены!");
+%}
+
+### 5. Получить текущего пользователя (использует сохраненный токен)
+GET {{baseUrl}}/api/auth/current
+Authorization: Bearer {{accessToken}}
+
+### 6. Запрос на восстановление пароля
+POST {{baseUrl}}/api/auth/password-restoration?emailOrLogin=admin
+
+### 7. Обновление пароля (требуется active_code из письма)
+# POST {{baseUrl}}/api/auth/update-password/ACTIVE_CODE_HERE?newPassword=newPassword123

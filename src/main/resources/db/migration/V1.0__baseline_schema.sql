@@ -10,7 +10,7 @@
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
-    id BIGSERIAL PRIMARY KEY,
+    id bigserial PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     active VARCHAR(50),
@@ -30,6 +30,18 @@ CREATE TABLE IF NOT EXISTS m2m_users_roles (
     role_id BIGINT NOT NULL REFERENCES roles(id),
     PRIMARY KEY (user_id, role_id)
 );
+
+-- Refresh tokens table (for JWT token rotation)
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+    id BIGSERIAL PRIMARY KEY,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    user_id BIGINT NOT NULL REFERENCES users(id),
+    expiry_date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Index for faster token lookup
+CREATE INDEX IF NOT EXISTS idx_refresh_token ON refresh_tokens(token);
 
 -- =============================================================================
 -- 2. MEDIA TABLES

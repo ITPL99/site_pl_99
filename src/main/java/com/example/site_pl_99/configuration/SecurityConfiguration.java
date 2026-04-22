@@ -54,6 +54,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/h2-console").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/auth/refresh").permitAll()
                         .requestMatchers("/api/auth/current").permitAll()
                         .requestMatchers("/api/auth/password-restoration").hasAnyAuthority("ADMIN")
                         .requestMatchers("/api/auth/update-password/**").hasAnyAuthority("ADMIN")

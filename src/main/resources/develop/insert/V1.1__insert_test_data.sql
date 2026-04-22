@@ -12,14 +12,14 @@ INSERT INTO roles (role_name) VALUES ('MODERATOR');
 -- =============================================================================
 -- 2. USERS (password = 'password123' encoded with BCrypt)
 -- =============================================================================
-INSERT INTO users (username, password, active, active_code, email) 
-VALUES ('admin', '$2a$10$N9qoCWz.x6hLsCFZ8iFY5eDzGYqzKqVQd8QFhF3dPbU7X.8tC6qI2', 'ACTIVE', NULL, 'admin@pl99.kg');
+INSERT INTO users (username, password, active, active_code, email)
+VALUES ('admin', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'admin@pl99.kg');
 
 INSERT INTO users (username, password, active, active_code, email) 
-VALUES ('testuser', '$2a$10$N9qoCWz.x6hLsCFZ8iFY5eDzGYqzKqVQd8QFhF3dPbU7X.8tC6qI2', 'ACTIVE', NULL, 'test@example.com');
+VALUES ('testuser', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'test@example.com');
 
 INSERT INTO users (username, password, active, active_code, email) 
-VALUES ('moderator', '$2a$10$N9qoCWz.x6hLsCFZ8iFY5eDzGYqzKqVQd8QFhF3dPbU7X.8tC6qI2', 'ACTIVE', NULL, 'moderator@pl99.kg');
+VALUES ('moderator', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'moderator@pl99.kg');
 
 -- =============================================================================
 -- 3. USER_ROLES ASSIGNMENTS

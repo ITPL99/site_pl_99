@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
@@ -19,9 +20,36 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Контроллер для управления видео.
+ * <p>
+ * Предоставляет API для загрузки, стриминга и управления видеофайлами.
+ * Видео хранятся в MinIO, метаданные - в базе данных.
+ * </p>
+ *
+ * @author PL99 Team
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("/api/video")
 @SecurityRequirement(name = "bearerAuth")
+@Tag(
+        name = "Видео",
+        description = """
+                API для загрузки и стриминга видеофайлов.
+                
+                **Возможности:**
+                - Загрузка видео в MinIO
+                - Потоковое воспроизведение видео
+                - Получение метаданных видео
+                
+                **Хранение:**
+                - Файлы хранятся в MinIO
+                - Метаданные (ID, имя файла) - в БД
+                
+                **Авторизация:** Все endpoints требуют Bearer токен
+                """
+)
 public class VideoController {
     private final VideoService videoService;
     private final VideoMinIoService minIoService;
@@ -87,27 +115,59 @@ public class VideoController {
     }
 
     @Operation(
-            summary = "Получить DTO видео по ID",
-            description = "Возвращает метаинформацию о видео по его ID"
+            summary = "Получить метаданные видео по ID",
+            description = """
+                    Возвращает метаинформацию о видео (ID, имя файла) по его ID.
+                    
+                    **Не возвращает сам файл!** Для получения видео используйте /stream-file-by-id/{id}
+                    """
     )
-    @ApiResponse(responseCode = "200", description = "Метаинформация возвращена",
-            content = @Content(schema = @Schema(implementation = VideoDto.class)))
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Метаинформация возвращена",
+                    content = @Content(schema = @Schema(implementation = VideoDto.class))
+            ),
+            @ApiResponse(responseCode = "401", description = "Не авторизован"),
+            @ApiResponse(responseCode = "404", description = "Видео не найдено")
+    })
     @GetMapping("/get-video-by-id/{id}")
-    public ResponseEntity<VideoDto> getImagesById(
-            @Parameter(description = "ID видео") @PathVariable("id") Long id) {
+    public ResponseEntity<VideoDto> getVideoById(
+            @Parameter(
+                    description = "ID видео",
+                    example = "1",
+                    required = true
+            )
+            @PathVariable("id") Long id) {
 
         return ResponseEntity.ok(VideoMapper.mapEntityToDto(videoService.getById(id)));
     }
 
     @Operation(
-            summary = "Получить DTO видео по имени файла",
-            description = "Возвращает метаинформацию о видео по имени файла"
+            summary = "Получить метаданные видео по имени файла",
+            description = """
+                    Возвращает метаинформацию о видео (ID, имя файла) по имени файла.
+                    
+                    **Не возвращает сам файл!** Для получения видео используйте /get-file-by-name/{file_name}
+                    """
     )
-    @ApiResponse(responseCode = "200", description = "Метаинформация возвращена",
-            content = @Content(schema = @Schema(implementation = VideoDto.class)))
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Метаинформация возвращена",
+                    content = @Content(schema = @Schema(implementation = VideoDto.class))
+            ),
+            @ApiResponse(responseCode = "401", description = "Не авторизован"),
+            @ApiResponse(responseCode = "404", description = "Файл не найден")
+    })
     @GetMapping("/get-video-by-fileName/{file_name}")
-    public ResponseEntity<VideoDto> getImagesByFileName(
-            @Parameter(description = "Имя файла") @PathVariable("file_name") String fileName) {
+    public ResponseEntity<VideoDto> getVideoByFileName(
+            @Parameter(
+                    description = "Имя файла видео",
+                    example = "course_video_01.mp4",
+                    required = true
+            )
+            @PathVariable("file_name") String fileName) {
 
         return ResponseEntity.ok(VideoMapper.mapEntityToDto(videoService.getByFileName(fileName)));
     }

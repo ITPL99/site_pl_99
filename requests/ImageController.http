@@ -1,0 +1,33 @@
+### ImageController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== IMAGE OPERATIONS ====================
+
+### 1. Загрузить изображение (ADMIN)
+POST {{baseUrl}}/api/images/save
+Content-Type: multipart/form-data; boundary=boundary
+Authorization: Bearer {{accessToken}}
+
+--boundary
+Content-Disposition: form-data; name="image"; filename="test-image.jpg"
+Content-Type: image/jpeg
+
+< /path/to/local/image.jpg
+--boundary--
+
+### 2. Получить файл по ID
+GET {{baseUrl}}/api/images/get-file-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Получить файл по имени
+GET {{baseUrl}}/api/images/get-file-by-name/test-image.jpg
+Authorization: Bearer {{accessToken}}
+
+### 4. Получить изображение по ID
+GET {{baseUrl}}/api/images/get-images-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить изображение по имени файла
+GET {{baseUrl}}/api/images/get-images-by-fileName/test-image.jpg
+Authorization: Bearer {{accessToken}}

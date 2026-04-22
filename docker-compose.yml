@@ -1,40 +1,51 @@
 services:
   pl99-app:
     build: .
+    container_name: pl99-backend
+    hostname: backend
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
+      - minio
     environment:
+      # Spring Profile - production mode
+      - APP_PROFILE=local
+      - DB_PASS=postgres_pl_99
+      # Database connection (using hostname 'db')
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/site_pl_99
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres_pl_99
-      - MINIO_URL=http://10.0.0.3:9000
+      # MinIO connection (using hostname 'minio')
+      - MINIO_URL=http://minio:9000
       - MINIO_ACCESS-KEY=minioadmin
       - MINIO_SECRET-KEY=minio_pl_99
       - MINIO_BUCKET_NAME_IMAGESNEWS=images-news
       - MINIO_BUCKET_NAME_VIDEO=video
       - MINIO_BUCKET_NAME_AVATAR=avatar
     networks:
-      custom_net:
-        ipv4_address: 10.0.0.10
-
-
-
+      - pl99-network
 
   db:
-    image: postgres
+    image: postgres:15-alpine
+    container_name: pl99-database
+    hostname: db
+    ports:
+      # Expose PostgreSQL for local access (host:container)
+      - "5432:5432"
     environment:
       - POSTGRES_DB=site_pl_99
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres_pl_99
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     networks:
-      custom_net:
-        ipv4_address: 10.0.0.2
-
+      - pl99-network
 
   minio:
     image: minio/minio:latest
+    container_name: pl99-minio
+    hostname: minio
     ports:
       - 9000:9000
       - 9001:9001
@@ -49,16 +60,16 @@ services:
       - ":9001"
       - /data
     networks:
-      custom_net:
-        ipv4_address: 10.0.0.3
+      - pl99-network
 
 volumes:
+  postgres-data:
+    driver: local
   minio-data:
-
+    driver: local
 
 networks:
-  custom_net:
+  pl99-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 10.0.0.0/24
+    # Docker DNS automatically resolves hostnames within this network
+    # Services can reach each other by: backend, db, minio

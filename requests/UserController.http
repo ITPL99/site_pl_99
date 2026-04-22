@@ -1,0 +1,30 @@
+### UserController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен (admin)
+
+### ==================== USER MANAGEMENT ====================
+
+### 1. Получить всех пользователей (только ADMIN)
+GET {{baseUrl}}/api/user/all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить пользователя по логину
+POST {{baseUrl}}/api/user/get-login
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "username": "admin"
+}
+
+### 3. Добавить нового пользователя (только ADMIN)
+POST {{baseUrl}}/api/user/add
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "username": "newuser",
+  "password": "password123",
+  "email": "newuser@example.com",
+  "role": "USER"
+}

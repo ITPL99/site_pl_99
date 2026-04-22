@@ -18,10 +18,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Контроллер для управления почтовыми сообщениями.
+ * <p>
+ * Предоставляет API для отправки, получения и управления email сообщениями.
+ * </p>
+ *
+ * @author PL99 Team
+ * @since 1.0
+ */
 @RestController
 @RequestMapping("/api/mail")
 @SecurityRequirement(name = "bearerAuth")
-@Tag(name = "Mail Controller", description = "Отправка и управление email-сообщениями")
+@Tag(
+        name = "Почта",
+        description = """
+                API для управления почтовыми сообщениями.
+                
+                **Возможности:**
+                - Отправка email сообщений
+                - Получение списка сообщений
+                - Управление статусами сообщений
+                
+                **Авторизация:** Все endpoints требуют Bearer токен
+                """
+)
 public class MailController {
 
     private final MailService mailService;

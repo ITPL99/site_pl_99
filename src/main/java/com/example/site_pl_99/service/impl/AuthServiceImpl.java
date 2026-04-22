@@ -1,44 +1,56 @@
 package com.example.site_pl_99.service.impl;
 
+import com.example.site_pl_99.dto.RefreshTokenRequest;
+import com.example.site_pl_99.dto.TokenResponse;
+import com.example.site_pl_99.entity.RefreshToken;
 import com.example.site_pl_99.entity.UserEntity;
 import com.example.site_pl_99.enums.Active;
 import com.example.site_pl_99.excaption.AuthorizeException;
 import com.example.site_pl_99.excaption.InvalidPasswordRestore;
 import com.example.site_pl_99.excaption.NotImplementedException;
+import com.example.site_pl_99.repository.RefreshTokenRepository;
 import com.example.site_pl_99.repository.UserRepository;
 import com.example.site_pl_99.security.JWTHandler;
 import com.example.site_pl_99.service.AuthService;
 import com.example.site_pl_99.service.MailService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AuthServiceImpl.class);
+    
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final JWTHandler jwtHandler;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
+    
+    @Value("${jwt.refresh.token.time}")
+    private Long refreshTokenDurationMs;
 
     public AuthServiceImpl(
             UserRepository userRepository,
+            RefreshTokenRepository refreshTokenRepository,
             JWTHandler jwtHandler,
-            PasswordEncoder passwordEncoder, MailService mailService
+            PasswordEncoder passwordEncoder, 
+            MailService mailService
     ) {
         this.userRepository = userRepository;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.jwtHandler = jwtHandler;
         this.passwordEncoder = passwordEncoder;
-
         this.mailService = mailService;
     }
 
@@ -53,20 +65,105 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(String username, String password) {
+    @Transactional
+    public TokenResponse login(String username, String password) {
         log.info("------>>>>> Пришел логин {}", username);
-        log.info("------>>>>> Пришел пароль {}", password);
-        UserEntity authUser = userRepository.findByUsername(username).orElseThrow(()-> new AuthorizeException("error.authorization"));
-        log.info("------>>>>> Пришел пароль пользователя  {}", authUser.getPassword());
-        if(!passwordEncoder.matches(password, authUser.getPassword())) {
+        UserEntity authUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AuthorizeException("error.authorization"));
+        
+        if (!passwordEncoder.matches(password, authUser.getPassword())) {
             throw new AuthorizeException("error.authorization");
         }
-        return jwtHandler.jwtGenerator(authUser);
+        
+        // Удаляем старый refresh token если есть
+        refreshTokenRepository.findByUser(authUser).ifPresent(refreshTokenRepository::delete);
+        
+        // Генерируем новую пару токенов
+        String accessToken = jwtHandler.generateAccessToken(authUser);
+        String refreshToken = createRefreshToken(authUser);
+        
+        Instant accessExpiry = Instant.now().plusMillis(86400000); // 24 часа
+        Instant refreshExpiry = Instant.now().plusMillis(refreshTokenDurationMs); // 7 дней
+        
+        return TokenResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .tokenType("Bearer")
+                .accessTokenExpiry(accessExpiry)
+                .refreshTokenExpiry(refreshExpiry)
+                .accessTokenExpiresIn(86400L)
+                .refreshTokenExpiresIn(refreshTokenDurationMs / 1000)
+                .status("SUCCESS")
+                .message("Аутентификация успешна")
+                .build();
+    }
+    
+    @Override
+    @Transactional
+    public TokenResponse refreshToken(RefreshTokenRequest request) {
+        log.info("------>>>>> Запрос на обновление токена");
+        
+        // Ищем refresh token в базе
+        RefreshToken refreshToken = refreshTokenRepository.findByToken(request.getRefreshToken())
+                .orElseThrow(() -> new AuthorizeException("error.invalidRefreshToken"));
+        
+        // Проверяем не истек ли срок
+        if (refreshToken.isExpired()) {
+            refreshTokenRepository.delete(refreshToken);
+            throw new AuthorizeException("error.refreshTokenExpired");
+        }
+        
+        UserEntity user = refreshToken.getUser();
+        
+        // Удаляем старый refresh token
+        refreshTokenRepository.delete(refreshToken);
+        
+        // Генерируем новую пару токенов
+        String newAccessToken = jwtHandler.generateAccessToken(user);
+        String newRefreshToken = createRefreshToken(user);
+        
+        Instant accessExpiry = Instant.now().plusMillis(86400000);
+        Instant refreshExpiry = Instant.now().plusMillis(refreshTokenDurationMs);
+        
+        return TokenResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .tokenType("Bearer")
+                .accessTokenExpiry(accessExpiry)
+                .refreshTokenExpiry(refreshExpiry)
+                .accessTokenExpiresIn(86400L)
+                .refreshTokenExpiresIn(refreshTokenDurationMs / 1000)
+                .status("SUCCESS")
+                .message("Токены успешно обновлены")
+                .build();
+    }
+    
+    /**
+     * Создает и сохраняет refresh token для пользователя
+     */
+    private String createRefreshToken(UserEntity user) {
+        RefreshToken refreshToken = RefreshToken.builder()
+                .token(jwtHandler.generateRefreshToken())
+                .user(user)
+                .expiryDate(Instant.now().plusMillis(refreshTokenDurationMs))
+                .build();
+        
+        refreshToken = refreshTokenRepository.save(refreshToken);
+        return refreshToken.getToken();
     }
 
     @Override
     public String logout() {
         throw new NotImplementedException();
+    }
+    
+    @Override
+    @Transactional
+    public void logoutUser(String username) {
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new AuthorizeException("error.authorization"));
+        refreshTokenRepository.deleteByUser(user);
+        log.info("------>>>>> Пользователь {} вышел из системы, refresh токены удалены", username);
     }
 
     @Override

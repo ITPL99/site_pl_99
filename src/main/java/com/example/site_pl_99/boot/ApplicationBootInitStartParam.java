@@ -16,9 +16,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-// TODO: На продакшен убрать удалить данный класс
-@Profile({"develop","local","test"})
-@Component
+//// TODO: На продакшен убрать удалить данный класс
+//@Profile({"develop","local","test"})
+//@Component
 public class
 ApplicationBootInitStartParam implements CommandLineRunner {
 
@@ -40,25 +40,25 @@ ApplicationBootInitStartParam implements CommandLineRunner {
 
         List<RoleEntity> roleEntitySet = roleRepository.findAll();
 
-        if(userRepository.findByUsername("admin").isEmpty()) {
-            UserEntity admin = new UserEntity();
-            admin
-                    .setActive(Active.ACTIVE)
-                 .setPassword(passwordEncoder.encode("admin"))
-                 .setUsername("admin")
-                 .setRoles(roleEntitySet)
-                 .setEmail("admin@admin.com");
-            userRepository.save(admin);
-        }
+//        if(userRepository.findByUsername("admin").isEmpty()) {
+//            UserEntity admin = new UserEntity();
+//            admin
+//                    .setActive(Active.ACTIVE)
+//                 .setPassword(passwordEncoder.encode("admin"))
+//                 .setUsername("admin")
+//                 .setRoles(roleEntitySet)
+//                 .setEmail("admin@admin.com");
+//            userRepository.save(admin);
+//        }
 
-        if(userRepository.findByUsername("alex").isEmpty()) {
+        if(userRepository.findByUsername("develop").isEmpty()) {
             UserEntity admin = new UserEntity();
             admin
                     .setActive(Active.ACTIVE)
-                    .setPassword(passwordEncoder.encode("alex"))
-                    .setUsername("alex")
+                    .setPassword(passwordEncoder.encode("qwe123"))
+                    .setUsername("develop")
                     .setRoles(roleEntitySet)
-                    .setEmail("89515014507@mail.ru");
+                    .setEmail("develop@mail.ru");
             userRepository.save(admin);
         }
     }

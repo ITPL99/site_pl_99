@@ -1,0 +1,74 @@
+### MasterController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== MASTER QUERIES ====================
+
+### 1. Получить всех мастеров
+GET {{baseUrl}}/api/master/get-all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить мастера по ID
+GET {{baseUrl}}/api/master/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Поиск по ФИО
+GET {{baseUrl}}/api/master/get-by-full-name?fullName=Петров
+Authorization: Bearer {{accessToken}}
+
+### 4. Поиск по имени
+GET {{baseUrl}}/api/master/get-search-by-name?name=Петр
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить по статусу
+GET {{baseUrl}}/api/master/get-by-active-status?status=ACTIVE
+Authorization: Bearer {{accessToken}}
+
+### 6. Получить по дате рождения
+GET {{baseUrl}}/api/master/get-all-by-date-berth?dateBerth=1990-01-01
+Authorization: Bearer {{accessToken}}
+
+### 7. Получить по профессии
+GET {{baseUrl}}/api/master/get-all-by-profession?profession=Дизайнер
+Authorization: Bearer {{accessToken}}
+
+### 8. Получить по дате приема
+GET {{baseUrl}}/api/master/get-all-by-date-employment?dateEmployment=2021-01-01
+Authorization: Bearer {{accessToken}}
+
+### 9. Получить по дате увольнения
+GET {{baseUrl}}/api/master/get-all-by-date-dismissal?dateDismissal=2024-01-01
+Authorization: Bearer {{accessToken}}
+
+### ==================== MASTER MANAGEMENT (ADMIN) ====================
+
+### 10. Создать мастера (ADMIN)
+POST {{baseUrl}}/api/master/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "fullName": "Петров Петр Петрович",
+  "dateBerth": "1988-03-20",
+  "profession": "Графический дизайнер",
+  "dateEmployment": "2021-01-01",
+  "status": "ACTIVE"
+}
+
+### 11. Обновить мастера (ADMIN)
+PUT {{baseUrl}}/api/master/update-master
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "id": 1,
+  "fullName": "Петров Петр Иванович",
+  "dateBerth": "1988-03-20",
+  "profession": "UI/UX дизайнер",
+  "dateEmployment": "2021-01-01",
+  "status": "ACTIVE"
+}
+
+### 12. Удалить мастера (ADMIN)
+DELETE {{baseUrl}}/api/master/delete-by-id/1
+Authorization: Bearer {{accessToken}}

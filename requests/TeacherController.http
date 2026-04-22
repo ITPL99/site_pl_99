@@ -1,0 +1,74 @@
+### TeacherController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== TEACHER QUERIES ====================
+
+### 1. Получить всех преподавателей
+GET {{baseUrl}}/api/teacher/get-all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить преподавателя по ID
+GET {{baseUrl}}/api/teacher/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Поиск по ФИО
+GET {{baseUrl}}/api/teacher/get-by-full-name?fullName=Иванов
+Authorization: Bearer {{accessToken}}
+
+### 4. Поиск по имени
+GET {{baseUrl}}/api/teacher/get-search-by-name?name=Иван
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить по статусу активности
+GET {{baseUrl}}/api/teacher/get-by-acive-status?active=true
+Authorization: Bearer {{accessToken}}
+
+### 6. Получить по дате рождения
+GET {{baseUrl}}/api/teacher/get-all-by-date-berth?dateBirth=1990-01-01
+Authorization: Bearer {{accessToken}}
+
+### 7. Получить по отделу/портфолио
+GET {{baseUrl}}/api/teacher/get-all-by-portfolio?department=IT
+Authorization: Bearer {{accessToken}}
+
+### 8. Получить по дате приема
+GET {{baseUrl}}/api/teacher/get-all-by-date-employment?dateEmployment=2020-01-01
+Authorization: Bearer {{accessToken}}
+
+### 9. Получить по дате увольнения
+GET {{baseUrl}}/api/teacher/get-all-by-date-dismissal?dateDismissal=2024-01-01
+Authorization: Bearer {{accessToken}}
+
+### ==================== TEACHER MANAGEMENT (ADMIN) ====================
+
+### 10. Создать преподавателя (ADMIN)
+POST {{baseUrl}}/api/teacher/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "fullName": "Иванов Иван Иванович",
+  "dateBirth": "1985-05-15",
+  "department": "IT",
+  "dateEmployment": "2020-01-01",
+  "active": true
+}
+
+### 11. Обновить преподавателя (ADMIN)
+PUT {{baseUrl}}/api/teacher/update-by-id
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "id": 1,
+  "fullName": "Иванов Иван Петрович",
+  "dateBirth": "1985-05-15",
+  "department": "IT",
+  "dateEmployment": "2020-01-01",
+  "active": true
+}
+
+### 12. Удалить преподавателя (ADMIN)
+DELETE {{baseUrl}}/api/teacher/delete-by-id/1
+Authorization: Bearer {{accessToken}}

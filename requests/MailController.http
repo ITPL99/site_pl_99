@@ -1,0 +1,29 @@
+### MailController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== MAIL OPERATIONS ====================
+
+### 1. Отправить сообщение
+POST {{baseUrl}}/api/mail/send-message?email=recipient@example.com&title=Тестовое письмо&content=Это тестовое письмо из системы
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить все письма
+GET {{baseUrl}}/api/mail/get-all
+Authorization: Bearer {{accessToken}}
+
+### 3. Получить письмо по ID
+GET {{baseUrl}}/api/mail/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 4. Получить письма по заголовку
+GET {{baseUrl}}/api/mail/get-by-title?title=Тестовое
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить письма по статусу
+GET {{baseUrl}}/api/mail/get-by-status?status=SENT
+Authorization: Bearer {{accessToken}}
+
+### 6. Обновить статус письма
+PUT {{baseUrl}}/api/mail/update-status-by-id?id=1&status=READ
+Authorization: Bearer {{accessToken}}

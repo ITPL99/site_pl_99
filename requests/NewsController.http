@@ -1,0 +1,63 @@
+### NewsController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== NEWS QUERIES ====================
+
+### 1. Получить все новости
+GET {{baseUrl}}/api/news/get-all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить все новости (полная информация, ADMIN)
+GET {{baseUrl}}/api/news/get-all-full
+Authorization: Bearer {{accessToken}}
+
+### 3. Получить новость по ID
+GET {{baseUrl}}/api/news/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 4. Поиск новости по названию
+GET {{baseUrl}}/api/news/get-by-title?title=Заголовок
+Authorization: Bearer {{accessToken}}
+
+### 5. Поиск новости по подзаголовку
+GET {{baseUrl}}/api/news/get-all-by-content-sub-title?contentSubTitle=Подзаголовок
+Authorization: Bearer {{accessToken}}
+
+### 6. Поиск новости по контенту
+GET {{baseUrl}}/api/news/get-all-by-content-title?contentTitle=Текст
+Authorization: Bearer {{accessToken}}
+
+### 7. Получить новости по статусу
+GET {{baseUrl}}/api/news/get-by-status?status=PUBLISHED
+Authorization: Bearer {{accessToken}}
+
+### ==================== NEWS MANAGEMENT (ADMIN) ====================
+
+### 8. Создать новость (ADMIN)
+POST {{baseUrl}}/api/news/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Новая новость",
+  "contentTitle": "Содержание новости",
+  "contentSubTitle": "Подзаголовок",
+  "status": "PUBLISHED"
+}
+
+### 9. Обновить новость (ADMIN)
+PUT {{baseUrl}}/api/news/update-by-id/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Обновленная новость",
+  "contentTitle": "Обновленное содержание",
+  "contentSubTitle": "Обновленный подзаголовок",
+  "status": "PUBLISHED"
+}
+
+### 10. Удалить новость (ADMIN)
+DELETE {{baseUrl}}/api/news/delete-by-id?id=1
+Authorization: Bearer {{accessToken}}

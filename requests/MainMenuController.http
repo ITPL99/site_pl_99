@@ -1,0 +1,37 @@
+### MainMenuController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен (ADMIN для изменений)
+
+### ==================== MAIN MENU MANAGEMENT ====================
+
+### 1. Добавить пункт меню (ADMIN)
+POST {{baseUrl}}/api/main-menu/add-main-menu
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Новый раздел",
+  "url": "/new-section",
+  "order": 5,
+  "parentId": null
+}
+
+### 2. Получить пункт меню по ID
+GET {{baseUrl}}/api/main-menu/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Обновить пункт меню (ADMIN)
+PUT {{baseUrl}}/api/main-menu/update-by-id/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Обновленный раздел",
+  "url": "/updated-section",
+  "order": 3,
+  "parentId": null
+}
+
+### 4. Удалить пункт меню (ADMIN)
+DELETE {{baseUrl}}/api/main-menu/delete-by-id/1
+Authorization: Bearer {{accessToken}}

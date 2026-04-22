@@ -29,7 +29,7 @@
     <properties>
         <java.version>17</java.version>
         <docker.image.name>pl99-application:latest</docker.image.name>
-        <docker.from.image>openjdk:17-alpine</docker.from.image>
+        <docker.from.image>eclipse-temurin:17-jre-alpine</docker.from.image>
         <docker.port>8080</docker.port>
     </properties>
     <dependencies>

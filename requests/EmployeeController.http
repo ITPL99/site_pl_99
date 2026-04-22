@@ -1,0 +1,76 @@
+### EmployeeController API Tests
+### Базовый URL: {{baseUrl}}
+### Требуется: Bearer токен
+
+### ==================== EMPLOYEE QUERIES ====================
+
+### 1. Получить всех сотрудников
+GET {{baseUrl}}/api/employee/get-all
+Authorization: Bearer {{accessToken}}
+
+### 2. Получить сотрудника по ID
+GET {{baseUrl}}/api/employee/get-by-id/1
+Authorization: Bearer {{accessToken}}
+
+### 3. Поиск по ФИО
+GET {{baseUrl}}/api/employee/get-by-full-name?fullName=Сидоров
+Authorization: Bearer {{accessToken}}
+
+### 4. Поиск по имени
+GET {{baseUrl}}/api/employee/search-by-Name?fullName=Сидор
+Authorization: Bearer {{accessToken}}
+
+### 5. Получить по дате рождения
+GET {{baseUrl}}/api/employee/get-by-date-date-berth?dateBerth=1992-07-10
+Authorization: Bearer {{accessToken}}
+
+### 6. Получить по статусу
+GET {{baseUrl}}/api/employee/get-by-date-status?status=ACTIVE
+Authorization: Bearer {{accessToken}}
+
+### 7. Получить по отделу
+GET {{baseUrl}}/api/employee/get-by-date-department?department=HR
+Authorization: Bearer {{accessToken}}
+
+### 8. Получить по дате приема
+GET {{baseUrl}}/api/employee/get-by-date-employment?dateEmployment=2019-06-01
+Authorization: Bearer {{accessToken}}
+
+### 9. Получить по дате увольнения
+GET {{baseUrl}}/api/employee/get-by-date-dismissal?dateDismissal=2024-01-01
+Authorization: Bearer {{accessToken}}
+
+### ==================== EMPLOYEE MANAGEMENT (ADMIN) ====================
+
+### 10. Создать сотрудника (ADMIN)
+POST {{baseUrl}}/api/employee/create
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "fullName": "Сидоров Сидор Сидорович",
+  "dateBerth": "1992-07-10",
+  "department": "HR",
+  "position": "Менеджер",
+  "dateEmployment": "2019-06-01",
+  "status": "ACTIVE"
+}
+
+### 11. Обновить сотрудника (ADMIN)
+PUT {{baseUrl}}/api/employee/update
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "id": 1,
+  "fullName": "Сидоров Сидор Петрович",
+  "dateBerth": "1992-07-10",
+  "department": "HR",
+  "position": "Старший менеджер",
+  "dateEmployment": "2019-06-01",
+  "status": "ACTIVE"
+}
+
+### 12. Удалить сотрудника (ADMIN)
+DELETE {{baseUrl}}/api/employee/delete-by-id/1
+Authorization: Bearer {{accessToken}}
