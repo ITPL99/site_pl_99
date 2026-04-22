@@ -13,7 +13,9 @@ TeacherMapper {
         teacherEntity.setDateBerth(teacherDtoRequest.getDateBirth());
         teacherEntity.setLinkPortfolio(teacherDtoRequest.getLinkPortfolio());
         teacherEntity.setDateEmployment(teacherDtoRequest.getDateEmployment());
-        teacherEntity.setImage(ImageMapper.mapDtoToEntity(teacherDtoRequest.getImage()));
+        if (teacherDtoRequest.getImage() != null) {
+            teacherEntity.setImage(ImageMapper.mapDtoToEntity(teacherDtoRequest.getImage()));
+        }
         return teacherEntity;
     }
 
@@ -24,7 +26,9 @@ TeacherMapper {
         teacherEntity.setDateBerth(teacherDtoRequest.getDateBirth());
         teacherEntity.setLinkPortfolio(teacherDtoRequest.getLinkPortfolio());
         teacherEntity.setDateEmployment(teacherDtoRequest.getDateEmployment());
-        teacherEntity.setImage(ImageMapper.mapDtoToEntity(teacherDtoRequest.getImage()));
+        if (teacherDtoRequest.getImage() != null) {
+            teacherEntity.setImage(ImageMapper.mapDtoToEntity(teacherDtoRequest.getImage()));
+        }
         return teacherEntity;
     }
 
@@ -37,7 +41,9 @@ TeacherMapper {
         teacherDtoResponse.setActive(teacherEntity.getActive());
         teacherDtoResponse.setDateEmployment(teacherEntity.getDateEmployment());
         teacherDtoResponse.setDateDismissal(teacherEntity.getDateDismissal());
-        teacherDtoResponse.setImage(ImageMapper.mapEntityToDto(teacherEntity.getImage()));
+        if (teacherEntity.getImage() != null) {
+            teacherDtoResponse.setImage(ImageMapper.mapEntityToDto(teacherEntity.getImage()));
+        }
         return teacherDtoResponse;
     }
 }

@@ -18,7 +18,9 @@ public class EmployeeMapper {
         dtoResponse.setId(entity.getId());
         dtoResponse.setDateBerth(entity.getDateBerth());
         dtoResponse.setFullName(entity.getFullName());
-        dtoResponse.setImage(ImageMapper.mapEntityToDto(entity.getImage()));
+        if (entity.getImage() != null) {
+            dtoResponse.setImage(ImageMapper.mapEntityToDto(entity.getImage()));
+        }
         dtoResponse.setDepartment(
                 LocaleContextHolder.getLocale().getLanguage().equalsIgnoreCase("ru")?
                         entity.getDepartmentRu() :
@@ -48,7 +50,9 @@ public class EmployeeMapper {
         entity.setFullName(dtoRequest.getFullName());
         entity.setDateBerth(dtoRequest.getDateBerth());
         entity.setDateDismissal(dtoRequest.getDateDismissal());
-        entity.setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()));
+        if (dtoRequest.getImage() != null) {
+            entity.setImage(ImageMapper.mapDtoToEntity(dtoRequest.getImage()));
+        }
         entity.setDepartmentRu(dtoRequest.getDepartmentRu());
         entity.setDepartmentKg(dtoRequest.getDepartmentKg());
         entity.setDateEmployment(dtoRequest.getDateEmployment());

@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author PL99 Team
  * @since 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/news")
 @SecurityRequirement(name = "bearerAuth")
@@ -288,6 +290,7 @@ public class NewsController {
                     content = @Content(schema = @Schema(implementation = NewsDtoRequest.class))
             )
             @RequestBody NewsDtoRequest entity) {
+        log.info("Пришло {}",entity);
         return ResponseEntity.ok(NewsMapper.toNewsDtoResponse(newsService.addNews(NewsMapper.toNewsEntity(entity))));
     }
 

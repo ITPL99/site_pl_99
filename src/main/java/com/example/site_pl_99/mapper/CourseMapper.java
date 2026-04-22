@@ -20,7 +20,9 @@ public class CourseMapper {
         courseEntity.setTitleKg(request.getTitleKg());
         courseEntity.setDescriptionRu(request.getDescriptionRu());
         courseEntity.setDescriptionKg(request.getDescriptionKg());
-        courseEntity.setImage(ImageMapper.mapDtoToEntity(request.getImage()));
+        if (request.getImage() != null) {
+            courseEntity.setImage(ImageMapper.mapDtoToEntity(request.getImage()));
+        }
         courseEntity.setPrice(request.getPrice());
         courseEntity.setDateStart(request.getDateStart());
         courseEntity.setDateEnd(request.getDateEnd());
@@ -41,7 +43,9 @@ public class CourseMapper {
             courseDtoResponse.setDescription(byTitle.getDescriptionKg());
         }
         courseDtoResponse.setPrice(byTitle.getPrice());
-        courseDtoResponse.setImageFileName(byTitle.getImage().getFileName());
+        if (byTitle.getImage() != null) {
+            courseDtoResponse.setImageFileName(byTitle.getImage().getFileName());
+        }
         courseDtoResponse.setDateStart(byTitle.getDateStart());
         courseDtoResponse.setDateEnd(byTitle.getDateEnd());
         return courseDtoResponse;

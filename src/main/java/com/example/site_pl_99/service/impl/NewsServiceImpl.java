@@ -7,6 +7,8 @@ import com.example.site_pl_99.excaption.NewsIsNotFoundException;
 import com.example.site_pl_99.excaption.UniquenessViolationException;
 import com.example.site_pl_99.repository.NewsRepository;
 import com.example.site_pl_99.service.NewsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class NewsServiceImpl implements NewsService {
+    private static final Logger log = LoggerFactory.getLogger(NewsServiceImpl.class);
     private final NewsRepository newsRepository;
 
     public NewsServiceImpl(NewsRepository newsRepository) {
@@ -23,6 +26,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public NewsEntity addNews(NewsEntity newsEntity) {
+        log.info("Пришли данные в бизнес логику {}",newsEntity);
         try {
             if (newsEntity.getTitleRu().isEmpty() && newsEntity.getTitleKg().isEmpty())
                 throw new IncorectInputException("");

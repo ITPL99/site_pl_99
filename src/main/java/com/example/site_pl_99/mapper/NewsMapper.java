@@ -6,6 +6,8 @@ import com.example.site_pl_99.dto.NewsDtoResponse;
 import com.example.site_pl_99.dto.NewsDtoUpdate;
 import com.example.site_pl_99.entity.ImageEntity;
 import com.example.site_pl_99.entity.NewsEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.List;
@@ -13,7 +15,10 @@ import java.util.stream.Collectors;
 
 public class NewsMapper {
 
+    private static final Logger log = LoggerFactory.getLogger(NewsMapper.class);
+
     public static NewsEntity toNewsEntity(NewsDtoRequest newsDtoRequest) {
+        log.info("Пришло для того что бы превротить ДТО в Сущность системы {}",newsDtoRequest);
         NewsEntity newsEntity = new NewsEntity();
         newsEntity.setTitleKg(newsDtoRequest.getTitleKg());
         newsEntity.setTitleRu(newsDtoRequest.getTitleRu());
@@ -21,14 +26,23 @@ public class NewsMapper {
         newsEntity.setSubTitleKg(newsDtoRequest.getSubTitleKg());
         newsEntity.setDescriptionKg(newsDtoRequest.getDescriptionKg());
         newsEntity.setDescriptionRu(newsDtoRequest.getDescriptionRu());
-        newsEntity.setImageSmall(ImageMapper.mapDtoToEntity(newsDtoRequest.getImageSmall()));
-        newsEntity.setImageFull(ImageMapper.mapDtoToEntity(newsDtoRequest.getImageFull()));
-        newsEntity.setImages(newsDtoRequest.getImagesFile().stream().map(ImageMapper::mapDtoToEntity).collect(Collectors.toList()));
-        newsEntity.setVideo(VideoMapper.mapDtoToEntity(newsDtoRequest.getVideoFileName()));
+        if (newsDtoRequest.getImageSmall() != null) {
+            newsEntity.setImageSmall(ImageMapper.mapDtoToEntity(newsDtoRequest.getImageSmall()));
+        }
+        if (newsDtoRequest.getImageFull() != null) {
+            newsEntity.setImageFull(ImageMapper.mapDtoToEntity(newsDtoRequest.getImageFull()));
+        }
+        if (newsDtoRequest.getImagesFile() != null) {
+            newsEntity.setImages(newsDtoRequest.getImagesFile().stream().map(ImageMapper::mapDtoToEntity).collect(Collectors.toList()));
+        }
+        if (newsDtoRequest.getVideoFileName() != null) {
+            newsEntity.setVideo(VideoMapper.mapDtoToEntity(newsDtoRequest.getVideoFileName()));
+        }
 
         return newsEntity;
     }
     public static NewsDtoResponse toNewsDtoResponse(NewsEntity newsEntity) {
+        log.info("пришло для трансформации из сущности в ДТО {}", newsEntity);
         NewsDtoResponse newsDtoResponse = new NewsDtoResponse();
         newsDtoResponse.setId(newsEntity.getId());
 
