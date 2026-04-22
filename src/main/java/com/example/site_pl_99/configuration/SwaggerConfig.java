@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
                 Даутов Муслим
                 Доктурбаев Азирет
                 Жаныбаев Нурэл
+                Айтбеков Эмир
                 """
 ))
 @SecurityScheme(
