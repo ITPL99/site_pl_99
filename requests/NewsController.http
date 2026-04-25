@@ -2,6 +2,20 @@
 ### Базовый URL: {{baseUrl}}
 ### Требуется: Bearer токен
 
+### ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+### Меняй только эту цифру - она подставится везде:
+@newsNum = 1
+
+@titleRu = новость{{newsNum}}
+@titleKg = новость{{newsNum}} кг
+@subTitleRu = подзаголовок{{newsNum}}
+@subTitleKg = подзаголовок{{newsNum}} кг
+@descriptionRu = описание{{newsNum}}
+@descriptionKg = описание{{newsNum}} кг
+
+@updatedTitleRu = обновленная новость{{newsNum}}
+@updatedTitleKg = обновленная новость{{newsNum}} кг
+
 ### ==================== NEWS QUERIES ====================
 
 ### 1. Получить все новости
@@ -34,18 +48,32 @@ Authorization: Bearer {{accessToken}}
 
 ### ==================== NEWS MANAGEMENT (ADMIN) ====================
 
-### 8. Создать новость (ADMIN)
+### 8. Создать новость БЕЗ изображений (ADMIN) - простой тест
 POST {{baseUrl}}/api/news/save
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "titleRu": "новсть2",
-  "titleKg": "новость2 кр",
-  "subTitleRu": "подпись2",
-  "subTitleKg": "подпись2 кр",
-  "descriptionRu": "оиписание2",
-  "descriptionKg": "описание2 кр",
+  "titleRu": "{{titleRu}}",
+  "titleKg": "{{titleKg}}",
+  "subTitleRu": "{{subTitleRu}}",
+  "subTitleKg": "{{subTitleKg}}",
+  "descriptionRu": "{{descriptionRu}}",
+  "descriptionKg": "{{descriptionKg}}"
+}
+
+### 9. Создать новость С изображениями (ADMIN) - тест с файлами
+POST {{baseUrl}}/api/news/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "titleRu": "{{titleRu}}",
+  "titleKg": "{{titleKg}}",
+  "subTitleRu": "{{subTitleRu}}",
+  "subTitleKg": "{{subTitleKg}}",
+  "descriptionRu": "{{descriptionRu}}",
+  "descriptionKg": "{{descriptionKg}}",
   "imageSmall": {
     "id": 17,
     "fileName": "logo-400px.png"
@@ -62,18 +90,38 @@ Authorization: Bearer {{accessToken}}
   ]
 }
 
-### 9. Обновить новость (ADMIN)
+### 10. Создать новость С видео (ADMIN) - тест видео
+POST {{baseUrl}}/api/news/save
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "titleRu": "{{titleRu}}",
+  "titleKg": "{{titleKg}}",
+  "subTitleRu": "{{subTitleRu}}",
+  "subTitleKg": "{{subTitleKg}}",
+  "descriptionRu": "{{descriptionRu}}",
+  "descriptionKg": "{{descriptionKg}}",
+  "videoFileName": {
+    "id": 1,
+    "fileName": "sample-video.mp4"
+  }
+}
+
+### 11. Обновить новость (ADMIN)
 PUT {{baseUrl}}/api/news/update-by-id/1
 Content-Type: application/json
 Authorization: Bearer {{accessToken}}
 
 {
-  "title": "Обновленная новость",
-  "contentTitle": "Обновленное содержание",
-  "contentSubTitle": "Обновленный подзаголовок",
-  "status": "PUBLISHED"
+  "titleRu": "{{updatedTitleRu}}",
+  "titleKg": "{{updatedTitleKg}}",
+  "subTitleRu": "{{subTitleRu}}",
+  "subTitleKg": "{{subTitleKg}}",
+  "descriptionRu": "{{descriptionRu}}",
+  "descriptionKg": "{{descriptionKg}}"
 }
 
-### 10. Удалить новость (ADMIN)
+### 12. Удалить новость (ADMIN)
 DELETE {{baseUrl}}/api/news/delete-by-id?id=1
 Authorization: Bearer {{accessToken}}

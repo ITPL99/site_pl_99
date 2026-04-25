@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,6 +78,7 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Недостаточно прав (требуется ADMIN)")
     })
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDtoResponse>> getAllUsers() throws BaseException {
             return ResponseEntity.ok(UserMapper.toUserDtoResponseList(userService.getAll()));
     }
@@ -105,6 +107,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Некорректный ввод данных")
     })
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDtoResponse> addNewUser(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные для регистрации пользователя",
@@ -132,7 +135,8 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Пользователь не найден"),
             @ApiResponse(responseCode = "400", description = "Некорректный ввод")
     })
-    @PostMapping("/get-login")
+    @GetMapping("/get-login")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDtoResponse> getUserByLogin(
             @Parameter(
                     description = "Имя пользователя (логин)",

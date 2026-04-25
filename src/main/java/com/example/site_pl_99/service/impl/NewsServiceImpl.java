@@ -28,12 +28,12 @@ public class NewsServiceImpl implements NewsService {
     public NewsEntity addNews(NewsEntity newsEntity) {
         log.info("Пришли данные в бизнес логику {}",newsEntity);
         try {
-            if (newsEntity.getTitleRu().isEmpty() && newsEntity.getTitleKg().isEmpty())
-                throw new IncorectInputException("");
-            if (newsEntity.getDescriptionRu().isEmpty() && newsEntity.getDescriptionKg().isEmpty())
-                throw new IncorectInputException("");
-            if (newsEntity.getSubTitleRu().isEmpty() && newsEntity.getSubTitleKg().isEmpty())
-                throw new IncorectInputException("");
+            if (isNullOrEmpty(newsEntity.getTitleRu()) && isNullOrEmpty(newsEntity.getTitleKg()))
+                throw new IncorectInputException("error.emptyTitle");
+            if (isNullOrEmpty(newsEntity.getDescriptionRu()) && isNullOrEmpty(newsEntity.getDescriptionKg()))
+                throw new IncorectInputException("error.emptyDescription");
+            if (isNullOrEmpty(newsEntity.getSubTitleRu()) && isNullOrEmpty(newsEntity.getSubTitleKg()))
+                throw new IncorectInputException("error.emptySubtitle");
             return newsRepository.save(newsEntity);
         }catch (DataIntegrityViolationException e){
             throw new UniquenessViolationException(e.getMessage());
@@ -82,9 +82,9 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsEntity updateNews(Long id,NewsEntity news) {
         NewsEntity newsEntity = newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
-        if(news.getTitleRu().isEmpty() && news.getTitleKg().isEmpty()) throw new IncorectInputException("");
-        if(news.getDescriptionRu().isEmpty() && news.getDescriptionKg().isEmpty()) throw new IncorectInputException("");
-        if(news.getSubTitleRu().isEmpty() && news.getSubTitleKg().isEmpty()) throw new IncorectInputException("");
+        if(isNullOrEmpty(news.getTitleRu()) && isNullOrEmpty(news.getTitleKg())) throw new IncorectInputException("error.emptyTitle");
+        if(isNullOrEmpty(news.getDescriptionRu()) && isNullOrEmpty(news.getDescriptionKg())) throw new IncorectInputException("error.emptyDescription");
+        if(isNullOrEmpty(news.getSubTitleRu()) && isNullOrEmpty(news.getSubTitleKg())) throw new IncorectInputException("error.emptySubtitle");
         if(news.getImageSmall() != null) newsEntity.setImageSmall(news.getImageSmall());
         if(news.getImageFull() != null) newsEntity.setImageFull(news.getImageFull());
         if(news.getImages() != null) newsEntity.setImages(news.getImages());
@@ -95,5 +95,9 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public NewsEntity getById(Long id) {
         return newsRepository.findById(id).orElseThrow(() -> new NewsIsNotFoundException("error.findNews"));
+    }
+
+    private boolean isNullOrEmpty(String str) {
+        return str == null || str.isEmpty();
     }
 }

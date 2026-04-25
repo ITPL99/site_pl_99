@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -186,6 +187,7 @@ public class NewsController {
             }
     )
     @GetMapping("/get-all-full")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<NewsDtoPreviewResponse>> findAllFullNews() {
         return ResponseEntity.ok(NewsMapper.toNewsDtoPreviewResponseList(newsService.getAllFull()));
     }
@@ -283,6 +285,7 @@ public class NewsController {
             }
     )
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<NewsDtoResponse> save(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные новости для создания",
@@ -313,6 +316,7 @@ public class NewsController {
             }
     )
     @DeleteMapping("/delete-by-id")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(
             @Parameter(
                     description = "ID новости для удаления",
@@ -379,6 +383,7 @@ public class NewsController {
             }
     )
     @PutMapping("/update-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<NewsDtoResponse> updateById(
             @Parameter(
                     description = "ID новости для обновления",

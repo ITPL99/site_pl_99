@@ -1,5 +1,7 @@
 package com.example.site_pl_99.controller;
 
+import com.example.site_pl_99.dto.ApiResponseWrapper;
+import com.example.site_pl_99.dto.LoginRequestDto;
 import com.example.site_pl_99.dto.RefreshTokenRequest;
 import com.example.site_pl_99.dto.TokenResponse;
 import com.example.site_pl_99.dto.UserDtoResponse;
@@ -65,14 +67,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    /**
-     * Аутентификация пользователя.
-     * 
-     * @param username имя пользователя
-     * @param password пароль пользователя
-     * @return TokenResponse с access и refresh токенами
-     * @throws BaseException при ошибке аутентификации
-     */
+
     @Operation(
             summary = "Вход в аккаунт",
             description = """
@@ -111,6 +106,7 @@ public class AuthController {
                     """
     )
     @ApiResponses(value = {
+
             @ApiResponse(
                     responseCode = "200",
                     description = "Аутентификация успешна",
@@ -124,10 +120,11 @@ public class AuthController {
                                               "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                                               "refreshToken": "550e8400-e29b-41d4-a716-446655440000",
                                               "tokenType": "Bearer",
-                                              "accessTokenExpiry": "2026-04-22T12:30:00Z",
-                                              "refreshTokenExpiry": "2026-04-28T12:30:00Z",
-                                              "accessTokenExpiresIn": 86400,
-                                              "refreshTokenExpiresIn": 604800,
+                                              "user": {
+                                                "id": 1,
+                                                "username": "admin",
+                                                "roles": ["ADMIN"]
+                                              },
                                               "status": "SUCCESS",
                                               "message": "Аутентификация успешна"
                                             }
@@ -147,27 +144,19 @@ public class AuthController {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Некорректный запрос (пустые параметры)"
+                    description = "Ошибки валидации (невалидные данные)",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponse.class)
+                    )
             )
     })
     @PostMapping("/login")
     public TokenResponse login(
-            @Parameter(
-                    description = "Имя пользователя (login)",
-                    example = "admin",
-                    required = true
-            )
-            @RequestParam String username,
-            
-            @Parameter(
-                    description = "Пароль пользователя",
-                    example = "qwe123",
-                    required = true
-            )
-            @RequestParam String password
+            @Valid @RequestBody LoginRequestDto loginRequest
     ) throws BaseException {
-        log.info("----->>>>>  получили запрос на вход: {}", username);
-        return authService.login(username, password);
+        log.info("----->>>>>  получили запрос на вход: {}", loginRequest.getUsername());
+        return authService.login(loginRequest.getUsername(), loginRequest.getPassword());
     }
 
     /**

@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
@@ -72,6 +73,7 @@ public class MainMenuController {
             @ApiResponse(responseCode = "400", description = "Некорректные данные")
     })
     @PostMapping("/add-main-menu")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MainMenuDtoResponse> addMainMenu(
             @RequestBody(
                     description = "Данные элемента главного меню для добавления",
@@ -158,6 +160,7 @@ public class MainMenuController {
             @ApiResponse(responseCode = "404", description = "Элемент не найден")
     })
     @DeleteMapping("/delete-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteMainMenuById(
             @Parameter(
                     description = "ID элемента для удаления",

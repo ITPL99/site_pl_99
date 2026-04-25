@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -145,6 +146,7 @@ public class EmployeeController {
             }
     )
     @GetMapping("/get-by-date-date-berth")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateBerth(
             @Parameter(
                     description = "Дата рождения",
@@ -180,6 +182,7 @@ public class EmployeeController {
             }
     )
     @GetMapping("/get-by-date-status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EmployeeDtoResponse>> getByStatusActive(
             @Parameter(
                     description = "Статус активности",
@@ -249,6 +252,7 @@ public class EmployeeController {
             }
     )
     @GetMapping("/get-by-date-employment")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateEmployment(
             @Parameter(
                     description = "Дата трудоустройства",
@@ -283,6 +287,7 @@ public class EmployeeController {
             }
     )
     @GetMapping("/get-by-date-dismissal")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<EmployeeDtoResponse>> getByDateDismissal(
             @Parameter(
                     description = "Дата увольнения",
@@ -384,6 +389,7 @@ public class EmployeeController {
             }
     )
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeDtoResponse> save(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные нового сотрудника",
@@ -418,6 +424,7 @@ public class EmployeeController {
             }
     )
     @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<EmployeeDtoResponse> update(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные для обновления сотрудника",
@@ -448,6 +455,7 @@ public class EmployeeController {
             }
     )
     @DeleteMapping("/delete-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(
             @Parameter(
                     description = "ID сотрудника для удаления",

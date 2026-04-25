@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -234,6 +235,7 @@ public class MasterController {
             }
     )
     @GetMapping("/get-all-by-date-employment")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MasterDtoResponse>> getMasterByDateEmployment(
             @Parameter(
                     description = "Дата приема на работу",
@@ -266,6 +268,7 @@ public class MasterController {
             }
     )
     @GetMapping("/get-all-by-date-dismissal")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MasterDtoResponse>> getMasterByDateDismissal(
             @Parameter(
                     description = "Дата увольнения",
@@ -343,6 +346,7 @@ public class MasterController {
             }
     )
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MasterDtoResponse> save(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "DTO мастера для создания",
@@ -373,6 +377,7 @@ public class MasterController {
             }
     )
     @PutMapping("/update-master")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MasterDtoResponse> updateTeacher(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "DTO мастера для обновления",
@@ -398,6 +403,7 @@ public class MasterController {
             }
     )
     @DeleteMapping("/delete-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void delete(
             @Parameter(
                     description = "ID мастера для удаления",

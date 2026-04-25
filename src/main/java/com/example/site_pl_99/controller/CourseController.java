@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -311,6 +312,7 @@ public class CourseController {
             }
     )
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CourseDtoResponse> save(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные курса для создания",
@@ -368,6 +370,7 @@ public class CourseController {
             }
     )
     @GetMapping("/get-all-full")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CoursePreviewDto>> getAllFull() {
         return ResponseEntity.ok(CourseMapper.mapListEntityToPreviewDtoList(courseService.getAllFull()));
     }
@@ -390,6 +393,7 @@ public class CourseController {
             }
     )
     @DeleteMapping("/delete-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(
             @Parameter(
                     description = "ID курса для удаления",

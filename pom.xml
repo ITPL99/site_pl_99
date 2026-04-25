@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>site_pl_99</artifactId>
-    <version>0.1.36</version>
+    <version>0.1.40</version>
     <name>site_pl_99</name>
     <description>site_pl_99</description>
     <url/>
@@ -125,50 +125,25 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+
+                </configuration>
             </plugin>
 
             <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>0.42.0</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <images>
-                        <image>
-                            <name>${docker.image.name}</name>
-                            <build>
-                                <from>${docker.from.image}</from>
-                                <assembly>
-                                    <descriptorRef>artifact</descriptorRef>
-                                </assembly>
-                                <entryPoint>
-                                    <exec>
-                                        <arg>java</arg>
-                                        <arg>-jar</arg>
-                                        <arg>/maven/${project.build.finalName}.jar</arg>
-                                    </exec>
-                                </entryPoint>
-                                <ports>
-                                    <port>${docker.port}</port>
-                                </ports>
-                                <env>
-                                    <JAR_FILE_NAME>${project.build.finalName}</JAR_FILE_NAME>
-                                </env>
-                            </build>
-                        </image>
-                    </images>
+                    <image>
+                        <name>${artifactId}:${version}</name>
+                    </image>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>docker-build</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
+
         </plugins>
     </build>
 

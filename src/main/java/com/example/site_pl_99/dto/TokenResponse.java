@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.util.List;
 
 /**
  * DTO для ответа с токенами аутентификации.
@@ -38,7 +38,6 @@ public class TokenResponse {
                     
                     **Характеристики:**
                     - Тип: JWT (JSON Web Token)
-                    - Время жизни: 24 часа (86400 секунд)
                     - Содержит: userId, username, roles
                     - Используется для: доступа к защищенным endpoint'ам
                     
@@ -70,7 +69,6 @@ public class TokenResponse {
                     
                     **Характеристики:**
                     - Тип: UUID строка
-                    - Время жизни: 7 дней (604800 секунд)
                     - Хранение: база данных (таблица refresh_tokens)
                     - Используется для: endpoint **POST /api/auth/refresh**
                     
@@ -113,61 +111,13 @@ public class TokenResponse {
     private String tokenType;
 
     /**
-     * Дата и время истечения срока действия Access Token
+     * Информация о пользователе для фронтенда
      */
     @Schema(
-            description = """
-                    Дата и время истечения срока действия Access Token (UTC).
-                    
-                    **Формат:** ISO 8601 (Instant)
-                    **Пример:** 2026-04-22T12:30:00Z
-                    """,
-            example = "2026-04-22T12:30:00Z",
-            type = "string",
-            format = "date-time",
+            description = "Информация о аутентифицированном пользователе",
             requiredMode = Schema.RequiredMode.REQUIRED
     )
-    private Instant accessTokenExpiry;
-
-    /**
-     * Дата и время истечения срока действия Refresh Token
-     */
-    @Schema(
-            description = """
-                    Дата и время истечения срока действия Refresh Token (UTC).
-                    
-                    **Формат:** ISO 8601 (Instant)
-                    **Пример:** 2026-04-28T12:30:00Z
-                    
-                    **Примечание:** После истечения срока refresh token, пользователю
-                    необходимо заново выполнить аутентификацию через /api/auth/login
-                    """,
-            example = "2026-04-28T12:30:00Z",
-            type = "string",
-            format = "date-time",
-            requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private Instant refreshTokenExpiry;
-
-    /**
-     * Время жизни Access Token в секундах
-     */
-    @Schema(
-            description = "Время жизни Access Token в секундах",
-            example = "86400",
-            requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private Long accessTokenExpiresIn;
-
-    /**
-     * Время жизни Refresh Token в секундах
-     */
-    @Schema(
-            description = "Время жизни Refresh Token в секундах",
-            example = "604800",
-            requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private Long refreshTokenExpiresIn;
+    private UserInfo user;
 
     /**
      * Статус операции
@@ -194,4 +144,36 @@ public class TokenResponse {
             example = "Аутентификация успешна"
     )
     private String message;
+
+    /**
+     * Внутренний класс с информацией о пользователе
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Schema(description = "Информация о пользователе для клиента")
+    public static class UserInfo {
+
+        @Schema(
+                description = "ID пользователя для локального хранения и кэширования",
+                example = "1",
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        private Long id;
+
+        @Schema(
+                description = "Имя пользователя для отображения в интерфейсе",
+                example = "admin",
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        private String username;
+
+        @Schema(
+                description = "Список ролей пользователя для проверки прав на фронтенде",
+                example = "[\"ADMIN\", \"USER\"]",
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        private List<String> roles;
+    }
 }

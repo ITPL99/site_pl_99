@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -80,6 +81,7 @@ public class MailController {
             }
     )
     @GetMapping("/get-all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MailEntity>> getAll() {
         return ResponseEntity.ok(mailService.getAllMessages());
     }
@@ -92,6 +94,7 @@ public class MailController {
             }
     )
     @GetMapping("/get-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MailEntity> getById(
             @Parameter(description = "ID сообщения", example = "1") @PathVariable Long id) {
         return ResponseEntity.ok(mailService.getMessageById(id));
@@ -105,6 +108,7 @@ public class MailController {
             }
     )
     @GetMapping("/get-by-title")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MailEntity>> getByTitle(
             @Parameter(description = "Заголовок сообщения", example = "Monthly Report") @RequestParam String title) {
         return ResponseEntity.ok(mailService.getMessagesByTitle(title));
@@ -119,6 +123,7 @@ public class MailController {
 
     )
     @GetMapping("/get-by-status")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<MailEntity>> getByStatus(
             @Parameter(description = "Статус сообщения", example = "SENT") @RequestParam String status) {
         return ResponseEntity.ok(mailService.getMessagesByStatus(status));
@@ -132,6 +137,7 @@ public class MailController {
             }
     )
     @PutMapping("/update-status-by-id")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateStatusById(
             @Parameter(description = "ID сообщения", example = "5") @RequestParam Long id,
             @Parameter(description = "Новый статус", example = "READ") @RequestParam String status) {

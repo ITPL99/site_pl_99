@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -195,6 +196,7 @@ public class TeacherController {
             }
     )
     @GetMapping("/get-all-by-portfolio")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TeacherDtoResponse>> findByPortfolio(
             @Parameter(
                     description = "Название кафедры",
@@ -259,6 +261,7 @@ public class TeacherController {
             }
     )
     @GetMapping("/get-all-by-date-dismissal")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TeacherDtoResponse>> findByDateDismissal(
             @Parameter(
                     description = "Дата увольнения",
@@ -336,6 +339,7 @@ public class TeacherController {
             }
     )
     @PutMapping("/update-by-id")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TeacherDtoResponse> updateById(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные для обновления преподавателя",
@@ -367,6 +371,7 @@ public class TeacherController {
             }
     )
     @PostMapping("/save")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TeacherDtoResponse> save(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Данные нового преподавателя",
@@ -394,6 +399,7 @@ public class TeacherController {
             }
     )
     @DeleteMapping("/delete-by-id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteById(
             @Parameter(
                     description = "ID преподавателя для удаления",

@@ -82,17 +82,20 @@ public class AuthServiceImpl implements AuthService {
         String accessToken = jwtHandler.generateAccessToken(authUser);
         String refreshToken = createRefreshToken(authUser);
         
-        Instant accessExpiry = Instant.now().plusMillis(86400000); // 24 часа
-        Instant refreshExpiry = Instant.now().plusMillis(refreshTokenDurationMs); // 7 дней
+        // Создаем UserInfo для ответа
+        TokenResponse.UserInfo userInfo = TokenResponse.UserInfo.builder()
+                .id(authUser.getId())
+                .username(authUser.getUsername())
+                .roles(authUser.getAuthorities().stream()
+                        .map(auth -> auth.getAuthority().replace("ROLE_", ""))
+                        .toList())
+                .build();
         
         return TokenResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
-                .accessTokenExpiry(accessExpiry)
-                .refreshTokenExpiry(refreshExpiry)
-                .accessTokenExpiresIn(86400L)
-                .refreshTokenExpiresIn(refreshTokenDurationMs / 1000)
+                .user(userInfo)
                 .status("SUCCESS")
                 .message("Аутентификация успешна")
                 .build();
@@ -122,17 +125,20 @@ public class AuthServiceImpl implements AuthService {
         String newAccessToken = jwtHandler.generateAccessToken(user);
         String newRefreshToken = createRefreshToken(user);
         
-        Instant accessExpiry = Instant.now().plusMillis(86400000);
-        Instant refreshExpiry = Instant.now().plusMillis(refreshTokenDurationMs);
+        // Создаем UserInfo для ответа
+        TokenResponse.UserInfo userInfo = TokenResponse.UserInfo.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .roles(user.getAuthorities().stream()
+                        .map(auth -> auth.getAuthority().replace("ROLE_", ""))
+                        .toList())
+                .build();
         
         return TokenResponse.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .tokenType("Bearer")
-                .accessTokenExpiry(accessExpiry)
-                .refreshTokenExpiry(refreshExpiry)
-                .accessTokenExpiresIn(86400L)
-                .refreshTokenExpiresIn(refreshTokenDurationMs / 1000)
+                .user(userInfo)
                 .status("SUCCESS")
                 .message("Токены успешно обновлены")
                 .build();
