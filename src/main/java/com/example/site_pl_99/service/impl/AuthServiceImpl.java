@@ -96,8 +96,6 @@ public class AuthServiceImpl implements AuthService {
                 .refreshToken(refreshToken)
                 .tokenType("Bearer")
                 .user(userInfo)
-                .status("SUCCESS")
-                .message("Аутентификация успешна")
                 .build();
     }
     
@@ -139,8 +137,6 @@ public class AuthServiceImpl implements AuthService {
                 .refreshToken(newRefreshToken)
                 .tokenType("Bearer")
                 .user(userInfo)
-                .status("SUCCESS")
-                .message("Токены успешно обновлены")
                 .build();
     }
     

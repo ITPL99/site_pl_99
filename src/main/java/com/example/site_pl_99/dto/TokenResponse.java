@@ -120,32 +120,6 @@ public class TokenResponse {
     private UserInfo user;
 
     /**
-     * Статус операции
-     */
-    @Schema(
-            description = "Статус аутентификации",
-            example = "SUCCESS",
-            allowableValues = {"SUCCESS", "FAILED"},
-            requiredMode = Schema.RequiredMode.REQUIRED
-    )
-    private String status;
-
-    /**
-     * Сообщение для пользователя
-     */
-    @Schema(
-            description = """
-                    Информационное сообщение о результате операции.
-                    
-                    **Примеры:**
-                    - "Аутентификация успешна"
-                    - "Неверный логин или пароль"
-                    """,
-            example = "Аутентификация успешна"
-    )
-    private String message;
-
-    /**
      * Внутренний класс с информацией о пользователе
      */
     @Data

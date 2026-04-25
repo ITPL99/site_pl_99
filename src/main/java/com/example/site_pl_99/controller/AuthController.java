@@ -5,7 +5,7 @@ import com.example.site_pl_99.dto.LoginRequestDto;
 import com.example.site_pl_99.dto.RefreshTokenRequest;
 import com.example.site_pl_99.dto.TokenResponse;
 import com.example.site_pl_99.dto.UserDtoResponse;
-import com.example.site_pl_99.excaption.BaseException;
+
 import com.example.site_pl_99.mapper.UserMapper;
 import com.example.site_pl_99.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -72,6 +72,7 @@ public class AuthController {
             summary = "Вход в аккаунт",
             description = """
                     **Аутентификация пользователя и получение токенов доступа.**
+                    </br> Пользователи системы (admin, user, moderator) Пароли весх пользователей (qwe123)
                     
                     После успешной аутентификации возвращается пара токенов:
                     - **Access Token** (JWT) - для авторизации запросов, время жизни 24 часа
@@ -85,20 +86,8 @@ public class AuthController {
                     **Использование Refresh Token:**
                     Отправьте refresh token в теле запроса на endpoint **POST /api/auth/refresh**
                     
-                    **Пример успешного ответа:**
-                    ```json
-                    {
-                      "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-                      "refreshToken": "550e8400-e29b-41d4-a716-446655440000",
-                      "tokenType": "Bearer",
-                      "accessTokenExpiry": "2026-04-22T12:30:00Z",
-                      "refreshTokenExpiry": "2026-04-28T12:30:00Z",
-                      "accessTokenExpiresIn": 86400,
-                      "refreshTokenExpiresIn": 604800,
-                      "status": "SUCCESS",
-                      "message": "Аутентификация успешна"
-                    }
-                    ```
+                    **Структура ответа:**
+                    Ответ возвращается в универсальном формате ApiResponseWrapper с данными TokenResponse в поле data.
                     
                     **Ошибки:**
                     - 401 - Неверный логин или пароль
@@ -112,24 +101,7 @@ public class AuthController {
                     description = "Аутентификация успешна",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TokenResponse.class),
-                            examples = @ExampleObject(
-                                    name = "Успешный ответ",
-                                    value = """
-                                            {
-                                              "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-                                              "refreshToken": "550e8400-e29b-41d4-a716-446655440000",
-                                              "tokenType": "Bearer",
-                                              "user": {
-                                                "id": 1,
-                                                "username": "admin",
-                                                "roles": ["ADMIN"]
-                                              },
-                                              "status": "SUCCESS",
-                                              "message": "Аутентификация успешна"
-                                            }
-                                            """
-                            )
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
                     )
             ),
             @ApiResponse(
@@ -137,9 +109,7 @@ public class AuthController {
                     description = "Неверный логин или пароль",
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = "{\"error\": \"error.authorization\", \"message\": \"Неверный логин или пароль\"}"
-                            )
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
                     )
             ),
             @ApiResponse(
@@ -147,16 +117,17 @@ public class AuthController {
                     description = "Ошибки валидации (невалидные данные)",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ApiResponse.class)
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
                     )
             )
     })
     @PostMapping("/login")
-    public TokenResponse login(
+    public ApiResponseWrapper<TokenResponse> login(
             @Valid @RequestBody LoginRequestDto loginRequest
-    ) throws BaseException {
+    ) {
         log.info("----->>>>>  получили запрос на вход: {}", loginRequest.getUsername());
-        return authService.login(loginRequest.getUsername(), loginRequest.getPassword());
+        TokenResponse tokenResponse = authService.login(loginRequest.getUsername(), loginRequest.getPassword());
+        return ApiResponseWrapper.success(tokenResponse, "Аутентификация успешна");
     }
 
     /**
@@ -190,20 +161,8 @@ public class AuthController {
                     }
                     ```
                     
-                    **Пример успешного ответа:**
-                    ```json
-                    {
-                      "accessToken": "eyJhbGciOiJIUzI1NiIs...",
-                      "refreshToken": "660f9511-f3ac-52e5-b827-557766551111",
-                      "tokenType": "Bearer",
-                      "accessTokenExpiry": "2026-04-23T12:30:00Z",
-                      "refreshTokenExpiry": "2026-04-29T12:30:00Z",
-                      "accessTokenExpiresIn": 86400,
-                      "refreshTokenExpiresIn": 604800,
-                      "status": "SUCCESS",
-                      "message": "Токены успешно обновлены"
-                    }
-                    ```
+                    **Структура ответа:**
+                    Ответ возвращается в универсальном формате ApiResponseWrapper с данными TokenResponse в поле data.
                     
                     **Ошибки:**
                     - 401 - Невалидный или истекший refresh token
@@ -221,23 +180,7 @@ public class AuthController {
                     description = "Токены успешно обновлены",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = TokenResponse.class),
-                            examples = @ExampleObject(
-                                    name = "Успешное обновление",
-                                    value = """
-                                            {
-                                              "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-                                              "refreshToken": "660f9511-f3ac-52e5-b827-557766551111",
-                                              "tokenType": "Bearer",
-                                              "accessTokenExpiry": "2026-04-23T12:30:00Z",
-                                              "refreshTokenExpiry": "2026-04-29T12:30:00Z",
-                                              "accessTokenExpiresIn": 86400,
-                                              "refreshTokenExpiresIn": 604800,
-                                              "status": "SUCCESS",
-                                              "message": "Токены успешно обновлены"
-                                            }
-                                            """
-                            )
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
                     )
             ),
             @ApiResponse(
@@ -245,18 +188,20 @@ public class AuthController {
                     description = "Невалидный или истекший refresh token",
                     content = @Content(
                             mediaType = "application/json",
-                            examples = @ExampleObject(
-                                    value = "{\"error\": \"error.invalidRefreshToken\", \"message\": \"Невалидный refresh token\"}"
-                            )
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
                     )
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Пустой refresh token"
+                    description = "Пустой refresh token",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
             )
     })
     @PostMapping("/refresh")
-    public TokenResponse refreshToken(
+    public ApiResponseWrapper<TokenResponse> refreshToken(
             @Valid
             @RequestBody
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -264,17 +209,14 @@ public class AuthController {
                     required = true,
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = RefreshTokenRequest.class),
-                            examples = @ExampleObject(
-                                    name = "Пример запроса",
-                                    value = "{\"refreshToken\": \"550e8400-e29b-41d4-a716-446655440000\"}"
-                            )
+                            schema = @Schema(implementation = RefreshTokenRequest.class)
                     )
             )
             RefreshTokenRequest request
     ) {
         log.info("----->>>>>  получили запрос на обновление токена");
-        return authService.refreshToken(request);
+        TokenResponse tokenResponse = authService.refreshToken(request);
+        return ApiResponseWrapper.success(tokenResponse, "Токены успешно обновлены");
     }
 
     @Operation(
@@ -287,12 +229,27 @@ public class AuthController {
     )
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Информация о пользователе получена"),
-            @ApiResponse(responseCode = "401", description = "Отсутствует или невалидный токен")
+            @ApiResponse(
+                    responseCode = "200", 
+                    description = "Информация о пользователе получена",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "401", 
+                    description = "Отсутствует или невалидный токен",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            )
     })
     @GetMapping("/current")
-    public UserDtoResponse getCurrentAuthUser(){
-        return UserMapper.toUserDtoResponse(authService.getCurrentUser());
+    public ApiResponseWrapper<UserDtoResponse> getCurrentAuthUser(){
+        UserDtoResponse userDto = UserMapper.toUserDtoResponse(authService.getCurrentUser());
+        return ApiResponseWrapper.success(userDto, "Информация о пользователе получена");
     }
 
     @Operation(
@@ -305,19 +262,34 @@ public class AuthController {
                     """
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Письмо отправлено"),
-            @ApiResponse(responseCode = "404", description = "Пользователь не найден")
+            @ApiResponse(
+                    responseCode = "200", 
+                    description = "Письмо отправлено",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404", 
+                    description = "Пользователь не найден",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            )
     })
     @PostMapping("/password-restoration")
-    public String passwordRestoration(
+    public ApiResponseWrapper<String> passwordRestoration(
             @Parameter(description = "Логин или email пользователя", example = "admin")
             @RequestParam String emailOrLogin
     ){
         authService.passwordRestoration(emailOrLogin);
         Locale local = LocaleContextHolder.getLocale();
-        return local.getLanguage().equals("ru") ? "Вам на почту отправлен секретный код для восстановления пароля" :
+        String message = local.getLanguage().equals("ru") ? "Вам на почту отправлен секретный код для восстановления пароля" :
                 local.getLanguage().equals("kg") ? "Сырсөздү калыбына келтирүү үчүн жашыруун код сизге почта аркылуу жөнөтүлдү" :
                         "A secret code to restore password has been sent to you by mail";
+        return ApiResponseWrapper.success(message, "Письмо успешно отправлено");
     }
 
     @Operation(
@@ -330,18 +302,33 @@ public class AuthController {
                     """
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Пароль успешно изменен"),
-            @ApiResponse(responseCode = "400", description = "Невалидный или истекший код")
+            @ApiResponse(
+                    responseCode = "200", 
+                    description = "Пароль успешно изменен",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400", 
+                    description = "Невалидный или истекший код",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiResponseWrapper.class)
+                    )
+            )
     })
     @PostMapping("/update-password/{active_code}")
-    public String updatePassword(
+    public ApiResponseWrapper<String> updatePassword(
             @Parameter(description = "Секретный код для изменения пароля", example = "abc123")
             @PathVariable("active_code") String activeCode,
             
             @Parameter(description = "Новый пароль", example = "newPassword123")
             @RequestParam String newPassword
     ){
-       return authService.updatePassword(activeCode, newPassword);
+       String message = authService.updatePassword(activeCode, newPassword);
+       return ApiResponseWrapper.success(message, "Пароль успешно изменен");
     }
 }
 

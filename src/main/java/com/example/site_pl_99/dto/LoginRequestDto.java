@@ -37,7 +37,7 @@ public class LoginRequestDto {
     @Size(min = 6, message = "Password must be at least 6 characters")
     @Schema(
             description = "Пароль пользователя",
-            example = "secretPassword123",
+            example = "qwe123",
             requiredMode = Schema.RequiredMode.REQUIRED,
             minLength = 6,
             format = "password"

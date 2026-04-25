@@ -16,7 +16,7 @@ INSERT INTO users (username, password, active, active_code, email)
 VALUES ('admin', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'admin@pl99.kg');
 
 INSERT INTO users (username, password, active, active_code, email) 
-VALUES ('testuser', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'test@example.com');
+VALUES ('user', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'test@example.com');
 
 INSERT INTO users (username, password, active, active_code, email) 
 VALUES ('moderator', '$2a$04$tMu1FLdYGCYIHNmvrVjlTePvy0Dnx/8juEbLEenCxAG7g2vdrZHHy', 'ACTIVE', NULL, 'moderator@pl99.kg');

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CourseMapper {
     public static CourseEntity toEntity(CourseDtoRequest request){
         CourseEntity courseEntity = new CourseEntity();
-        courseEntity.setType(CourseType.valueOf(request.getCourseType()));
+        courseEntity.setType(request.getCourseType());
         courseEntity.setTitleRu(request.getTitleRu());
         courseEntity.setTitleKg(request.getTitleKg());
         courseEntity.setDescriptionRu(request.getDescriptionRu());
