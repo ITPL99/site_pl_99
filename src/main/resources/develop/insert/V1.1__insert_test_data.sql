@@ -28,7 +28,7 @@ INSERT INTO m2m_users_roles (user_id, role_id)
 VALUES ((SELECT id FROM users WHERE username = 'admin'), (SELECT id FROM roles WHERE role_name = 'ADMIN'));
 
 INSERT INTO m2m_users_roles (user_id, role_id) 
-VALUES ((SELECT id FROM users WHERE username = 'testuser'), (SELECT id FROM roles WHERE role_name = 'USER'));
+VALUES ((SELECT id FROM users WHERE username = 'user'), (SELECT id FROM roles WHERE role_name = 'USER'));
 
 INSERT INTO m2m_users_roles (user_id, role_id) 
 VALUES ((SELECT id FROM users WHERE username = 'moderator'), (SELECT id FROM roles WHERE role_name = 'MODERATOR'));
